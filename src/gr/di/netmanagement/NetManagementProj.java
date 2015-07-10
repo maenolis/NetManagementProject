@@ -18,5 +18,6 @@ public class NetManagementProj {
 		batteryFile = new File("data/battery.csv");
 		gpsFile = new File("data/gps.csv");
 		wifiFile = new File("data/wifi.csv");
+		System.out.println("test");
 	}
 }
