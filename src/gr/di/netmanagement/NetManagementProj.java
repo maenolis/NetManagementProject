@@ -14,8 +14,6 @@ public class NetManagementProj {
 
 	public static void main(String[] args) {
 
-		System.out.println((new File("data/base_station.csv")).exists());
-
 		baseStationFile = new File("data/base_station.csv");
 		batteryFile = new File("data/battery.csv");
 		gpsFile = new File("data/gps.csv");
