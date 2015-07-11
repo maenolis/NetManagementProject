@@ -22,6 +22,8 @@ public class NetManagementProj {
 		gpsFile = new File("data/gps.csv");
 		wifiFile = new File("data/wifi.csv");
 
+		System.out.println("manolis git testing");
+
 		FileReader fr = null;
 		BufferedReader br = null;
 		String line = null;
