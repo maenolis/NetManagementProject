@@ -16,9 +16,7 @@ public class Wifi {
 
 	private int frequency;
 
-	private float latitude;
-
-	private float longtitude;
+	private Location location;
 
 	private Date timestamp;
 
@@ -82,24 +80,14 @@ public class Wifi {
 		this.frequency = frequency;
 	}
 
-	public float getLatitude() {
+	public Location getLocation() {
 
-		return latitude;
+		return location;
 	}
 
-	public void setLatitude(float latitude) {
+	public void setLocation(Location location) {
 
-		this.latitude = latitude;
-	}
-
-	public float getLongtitude() {
-
-		return longtitude;
-	}
-
-	public void setLongtitude(float longtitude) {
-
-		this.longtitude = longtitude;
+		this.location = location;
 	}
 
 	public Date getTimestamp() {
@@ -121,15 +109,11 @@ public class Wifi {
 		this.bssid = bssid;
 		this.level = level;
 		this.frequency = frequency;
-		if (!(latitude.charAt(0) == 'N')) {
-			this.latitude = Float.valueOf(latitude);
+		if (!(latitude.charAt(0) == 'N') && !(longtitude.charAt(0) == 'N')) {
+			this.location = new Location(Float.valueOf(latitude),
+					Float.valueOf(longtitude));
 		} else {
-			this.latitude = -1.0f;
-		}
-		if (!(longtitude.charAt(0) == 'N')) {
-			this.longtitude = Float.valueOf(longtitude);
-		} else {
-			this.longtitude = -1.0f;
+			this.location = new Location(-1.0f, -1.0f);
 		}
 		this.timestamp = timestamp;
 	}
@@ -139,8 +123,8 @@ public class Wifi {
 
 		return "Wifi [id=" + id + ", email=" + email + ", ssid=" + ssid
 				+ ", bssid=" + bssid + ", level=" + level + ", frequency="
-				+ frequency + ", latitude=" + latitude + ", longtitude="
-				+ longtitude + ", timestamp=" + timestamp + "]";
+				+ frequency + ", location=" + location + ", timestamp="
+				+ timestamp + "]";
 	}
 
 }

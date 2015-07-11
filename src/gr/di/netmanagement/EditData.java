@@ -7,7 +7,39 @@ public class EditData {
 
 	private ArrayList<Object> accessPointsList;
 
-	HashMap<String, ArrayList<Wifi>> wifiMap;
+	private HashMap<String, ArrayList<Wifi>> wifiMap;
+
+	private HashMap<String, Location> wifiLocations;
+
+	public ArrayList<Object> getAccessPointsList() {
+
+		return accessPointsList;
+	}
+
+	public void setAccessPointsList(ArrayList<Object> accessPointsList) {
+
+		this.accessPointsList = accessPointsList;
+	}
+
+	public HashMap<String, ArrayList<Wifi>> getWifiMap() {
+
+		return wifiMap;
+	}
+
+	public void setWifiMap(HashMap<String, ArrayList<Wifi>> wifiMap) {
+
+		this.wifiMap = wifiMap;
+	}
+
+	public HashMap<String, Location> getWifiLocations() {
+
+		return wifiLocations;
+	}
+
+	public void setWifiLocations(HashMap<String, Location> wifiLocations) {
+
+		this.wifiLocations = wifiLocations;
+	}
 
 	private static final float PI = 3.14f;
 
@@ -36,10 +68,15 @@ public class EditData {
 
 	}
 
-	public void printWifiAccessPoints() {
+	public void computeAccessPointsLocation() {
 
 		for (String key : wifiMap.keySet()) {
-			System.out.println(wifiMap.get(key));
+			ArrayList<Wifi> list = wifiMap.get(key);
+			if (list.size() < 2) {
+				continue;
+			}
+			// TODO
+			System.out.println(list);
 		}
 	}
 }

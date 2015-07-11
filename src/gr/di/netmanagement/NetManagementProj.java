@@ -6,7 +6,7 @@ public class NetManagementProj {
 
 		try {
 			EditData a = new EditData();
-			a.printWifiAccessPoints();
+			a.computeAccessPointsLocation();
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();

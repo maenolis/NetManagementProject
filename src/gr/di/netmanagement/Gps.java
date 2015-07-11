@@ -8,9 +8,7 @@ public class Gps {
 
 	private String email;
 
-	private float latitude;
-
-	private float longtitude;
+	private Location location;
 
 	private Date timestamp;
 
@@ -34,24 +32,14 @@ public class Gps {
 		this.email = email;
 	}
 
-	public float getLatitude() {
+	public Location getLocation() {
 
-		return latitude;
+		return location;
 	}
 
-	public void setLatitude(float latitude) {
+	public void setLocation(Location location) {
 
-		this.latitude = latitude;
-	}
-
-	public float getLongtitude() {
-
-		return longtitude;
-	}
-
-	public void setLongtitude(float longtitude) {
-
-		this.longtitude = longtitude;
+		this.location = location;
 	}
 
 	public Date getTimestamp() {
@@ -69,15 +57,11 @@ public class Gps {
 
 		this.id = id;
 		this.email = email;
-		if (!(latitude.charAt(0) == 'N')) {
-			this.latitude = Float.valueOf(latitude);
+		if (!(latitude.charAt(0) == 'N') && !(longtitude.charAt(0) == 'N')) {
+			this.location = new Location(Float.valueOf(latitude),
+					Float.valueOf(longtitude));
 		} else {
-			this.latitude = -1.0f;
-		}
-		if (!(longtitude.charAt(0) == 'N')) {
-			this.longtitude = Float.valueOf(longtitude);
-		} else {
-			this.longtitude = -1.0f;
+			this.location = new Location(-1.0f, -1.0f);
 		}
 		this.timestamp = timestamp;
 	}
@@ -85,9 +69,8 @@ public class Gps {
 	@Override
 	public String toString() {
 
-		return "Gps [id=" + id + ", email=" + email + ", latitude=" + latitude
-				+ ", longtitude=" + longtitude + ", timestamp=" + timestamp
-				+ "]";
+		return "Gps [id=" + id + ", email=" + email + ", location=" + location
+				+ ", timestamp=" + timestamp + "]";
 	}
 
 }
