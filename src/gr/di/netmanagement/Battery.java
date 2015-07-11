@@ -100,4 +100,12 @@ public class Battery {
 		this.timestamp = timestamp;
 	}
 
+	@Override
+	public String toString() {
+
+		return "Battery [id=" + id + ", user=" + user + ", level=" + level
+				+ ", plugged=" + plugged + ", temperature=" + temperature
+				+ ", voltage=" + voltage + ", timestamp=" + timestamp + "]";
+	}
+
 }

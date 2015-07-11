@@ -148,4 +148,13 @@ public class BaseStation {
 		this.timestamp = timestamp;
 	}
 
+	@Override
+	public String toString() {
+
+		return "BaseStation [id=" + id + ", user=" + user + ", operator="
+				+ operator + ", mcc=" + mcc + ", mnc=" + mnc + ", cid=" + cid
+				+ ", lac=" + lac + ", latitude=" + latitude + ", longtitude="
+				+ longtitude + ", timestamp=" + timestamp + "]";
+	}
+
 }
