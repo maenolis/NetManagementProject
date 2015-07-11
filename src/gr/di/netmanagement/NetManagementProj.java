@@ -21,7 +21,7 @@ public class NetManagementProj {
 		batteryFile = new File("data/battery.csv");
 		gpsFile = new File("data/gps.csv");
 		wifiFile = new File("data/wifi.csv");
-
+		//alla
 		FileReader fr = null;
 		BufferedReader br = null;
 		String line = null;
