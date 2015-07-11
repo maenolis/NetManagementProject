@@ -146,7 +146,7 @@ public class DataReader {
 				default:
 					throw new Exception("Wrong FileType given.");
 				}
-				System.out.println(line);
+				//System.out.println(line);
 			}
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
