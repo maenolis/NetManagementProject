@@ -1,6 +1,5 @@
 package gr.di.netmanagement;
 
-import java.io.File;
 
 public class NetManagementProj {
 
@@ -8,7 +7,10 @@ public class NetManagementProj {
 
 		DataReader dr = new DataReader();
 		try {
-			dr.readFile(new File(""), FileType.GPS);
+			dr.readFile(FileType.BASE_STATION);
+			dr.readFile(FileType.BATTERY);
+			dr.readFile(FileType.GPS);
+			dr.readFile(FileType.WIFI);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();

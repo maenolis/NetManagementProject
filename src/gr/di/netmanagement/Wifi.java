@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Wifi {
 
-	private String id;
+	private int id;
 
 	private String email;
 
@@ -12,9 +12,9 @@ public class Wifi {
 
 	private String bssid;
 
-	private String level;
+	private int level;
 
-	private String frequency;
+	private int frequency;
 
 	private float latitude;
 
@@ -22,12 +22,12 @@ public class Wifi {
 
 	private Date timestamp;
 
-	public String getId() {
+	public int getId() {
 
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(int id) {
 
 		this.id = id;
 	}
@@ -62,22 +62,22 @@ public class Wifi {
 		this.bssid = bssid;
 	}
 
-	public String getLevel() {
+	public int getLevel() {
 
 		return level;
 	}
 
-	public void setLevel(String level) {
+	public void setLevel(int level) {
 
 		this.level = level;
 	}
 
-	public String getFrequency() {
+	public int getFrequency() {
 
 		return frequency;
 	}
 
-	public void setFrequency(String frequency) {
+	public void setFrequency(int frequency) {
 
 		this.frequency = frequency;
 	}
@@ -112,9 +112,8 @@ public class Wifi {
 		this.timestamp = timestamp;
 	}
 
-	public Wifi(String id, String email, String ssid, String bssid,
-			String level, String frequency, float latitude, float longtitude,
-			Date timestamp) {
+	public Wifi(int id, String email, String ssid, String bssid, int level,
+			int frequency, String latitude, String longtitude, Date timestamp) {
 
 		this.id = id;
 		this.email = email;
@@ -122,8 +121,16 @@ public class Wifi {
 		this.bssid = bssid;
 		this.level = level;
 		this.frequency = frequency;
-		this.latitude = latitude;
-		this.longtitude = longtitude;
+		if (!(latitude.charAt(0) == 'N')) {
+			this.latitude = Float.valueOf(latitude);
+		} else {
+			this.latitude = -1.0f;
+		}
+		if (!(longtitude.charAt(0) == 'N')) {
+			this.longtitude = Float.valueOf(longtitude);
+		} else {
+			this.longtitude = -1.0f;
+		}
 		this.timestamp = timestamp;
 	}
 

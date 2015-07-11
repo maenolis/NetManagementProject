@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Gps {
 
-	private String id;
+	private int id;
 
 	private String email;
 
@@ -14,12 +14,12 @@ public class Gps {
 
 	private Date timestamp;
 
-	public String getId() {
+	public int getId() {
 
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(int id) {
 
 		this.id = id;
 	}
@@ -64,13 +64,21 @@ public class Gps {
 		this.timestamp = timestamp;
 	}
 
-	public Gps(String id, String email, float latitude, float longtitude,
+	public Gps(int id, String email, String latitude, String longtitude,
 			Date timestamp) {
 
 		this.id = id;
 		this.email = email;
-		this.latitude = latitude;
-		this.longtitude = longtitude;
+		if (!(latitude.charAt(0) == 'N')) {
+			this.latitude = Float.valueOf(latitude);
+		} else {
+			this.latitude = -1.0f;
+		}
+		if (!(longtitude.charAt(0) == 'N')) {
+			this.longtitude = Float.valueOf(longtitude);
+		} else {
+			this.longtitude = -1.0f;
+		}
 		this.timestamp = timestamp;
 	}
 
