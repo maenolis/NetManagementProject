@@ -69,14 +69,40 @@ public class EditData {
 	}
 
 	public void computeAccessPointsLocation() {
-
+		float totalweight=0,latitudeSum=0,longtitudeSum=0,Latitude,Longtitude;
 		for (String key : wifiMap.keySet()) {
+			int counter=0, rssi;
+			float longtitude,latitude;
+			double weight=0;
+			
 			ArrayList<Wifi> list = wifiMap.get(key);
 			if (list.size() < 2) {
 				continue;
 			}
-			// TODO
-			System.out.println(list);
+			
+			latitude=list.get(counter).getLocation().getLatitude();
+			longtitude=list.get(counter).getLocation().getLongtitude();
+			rssi=list.get(counter).getLevel();
+			
+			//Convert latitude and longtitude from degrees to radians.
+			latitude=latitude*PI/180;
+			longtitude=longtitude*PI/180;
+			
+			//Convert dBm to mW.
+			weight=Math.pow(10,rssi/10);
+			totalweight+=weight;
+			
+			//Calculate latitude*weight and longtitude*weight
+			latitudeSum+=latitude*weight;
+			longtitudeSum+=longtitude*weight;
+			
+			counter++;
 		}
+		
+		//Calculate the weighted latitude and longtitude.
+		Latitude=latitudeSum/totalweight;
+		Longtitude=longtitudeSum/totalweight;
+		
+		System.out.println(Latitude + " kai " + Longtitude);
 	}
 }
