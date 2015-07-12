@@ -2,33 +2,32 @@ package gr.di.netmanagement;
 
 public class Location {
 
-	private float latitude;
+	private double latitude;
 
-	private float longtitude;
+	private double longtitude;
 
-	public float getLatitude() {
+	public double getLatitude() {
 
 		return latitude;
 	}
 
-	public void setLatitude(float latitude) {
+	public void setLatitude(double latitude) {
 
 		this.latitude = latitude;
 	}
 
-	public float getLongtitude() {
+	public double getLongtitude() {
 
 		return longtitude;
 	}
 
-	public void setLongtitude(float longtitude) {
+	public void setLongtitude(double longtitude) {
 
 		this.longtitude = longtitude;
 	}
 
-	public Location(float latitude, float longtitude) {
+	public Location(double latitude, double longtitude) {
 
-		super();
 		this.latitude = latitude;
 		this.longtitude = longtitude;
 	}

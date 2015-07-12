@@ -34,8 +34,8 @@ public class BaseStation {
 		this.cid = cid;
 		this.lac = lac;
 		if (!(latitude.charAt(0) == 'N') && !(longtitude.charAt(0) == 'N')) {
-			this.location = new Location(Float.valueOf(latitude),
-					Float.valueOf(longtitude));
+			this.location = new Location(Double.valueOf(latitude),
+					Double.valueOf(longtitude));
 		} else {
 			this.location = new Location(-1.0f, -1.0f);
 		}

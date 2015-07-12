@@ -41,7 +41,7 @@ public class ProcessData {
 		this.wifiLocations = wifiLocations;
 	}
 
-	private static final float PI = 3.14159265359f;
+	private static final double PI = 3.14159265359f;
 
 	ProcessData() {
 
@@ -72,8 +72,8 @@ public class ProcessData {
 	public void computeAccessPointsLocation() {
 
 		for (String key : wifiMap.keySet()) {
-			float totalweight = 0.0f, latitudeSum = 0.0f, longtitudeSum = 0.0f, latitude, longtitude;
-			float rssi;
+			Double totalweight = 0.0, latitudeSum = 0.0, longtitudeSum = 0.0, latitude, longtitude;
+			Double rssi;
 			double weight = 0;
 
 			ArrayList<Wifi> list = wifiMap.get(key);
@@ -88,7 +88,7 @@ public class ProcessData {
 				if (latitude == -1.0f && longtitude == -1.0f) {
 					System.out.println("No location for this ap.");
 				}
-				rssi = ap.getLevel();
+				rssi = (double) ap.getLevel();
 
 				// Convert latitude and longtitude from degrees to radians.
 				latitude = latitude * PI / 180;
