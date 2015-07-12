@@ -47,6 +47,7 @@ public class EditData {
 
 		accessPointsList = new ArrayList<Object>();
 		wifiMap = new HashMap<String, ArrayList<Wifi>>();
+		wifiLocations = new HashMap<String, Location>();
 		try {
 			DataReader dr = new DataReader();
 			accessPointsList = dr.readFile(FileType.WIFI);
@@ -69,40 +70,47 @@ public class EditData {
 	}
 
 	public void computeAccessPointsLocation() {
-		float totalweight=0,latitudeSum=0,longtitudeSum=0,Latitude,Longtitude;
+
 		for (String key : wifiMap.keySet()) {
-			int counter=0, rssi;
-			float longtitude,latitude;
-			double weight=0;
-			
+			float totalweight = 0.0f, latitudeSum = 0.0f, longtitudeSum = 0.0f, latitude, longtitude;
+			float rssi;
+			double weight = 0;
+
 			ArrayList<Wifi> list = wifiMap.get(key);
 			if (list.size() < 2) {
+				wifiLocations.put(key, list.get(0).getLocation());
 				continue;
 			}
-			
-			latitude=list.get(counter).getLocation().getLatitude();
-			longtitude=list.get(counter).getLocation().getLongtitude();
-			rssi=list.get(counter).getLevel();
-			
-			//Convert latitude and longtitude from degrees to radians.
-			latitude=latitude*PI/180;
-			longtitude=longtitude*PI/180;
-			
-			//Convert dBm to mW.
-			weight=Math.pow(10,rssi/10);
-			totalweight+=weight;
-			
-			//Calculate latitude*weight and longtitude*weight
-			latitudeSum+=latitude*weight;
-			longtitudeSum+=longtitude*weight;
-			
-			counter++;
+
+			for (Wifi ap : list) {
+				latitude = ap.getLocation().getLatitude();
+				longtitude = ap.getLocation().getLongtitude();
+				if (latitude == -1.0f && longtitude == -1.0f) {
+					System.out.println("No location for this ap.");
+				}
+				rssi = ap.getLevel();
+
+				// Convert latitude and longtitude from degrees to radians.
+				latitude = latitude * PI / 180;
+				longtitude = longtitude * PI / 180;
+
+				// Convert dBm to mW.
+				weight = Math.pow(10, rssi / 10);
+				totalweight += weight;
+
+				// Calculate latitude*weight and longtitude*weight
+				latitudeSum += latitude * weight;
+				longtitudeSum += longtitude * weight;
+			}
+			// Calculate the weighted latitude and longtitude.
+			latitude = latitudeSum / totalweight;
+			longtitude = longtitudeSum / totalweight;
+
+			wifiLocations.put(key, new Location(latitude / (PI / 180),
+					longtitude / (PI / 180)));
+			// System.out.println(latitude / (PI / 180) + " kai " + longtitude
+			// / (PI / 180));
 		}
-		
-		//Calculate the weighted latitude and longtitude.
-		Latitude=latitudeSum/totalweight;
-		Longtitude=longtitudeSum/totalweight;
-		
-		System.out.println(Latitude + " kai " + Longtitude);
+		System.out.println(wifiLocations.get("18:17:25:21:93:02"));
 	}
 }
