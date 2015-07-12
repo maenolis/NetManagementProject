@@ -3,7 +3,7 @@ package gr.di.netmanagement;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class EditData {
+public class ProcessData {
 
 	private ArrayList<Object> accessPointsList;
 
@@ -41,9 +41,9 @@ public class EditData {
 		this.wifiLocations = wifiLocations;
 	}
 
-	private static final float PI = 3.14f;
+	private static final float PI = 3.14159265359f;
 
-	EditData() {
+	ProcessData() {
 
 		accessPointsList = new ArrayList<Object>();
 		wifiMap = new HashMap<String, ArrayList<Wifi>>();
