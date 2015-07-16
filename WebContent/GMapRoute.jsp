@@ -42,11 +42,11 @@
 <ul class="nav nav-tabs nav-justified">
   <li><a href="/NetManagementProject/APStickers.jsp">Access Points Stickers
     </a></li>
-    <li class="active"><a href="#">User Route</a><div id = "map-canvas">
-    </div></li>
+    <li class="active"><a href="#">User Route</a></li>
     <li><a href="/NetManagementProject/LevelBatteryDiagram.jsp">Level/Battery Diagram</a></li>
     <li><a href="/NetManagementProject/Cells.jsp">User Connection Cells</a></li>
     </ul>
+    <div id = "map-canvas">
     </div>
 </body>
 </html>

@@ -38,12 +38,14 @@
 <div class="container">
 <ul class="nav nav-tabs nav-justified">
   <li class="active"><a href="#">Access Points Stickers
-    </a><div id = "map-canvas">
-    </div></li>
+    
     <li><a href="/NetManagementProject/GMapRoute.jsp">User Route</a></li>
     <li><a href="/NetManagementProject/LevelBatteryDiagram.jsp">Level/Battery Diagram</a></li>
     <li><a href="/NetManagementProject/Cells.jsp">User Connection Cells</a></li>
     </ul>
+    
+    </a><div id = "map-canvas">
     </div>
+</div>
 </body>
 </html>
