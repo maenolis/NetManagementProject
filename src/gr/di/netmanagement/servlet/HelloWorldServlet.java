@@ -1,7 +1,11 @@
 package gr.di.netmanagement.servlet;
 
+import gr.di.netmanagement.ProcessData;
+import gr.di.netmanagement.Wifi;
+
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -42,9 +46,11 @@ public class HelloWorldServlet extends HttpServlet {
 		if (request.getParameter("submit") != null)
 			performTask(request, response);
 	}
+
 	
 	private void performTask(HttpServletRequest request, HttpServletResponse response) throws ServletException,
 	IOException {
+		
 		String url = "/APStickers.jsp";
 		ServletContext context = getServletContext();
 		RequestDispatcher dispatcher = context.getRequestDispatcher(url);

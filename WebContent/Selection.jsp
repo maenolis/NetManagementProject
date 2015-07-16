@@ -4,7 +4,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Test</title>
+
+<title>Date Selection</title>
 </head>
 <body>
 	<h4>Select a day:</h4>
@@ -67,6 +68,7 @@
 	<form action="${pageContext.request.contextPath}/HelloWorldServlet" method="post">
 		<input type="submit" name="submit" value="Submit" />
 	</form>
+	
 
 </body>
 </html>

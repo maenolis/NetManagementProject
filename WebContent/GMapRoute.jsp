@@ -2,9 +2,11 @@
 <html lang = "en">
 <head>
     <style>
+  
       #map-canvas {
         width: 500px;
         height: 400px;
+        
       }
     </style>
     <meta charset="utf-8">
@@ -12,7 +14,8 @@
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <title>Access Points Stickers</title>
+  
+    <title>User Route</title>
     <script src = "https://maps.googleapis.com/maps/api/js?sensor=false"></script>
     <script>
         function initialize(){
@@ -37,10 +40,10 @@
 <body>
 <div class="container">
 <ul class="nav nav-tabs nav-justified">
-  <li class="active"><a href="#">Access Points Stickers
-    </a><div id = "map-canvas">
+  <li><a href="/NetManagementProject/APStickers.jsp">Access Points Stickers
+    </a></li>
+    <li class="active"><a href="#">User Route</a><div id = "map-canvas">
     </div></li>
-    <li><a href="/NetManagementProject/GMapRoute.jsp">User Route</a></li>
     <li><a href="/NetManagementProject/LevelBatteryDiagram.jsp">Level/Battery Diagram</a></li>
     <li><a href="/NetManagementProject/Cells.jsp">User Connection Cells</a></li>
     </ul>
