@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 
 public class DataReader {
 
@@ -24,7 +25,7 @@ public class DataReader {
 	private static File gpsFile;
 
 	private static File wifiFile;
-
+	
 	public static File getBaseStationFile() {
 
 		return baseStationFile;

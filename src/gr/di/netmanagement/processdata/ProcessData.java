@@ -6,18 +6,33 @@ import gr.di.netmanagement.beans.Wifi;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 
 public class ProcessData {
 	
 	private HashMap<String, ArrayList<Object>> baseStationMap;
 	
+	private boolean baseStationReaded;
+	
 	private HashMap<String, ArrayList<Object>> batteryMap;
 
+	private boolean batteryReaded;
+	
 	private HashMap<String, ArrayList<Object>> gpsMap;
+	
+	private boolean gpsReaded;
 	
 	private HashMap<String, ArrayList<Object>> wifiMap;
 	
+	private boolean wifiReaded;
+	
 	private HashMap<String, Location> wifiLocations;
+	
+	private HashSet<String> usersSet;
+	
+	private boolean usersReaded;
+	
+	private DataReader dataReader;
 
 	public HashMap<String, ArrayList<Object>> getBaseStationMap() {
 		return baseStationMap;
@@ -61,24 +76,89 @@ public class ProcessData {
 		this.wifiLocations = wifiLocations;
 	}
 
+	public HashSet<String> getUsersSet() {
+		readUsers();
+		return usersSet;
+	}
+
+	public void setUsersSet(HashSet<String> usersSet) {
+		this.usersSet = usersSet;
+	}
+
 	private static final double PI = 3.14159265359f;
 
 	public ProcessData() {
-
-		DataReader dataReader = new DataReader();
-		try {
-			wifiMap = dataReader.readFile(FileType.WIFI);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		dataReader = new DataReader();
+		baseStationReaded = false;
+		batteryReaded = false;
+		gpsReaded= false;
+		wifiReaded = false;
+		usersReaded = false;
 		wifiLocations = new HashMap<String, Location>();
+		usersSet = new HashSet<String>();
+	}
+	
+	public void readBaseStations() {
+		if (!baseStationReaded) {
+			baseStationReaded = true;
+			try {
+				baseStationMap = dataReader.readFile(FileType.BASE_STATION);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}	
+	}
+	
+	public void readBatteries() {
+		if (!batteryReaded) {
+			batteryReaded = true;
+			try {
+				batteryMap = dataReader.readFile(FileType.BATTERY);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}	
+	}
+	
+	public void readGps() {
+		if (!gpsReaded) {
+			gpsReaded = true;
+			try {
+				gpsMap = dataReader.readFile(FileType.GPS);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}	
+	}
+	
+	public void readWifis() {
+		if (!wifiReaded) {
+			wifiReaded = true;
+			try {
+				wifiMap = dataReader.readFile(FileType.WIFI);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}	
+	}
+	
+	public void readUsers() {
+		if (!usersReaded) {
+			usersReaded = true;
+			readWifis();
+			readBaseStations();
+			//usersSet.addAll(wifiMap.keySet());
+			usersSet.addAll(baseStationMap.keySet());
+		}
+		
 	}
 
 	public void computeAccessPointsLocation() {
-
+		
+		readWifis();
 		for (String key : wifiMap.keySet()) {
-			Double totalweight = 0.0, latitudeSum = 0.0, longtitudeSum = 0.0, latitude, longtitude;
-			Double rssi;
+			double totalweight = 0.0, latitudeSum = 0.0, longtitudeSum = 0.0, latitude, longtitude;
+			double rssi;
 			double weight = 0;
 
 			ArrayList<Object> list = wifiMap.get(key);
