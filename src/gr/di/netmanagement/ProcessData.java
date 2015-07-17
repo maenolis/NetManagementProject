@@ -1,5 +1,8 @@
 package gr.di.netmanagement;
 
+import gr.di.netmanagement.beans.FileType;
+import gr.di.netmanagement.beans.Wifi;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 

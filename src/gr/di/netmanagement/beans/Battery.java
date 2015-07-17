@@ -1,4 +1,4 @@
-package gr.di.netmanagement;
+package gr.di.netmanagement.beans;
 
 import java.util.Date;
 

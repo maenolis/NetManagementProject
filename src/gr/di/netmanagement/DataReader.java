@@ -1,5 +1,11 @@
 package gr.di.netmanagement;
 
+import gr.di.netmanagement.beans.BaseStation;
+import gr.di.netmanagement.beans.Battery;
+import gr.di.netmanagement.beans.FileType;
+import gr.di.netmanagement.beans.Gps;
+import gr.di.netmanagement.beans.Wifi;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
