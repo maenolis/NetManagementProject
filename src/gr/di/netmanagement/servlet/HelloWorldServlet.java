@@ -1,7 +1,7 @@
 package gr.di.netmanagement.servlet;
 
-import gr.di.netmanagement.ProcessData;
 import gr.di.netmanagement.beans.Wifi;
+import gr.di.netmanagement.processdata.ProcessData;
 
 import java.io.IOException;
 import java.util.ArrayList;

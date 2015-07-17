@@ -1,4 +1,4 @@
-package gr.di.netmanagement;
+package gr.di.netmanagement.processdata;
 
 import gr.di.netmanagement.beans.FileType;
 import gr.di.netmanagement.beans.Location;

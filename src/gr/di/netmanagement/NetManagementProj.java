@@ -1,5 +1,7 @@
 package gr.di.netmanagement;
 
+import gr.di.netmanagement.processdata.ProcessData;
+
 public class NetManagementProj {
 
 	public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package gr.di.netmanagement;
+package gr.di.netmanagement.processdata;
 
 import gr.di.netmanagement.beans.BaseStation;
 import gr.di.netmanagement.beans.Battery;
