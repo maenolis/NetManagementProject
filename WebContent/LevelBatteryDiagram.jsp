@@ -4,11 +4,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css">
-  <script src="lib/jquery/jquery.min.js"></script>
-  <script src="lib/bootstrap/js/bootstrap.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="/NetManagementProject/lib/jquery/jquery.min.js"></script>
+  <script src="/NetManagementProject/lib/bootstrap/js/bootstrap.min.js"></script>
+  <script src = "https://maps.googleapis.com/maps/api/js?sensor=false"></script>
 <title>Level/Battery Diagram</title>
 </head>
 <body>
