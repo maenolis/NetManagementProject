@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 public class DataReader {
 
@@ -72,9 +73,9 @@ public class DataReader {
 		wifiFile = new File("data/wifi.csv");
 	}
 
-	public ArrayList<Object> readFile(FileType fileType) throws Exception {
+	public HashMap<String, ArrayList<Object>> readFile(FileType fileType) throws Exception {
 
-		ArrayList<Object> list = new ArrayList<Object>();
+		HashMap<String, ArrayList<Object>> map = new HashMap<String, ArrayList<Object>>();
 		FileReader fr = null;
 		BufferedReader br = null;
 		String line = null;
@@ -116,38 +117,67 @@ public class DataReader {
 					splittedLine = new String[10];
 					splittedLine = line.split("\\t");
 					date = sf.parse(splittedLine[9]);
-					list.add(new BaseStation(Integer.valueOf(splittedLine[0]),
+					BaseStation baseStation = new BaseStation(Integer.valueOf(splittedLine[0]),
 							splittedLine[1], splittedLine[2], splittedLine[3],
 							splittedLine[4], splittedLine[5], splittedLine[6],
-							splittedLine[7], splittedLine[8], date));
+							splittedLine[7], splittedLine[8], date);
+					if (!map.containsKey(splittedLine[1])) {
+						ArrayList<Object> list = new ArrayList<Object>();
+						list.add(baseStation);
+						map.put(splittedLine[1], list);
+					} else {
+						map.get(splittedLine[1]).add(baseStation);
+					}
+					
 					break;
 				case BATTERY:
 					splittedLine = new String[7];
 					splittedLine = line.split("\\t");
 					date = sf.parse(splittedLine[6]);
-					list.add(new Battery(Integer.valueOf(splittedLine[0]),
+					Battery battery = new Battery(Integer.valueOf(splittedLine[0]),
 							splittedLine[1], Integer.valueOf(splittedLine[2]),
 							Integer.valueOf(splittedLine[3]), Integer
 									.valueOf(splittedLine[4]), Integer
-									.valueOf(splittedLine[5]), date));
+									.valueOf(splittedLine[5]), date);
+					if (!map.containsKey(splittedLine[1])) {
+						ArrayList<Object> list = new ArrayList<Object>();
+						list.add(battery);
+						map.put(splittedLine[1], list);
+					} else {
+						map.get(splittedLine[1]).add(battery);
+					}
 					break;
 				case WIFI:
 					splittedLine = new String[9];
 					splittedLine = line.split("\\t");
 					date = sf.parse(splittedLine[8]);
-					list.add(new Wifi(Integer.valueOf(splittedLine[0]),
+					Wifi wifi = new Wifi(Integer.valueOf(splittedLine[0]),
 							splittedLine[1], splittedLine[2], splittedLine[3],
 							Integer.valueOf(splittedLine[4]), Integer
 									.valueOf(splittedLine[5]), splittedLine[6],
-							splittedLine[7], date));
+							splittedLine[7], date);
+					if (!map.containsKey(splittedLine[1])) {
+						ArrayList<Object> list = new ArrayList<Object>();
+						list.add(wifi);
+						map.put(splittedLine[3], list);
+					} else {
+						map.get(splittedLine[3]).add(wifi);
+					}
 					break;
 				case GPS:
 					splittedLine = new String[5];
 					splittedLine = line.split("\\t");
 					date = sf.parse(splittedLine[4]);
-					list.add(new Gps(Integer.valueOf(splittedLine[0]),
+					Gps gps = new Gps(Integer.valueOf(splittedLine[0]),
 							splittedLine[1], splittedLine[2], splittedLine[3],
-							date));
+							date);
+					if (!map.containsKey(splittedLine[1])) {
+						ArrayList<Object> list = new ArrayList<Object>();
+						list.add(gps);
+						map.put(splittedLine[3], list);
+					} else {
+						map.get(splittedLine[3]).add(gps);
+					}
 					break;
 				default:
 					throw new Exception("Wrong FileType given.");
@@ -168,6 +198,6 @@ public class DataReader {
 			}
 		}
 
-		return list;
+		return map;
 	}
 }

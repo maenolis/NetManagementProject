@@ -8,30 +8,46 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ProcessData {
+	
+	private HashMap<String, ArrayList<Object>> baseStationMap;
+	
+	private HashMap<String, ArrayList<Object>> batteryMap;
 
-	private ArrayList<Object> accessPointsList;
-
-	private HashMap<String, ArrayList<Wifi>> wifiMap;
-
+	private HashMap<String, ArrayList<Object>> gpsMap;
+	
+	private HashMap<String, ArrayList<Object>> wifiMap;
+	
 	private HashMap<String, Location> wifiLocations;
 
-	public ArrayList<Object> getAccessPointsList() {
-
-		return accessPointsList;
+	public HashMap<String, ArrayList<Object>> getBaseStationMap() {
+		return baseStationMap;
 	}
 
-	public void setAccessPointsList(ArrayList<Object> accessPointsList) {
-
-		this.accessPointsList = accessPointsList;
+	public void setBaseStationMap(HashMap<String, ArrayList<Object>> baseStationMap) {
+		this.baseStationMap = baseStationMap;
 	}
 
-	public HashMap<String, ArrayList<Wifi>> getWifiMap() {
+	public HashMap<String, ArrayList<Object>> getBatteryMap() {
+		return batteryMap;
+	}
 
+	public void setBatteryMap(HashMap<String, ArrayList<Object>> batteryMap) {
+		this.batteryMap = batteryMap;
+	}
+
+	public HashMap<String, ArrayList<Object>> getGpsMap() {
+		return gpsMap;
+	}
+
+	public void setGpsMap(HashMap<String, ArrayList<Object>> gpsMap) {
+		this.gpsMap = gpsMap;
+	}
+
+	public HashMap<String, ArrayList<Object>> getWifiMap() {
 		return wifiMap;
 	}
 
-	public void setWifiMap(HashMap<String, ArrayList<Wifi>> wifiMap) {
-
+	public void setWifiMap(HashMap<String, ArrayList<Object>> wifiMap) {
 		this.wifiMap = wifiMap;
 	}
 
@@ -47,11 +63,20 @@ public class ProcessData {
 
 	private static final double PI = 3.14159265359f;
 
-	ProcessData() {
+	public ProcessData() {
 
-		accessPointsList = new ArrayList<Object>();
-		wifiMap = new HashMap<String, ArrayList<Wifi>>();
+		DataReader dataReader = new DataReader();
+		try {
+			wifiMap = dataReader.readFile(FileType.WIFI);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		wifiLocations = new HashMap<String, Location>();
+		//mapWifis();
+	}
+	
+	/*public void mapWifis() {
+		//TODO
 		try {
 			DataReader dr = new DataReader();
 			accessPointsList = dr.readFile(FileType.WIFI);
@@ -70,8 +95,7 @@ public class ProcessData {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-	}
+	}*/
 
 	public void computeAccessPointsLocation() {
 
@@ -80,19 +104,19 @@ public class ProcessData {
 			Double rssi;
 			double weight = 0;
 
-			ArrayList<Wifi> list = wifiMap.get(key);
+			ArrayList<Object> list = wifiMap.get(key);
 			if (list.size() < 2) {
-				wifiLocations.put(key, list.get(0).getLocation());
+				wifiLocations.put(key, ((Wifi) list.get(0)).getLocation());
 				continue;
 			}
 
-			for (Wifi ap : list) {
-				latitude = ap.getLocation().getLatitude();
-				longtitude = ap.getLocation().getLongtitude();
+			for (Object ap : list) {
+				latitude = ((Wifi) ap).getLocation().getLatitude();
+				longtitude = ((Wifi) ap).getLocation().getLongtitude();
 				if (latitude == -1.0f && longtitude == -1.0f) {
 					System.out.println("No location for this ap.");
 				}
-				rssi = (double) ap.getLevel();
+				rssi = (double) ((Wifi) ap).getLevel();
 
 				// Convert latitude and longtitude from degrees to radians.
 				latitude = latitude * PI / 180;
