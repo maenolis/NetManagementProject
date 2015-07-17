@@ -1,7 +1,5 @@
 package gr.di.netmanagement.beans;
 
-import gr.di.netmanagement.Location;
-
 import java.util.Date;
 
 public class Gps {

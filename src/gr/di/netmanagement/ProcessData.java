@@ -1,6 +1,7 @@
 package gr.di.netmanagement;
 
 import gr.di.netmanagement.beans.FileType;
+import gr.di.netmanagement.beans.Location;
 import gr.di.netmanagement.beans.Wifi;
 
 import java.util.ArrayList;
