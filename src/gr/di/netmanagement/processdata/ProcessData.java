@@ -72,30 +72,7 @@ public class ProcessData {
 			e.printStackTrace();
 		}
 		wifiLocations = new HashMap<String, Location>();
-		//mapWifis();
 	}
-	
-	/*public void mapWifis() {
-		//TODO
-		try {
-			DataReader dr = new DataReader();
-			accessPointsList = dr.readFile(FileType.WIFI);
-			Wifi ap;
-			for (Object obj : accessPointsList) {
-				ap = (Wifi) obj;
-				if (!wifiMap.containsKey(ap.getBssid())) {
-					ArrayList<Wifi> list = new ArrayList<Wifi>();
-					list.add(ap);
-					wifiMap.put(ap.getBssid(), list);
-				} else {
-					wifiMap.get(ap.getBssid()).add(ap);
-				}
-
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}*/
 
 	public void computeAccessPointsLocation() {
 
