@@ -2,22 +2,33 @@ package gr.di.netmanagement.beans;
 
 import java.util.Date;
 
+/**
+ * The Class Wifi.
+ */
 public class Wifi {
 
+	/** The id. */
 	private int id;
 
+	/** The email. */
 	private String email;
 
+	/** The ssid. */
 	private String ssid;
 
+	/** The bssid. */
 	private String bssid;
 
+	/** The level. */
 	private int level;
 
+	/** The frequency. */
 	private int frequency;
 
+	/** The location. */
 	private Location location;
 
+	/** The timestamp. */
 	private Date timestamp;
 
 	public int getId() {
@@ -25,7 +36,7 @@ public class Wifi {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(final int id) {
 
 		this.id = id;
 	}
@@ -35,7 +46,7 @@ public class Wifi {
 		return email;
 	}
 
-	public void setEmail(String email) {
+	public void setEmail(final String email) {
 
 		this.email = email;
 	}
@@ -45,7 +56,7 @@ public class Wifi {
 		return ssid;
 	}
 
-	public void setSsid(String ssid) {
+	public void setSsid(final String ssid) {
 
 		this.ssid = ssid;
 	}
@@ -55,7 +66,7 @@ public class Wifi {
 		return bssid;
 	}
 
-	public void setBssid(String bssid) {
+	public void setBssid(final String bssid) {
 
 		this.bssid = bssid;
 	}
@@ -65,7 +76,7 @@ public class Wifi {
 		return level;
 	}
 
-	public void setLevel(int level) {
+	public void setLevel(final int level) {
 
 		this.level = level;
 	}
@@ -75,7 +86,7 @@ public class Wifi {
 		return frequency;
 	}
 
-	public void setFrequency(int frequency) {
+	public void setFrequency(final int frequency) {
 
 		this.frequency = frequency;
 	}
@@ -85,7 +96,7 @@ public class Wifi {
 		return location;
 	}
 
-	public void setLocation(Location location) {
+	public void setLocation(final Location location) {
 
 		this.location = location;
 	}
@@ -95,13 +106,36 @@ public class Wifi {
 		return timestamp;
 	}
 
-	public void setTimestamp(Date timestamp) {
+	public void setTimestamp(final Date timestamp) {
 
 		this.timestamp = timestamp;
 	}
 
-	public Wifi(int id, String email, String ssid, String bssid, int level,
-			int frequency, String latitude, String longtitude, Date timestamp) {
+	/**
+	 * Instantiates a new wifi.
+	 *
+	 * @param id
+	 *            the id
+	 * @param email
+	 *            the email
+	 * @param ssid
+	 *            the ssid
+	 * @param bssid
+	 *            the bssid
+	 * @param level
+	 *            the level
+	 * @param frequency
+	 *            the frequency
+	 * @param latitude
+	 *            the latitude
+	 * @param longtitude
+	 *            the longtitude
+	 * @param timestamp
+	 *            the timestamp
+	 */
+	public Wifi(final int id, final String email, final String ssid,
+			final String bssid, final int level, final int frequency,
+			final String latitude, final String longtitude, final Date timestamp) {
 
 		this.id = id;
 		this.email = email;
@@ -118,6 +152,11 @@ public class Wifi {
 		this.timestamp = timestamp;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
 

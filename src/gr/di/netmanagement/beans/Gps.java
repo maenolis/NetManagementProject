@@ -2,14 +2,21 @@ package gr.di.netmanagement.beans;
 
 import java.util.Date;
 
+/**
+ * The Class Gps.
+ */
 public class Gps {
 
+	/** The id. */
 	private int id;
 
+	/** The email. */
 	private String email;
 
+	/** The location. */
 	private Location location;
 
+	/** The timestamp. */
 	private Date timestamp;
 
 	public int getId() {
@@ -17,7 +24,7 @@ public class Gps {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(final int id) {
 
 		this.id = id;
 	}
@@ -27,7 +34,7 @@ public class Gps {
 		return email;
 	}
 
-	public void setEmail(String email) {
+	public void setEmail(final String email) {
 
 		this.email = email;
 	}
@@ -37,7 +44,7 @@ public class Gps {
 		return location;
 	}
 
-	public void setLocation(Location location) {
+	public void setLocation(final Location location) {
 
 		this.location = location;
 	}
@@ -47,13 +54,27 @@ public class Gps {
 		return timestamp;
 	}
 
-	public void setTimestamp(Date timestamp) {
+	public void setTimestamp(final Date timestamp) {
 
 		this.timestamp = timestamp;
 	}
 
-	public Gps(int id, String email, String latitude, String longtitude,
-			Date timestamp) {
+	/**
+	 * Instantiates a new gps.
+	 *
+	 * @param id
+	 *            the id
+	 * @param email
+	 *            the email
+	 * @param latitude
+	 *            the latitude
+	 * @param longtitude
+	 *            the longtitude
+	 * @param timestamp
+	 *            the timestamp
+	 */
+	public Gps(final int id, final String email, final String latitude,
+			final String longtitude, final Date timestamp) {
 
 		this.id = id;
 		this.email = email;
@@ -66,6 +87,11 @@ public class Gps {
 		this.timestamp = timestamp;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
 

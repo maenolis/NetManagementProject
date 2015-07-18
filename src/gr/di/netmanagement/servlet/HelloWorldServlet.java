@@ -1,11 +1,6 @@
 package gr.di.netmanagement.servlet;
 
-import gr.di.netmanagement.beans.Wifi;
-import gr.di.netmanagement.processdata.ProcessData;
-
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -20,37 +15,49 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet("/HelloWorldServlet")
 public class HelloWorldServlet extends HttpServlet {
+
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public HelloWorldServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public HelloWorldServlet() {
+
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	@Override
+	protected void doGet(final HttpServletRequest request,
+			final HttpServletResponse response) throws ServletException,
+			IOException {
+
 		// TODO Auto-generated method stub
 		performTask(request, response);
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	@Override
+	protected void doPost(final HttpServletRequest request,
+			final HttpServletResponse response) throws ServletException,
+			IOException {
+
 		// TODO Auto-generated method stub
 		if (request.getParameter("submit") != null)
 			performTask(request, response);
 	}
 
-	
-	private void performTask(HttpServletRequest request, HttpServletResponse response) throws ServletException,
-	IOException {
-		
+	private void performTask(final HttpServletRequest request,
+			final HttpServletResponse response) throws ServletException,
+			IOException {
+
 		String url = "/APStickers.jsp";
 		ServletContext context = getServletContext();
 		RequestDispatcher dispatcher = context.getRequestDispatcher(url);

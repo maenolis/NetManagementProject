@@ -1,5 +1,16 @@
 package gr.di.netmanagement.beans;
 
+/**
+ * The Enum FileType.
+ */
 public enum FileType {
-	BASE_STATION, BATTERY, WIFI, GPS
+
+	/** The base station. */
+	BASE_STATION,
+	/** The battery. */
+	BATTERY,
+	/** The wifi. */
+	WIFI,
+	/** The gps. */
+	GPS
 }
