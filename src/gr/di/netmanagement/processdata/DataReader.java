@@ -8,9 +8,11 @@ import gr.di.netmanagement.beans.Location;
 import gr.di.netmanagement.beans.Wifi;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -22,17 +24,13 @@ import java.util.HashSet;
  */
 public class DataReader {
 
-	/** The base station file. */
-	private static File baseStationFile;
+	private static InputStream baseStationStream;
 
-	/** The battery file. */
-	private static File batteryFile;
+	private static InputStream batteryStream;
 
-	/** The gps file. */
-	private static File gpsFile;
+	private static InputStream gpsStream;
 
-	/** The wifi file. */
-	private static File wifiFile;
+	private static InputStream wifiStream;
 
 	/** The base station map. */
 	private HashMap<String, ArrayList<Object>> baseStationMap;
@@ -69,46 +67,6 @@ public class DataReader {
 
 	/** The Constant PI. */
 	private static final double PI = 3.14159265359f;
-
-	public static File getBaseStationFile() {
-
-		return baseStationFile;
-	}
-
-	public static void setBaseStationFile(final File baseStationFile) {
-
-		DataReader.baseStationFile = baseStationFile;
-	}
-
-	public static File getBatteryFile() {
-
-		return batteryFile;
-	}
-
-	public static void setBatteryFile(final File batteryFile) {
-
-		DataReader.batteryFile = batteryFile;
-	}
-
-	public static File getGpsFile() {
-
-		return gpsFile;
-	}
-
-	public static void setGpsFile(final File gpsFile) {
-
-		DataReader.gpsFile = gpsFile;
-	}
-
-	public static File getWifiFile() {
-
-		return wifiFile;
-	}
-
-	public static void setWifiFile(final File wifiFile) {
-
-		DataReader.wifiFile = wifiFile;
-	}
 
 	public HashMap<String, ArrayList<Object>> getBaseStationMap() {
 
@@ -175,13 +133,22 @@ public class DataReader {
 
 	/**
 	 * Instantiates a new data reader.
+	 * 
+	 * @throws URISyntaxException
+	 * @throws IOException
 	 */
-	public DataReader() {
+	public DataReader() throws URISyntaxException, IOException {
 
-		baseStationFile = new File("data/base_station.csv");
-		batteryFile = new File("data/battery.csv");
-		gpsFile = new File("data/gps.csv");
-		wifiFile = new File("data/wifi.csv");
+		baseStationStream = (new URL(
+				"http://localhost:8080/data/base_station.csv"))
+				.openConnection().getInputStream();
+
+		batteryStream = (new URL("http://localhost:8080/data/battery.csv"))
+				.openConnection().getInputStream();
+		gpsStream = (new URL("http://localhost:8080/data/gps.csv"))
+				.openConnection().getInputStream();
+		wifiStream = (new URL("http://localhost:8080/data/wifi.csv"))
+				.openConnection().getInputStream();
 		baseStationReaded = false;
 		batteryReaded = false;
 		gpsReaded = false;
@@ -204,34 +171,32 @@ public class DataReader {
 			throws Exception {
 
 		HashMap<String, ArrayList<Object>> map = new HashMap<String, ArrayList<Object>>();
-		FileReader fr = null;
 		BufferedReader br = null;
 		String line = null;
 		String[] splittedLine = null;
 		SimpleDateFormat sf = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
 		Date date = null;
-		File file = null;
+		InputStream stream = null;
 		boolean firstLine = true;
 		try {
 			switch (fileType) {
 			case BASE_STATION:
-				file = getBaseStationFile();
+				stream = baseStationStream;
 				break;
 			case BATTERY:
-				file = getBatteryFile();
+				stream = batteryStream;
 				break;
 			case GPS:
-				file = getGpsFile();
+				stream = gpsStream;
 				break;
 			case WIFI:
-				file = getWifiFile();
+				stream = wifiStream;
 				break;
 			default:
 				throw new Exception("Wrong FileType given.");
 			}
 
-			fr = new FileReader(file);
-			br = new BufferedReader(fr, 1024);
+			br = new BufferedReader(new InputStreamReader(stream), 1024);
 			while ((line = br.readLine()) != null) {
 				if (line.isEmpty()) {
 					break;
@@ -323,7 +288,7 @@ public class DataReader {
 			if (br != null) {
 				try {
 					br.close();
-					fr.close();
+					// fr.close();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
