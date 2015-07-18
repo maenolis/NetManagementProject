@@ -19,17 +19,22 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class DataReader.
  */
 public class DataReader {
 
+	/** The base station stream. */
 	private static InputStream baseStationStream;
 
+	/** The battery stream. */
 	private static InputStream batteryStream;
 
+	/** The gps stream. */
 	private static InputStream gpsStream;
 
+	/** The wifi stream. */
 	private static InputStream wifiStream;
 
 	/** The base station map. */
@@ -133,9 +138,11 @@ public class DataReader {
 
 	/**
 	 * Instantiates a new data reader.
-	 * 
+	 *
 	 * @throws URISyntaxException
+	 *             the URI syntax exception
 	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
 	public DataReader() throws URISyntaxException, IOException {
 
