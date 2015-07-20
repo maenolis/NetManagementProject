@@ -1,3 +1,4 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -8,10 +9,11 @@
   <script src="/NetManagementProject/lib/jquery/jquery.min.js"></script>
   <script src="/NetManagementProject/lib/bootstrap/js/bootstrap.min.js"></script>
   <script src = "https://maps.googleapis.com/maps/api/js?sensor=false"></script>
-
 <title>Date Selection</title>
 </head>
 <body>
+
+<form action="${pageContext.request.contextPath}/HelloWorldServlet" method="post">
 	<h4>Select a day:</h4>
 	<select name="day" id="day" onchange="" size="1">
     	<option value="01">01</option>
@@ -66,11 +68,14 @@
 		<option value="2015">2015</option>
 	</select>
 	<h4>Select a user:</h4>
-	<select name="user" id="user" onchange="" size="1">
+	
+	<select name="users" id="users" onchange="" size="1">
+		<c:forEach items="${users}" var="users"> <option>${users}</option> </c:forEach>
 	</select>
 	<p>
-	<form action="${pageContext.request.contextPath}/HelloWorldServlet" method="post">
+	<p>
 		<input type="submit" name="submit" value="Submit" />
+		
 	</form>
 	
 

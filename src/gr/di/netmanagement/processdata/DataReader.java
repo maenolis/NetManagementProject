@@ -424,6 +424,6 @@ public class DataReader {
 			// System.out.println(latitude / (PI / 180) + " kai " + longtitude
 			// / (PI / 180));
 		}
-		System.out.println(wifiLocations.get("18:17:25:21:93:02"));
+		//System.out.println(wifiLocations.get("18:17:25:21:93:02"));
 	}
 }

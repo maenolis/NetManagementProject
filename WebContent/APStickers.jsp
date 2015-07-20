@@ -18,6 +18,7 @@
     <script>
         function initialize(){
         	var myLatlng = new google.maps.LatLng(38.00450334902246,23.678711790165565);
+        	var lat = <%= request.getAttribute("lat") %>, lng = <%= request.getAttribute("lng") %>;
             var mapOptions = {
                 center: new google.maps.LatLng(38, 23),
                 zoom: 8,

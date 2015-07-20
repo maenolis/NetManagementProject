@@ -1,6 +1,16 @@
 package gr.di.netmanagement.servlet;
 
+import gr.di.netmanagement.beans.Location;
+import gr.di.netmanagement.processdata.DataReader;
+
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -35,9 +45,18 @@ public class HelloWorldServlet extends HttpServlet {
 	protected void doGet(final HttpServletRequest request,
 			final HttpServletResponse response) throws ServletException,
 			IOException {
-
-		// TODO Auto-generated method stub
-		performTask(request, response);
+		try {
+			DataReader dr = new DataReader();
+			HashSet<String> users = dr.getUsersSet();
+			List<String> list = new ArrayList<String>(users);
+			//System.out.println(list);
+			request.setAttribute("users",list);
+			RequestDispatcher rd = getServletContext().getRequestDispatcher("/Selection.jsp");  
+			rd.forward(request, response);
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	/**
@@ -48,17 +67,18 @@ public class HelloWorldServlet extends HttpServlet {
 	protected void doPost(final HttpServletRequest request,
 			final HttpServletResponse response) throws ServletException,
 			IOException {
-
+		String user = request.getParameter("users");
+		//System.out.println(user);
 		// TODO Auto-generated method stub
 		if (request.getParameter("submit") != null)
-			performTask(request, response);
+			performTask(request, response, user);
 	}
 
 	private void performTask(final HttpServletRequest request,
-			final HttpServletResponse response) throws ServletException,
+			final HttpServletResponse response, String user) throws ServletException,
 			IOException {
-
 		String url = "/APStickers.jsp";
+	
 		ServletContext context = getServletContext();
 		RequestDispatcher dispatcher = context.getRequestDispatcher(url);
 		dispatcher.forward(request, response);
