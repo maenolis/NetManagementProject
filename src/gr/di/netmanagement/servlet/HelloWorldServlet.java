@@ -1,7 +1,7 @@
 package gr.di.netmanagement.servlet;
 
 import gr.di.netmanagement.beans.Location;
-import gr.di.netmanagement.processdata.DataReader;
+import gr.di.netmanagement.processdata.DataProcessor;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -45,17 +45,13 @@ public class HelloWorldServlet extends HttpServlet {
 	protected void doGet(final HttpServletRequest request,
 			final HttpServletResponse response) throws ServletException,
 			IOException {
-		try {
-			DataReader dr = new DataReader();
-			HashSet<String> users = dr.getUsersSet();
-			List<String> list = new ArrayList<String>(users);
-			//System.out.println(list);
-			request.setAttribute("users",list);
-			RequestDispatcher rd = getServletContext().getRequestDispatcher("/Selection.jsp");  
-			rd.forward(request, response);
-		} catch (URISyntaxException e) {
-			e.printStackTrace();
-		}
+		DataProcessor  dataProcessor = new DataProcessor();
+		HashSet<String> users = dataProcessor.getUsersSet();
+		List<String> list = new ArrayList<String>(users);
+		//System.out.println(list);
+		request.setAttribute("users",list);
+		RequestDispatcher rd = getServletContext().getRequestDispatcher("/Selection.jsp");  
+		rd.forward(request, response);
 		
 	}
 

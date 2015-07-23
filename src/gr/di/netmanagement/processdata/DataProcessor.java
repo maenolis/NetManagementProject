@@ -23,7 +23,7 @@ import java.util.HashSet;
 /**
  * The Class DataReader.
  */
-public class DataReader {
+public class DataProcessor {
 
 	/** The base station stream. */
 	private static InputStream baseStationStream;
@@ -85,7 +85,7 @@ public class DataReader {
 	}
 
 	public HashMap<String, ArrayList<Object>> getBatteryMap() {
-
+		readBatteries();
 		return batteryMap;
 	}
 
@@ -96,7 +96,7 @@ public class DataReader {
 	}
 
 	public HashMap<String, ArrayList<Object>> getGpsMap() {
-
+		readGps();
 		return gpsMap;
 	}
 
@@ -106,7 +106,7 @@ public class DataReader {
 	}
 
 	public HashMap<String, ArrayList<Object>> getWifiMap() {
-
+		readWifis();
 		return wifiMap;
 	}
 
@@ -116,7 +116,7 @@ public class DataReader {
 	}
 
 	public HashMap<String, Location> getWifiLocations() {
-
+		readWifis();
 		return wifiLocations;
 	}
 
@@ -144,18 +144,33 @@ public class DataReader {
 	 * @throws IOException
 	 *             Signals that an I/O exception has occurred.
 	 */
-	public DataReader() throws URISyntaxException, IOException {
+	public DataProcessor() {
 
-		baseStationStream = (new URL(
-				"http://localhost:8080/data/base_station.csv"))
-				.openConnection().getInputStream();
-
-		batteryStream = (new URL("http://localhost:8080/data/battery.csv"))
-				.openConnection().getInputStream();
-		gpsStream = (new URL("http://localhost:8080/data/gps.csv"))
-				.openConnection().getInputStream();
-		wifiStream = (new URL("http://localhost:8080/data/wifi.csv"))
-				.openConnection().getInputStream();
+		
+		try {
+			baseStationStream = (new URL(
+					"http://localhost:8080/data/base_station.csv"))
+					.openConnection().getInputStream();
+			batteryStream = (new URL("http://localhost:8080/data/battery.csv"))
+					.openConnection().getInputStream();
+			gpsStream = (new URL("http://localhost:8080/data/gps.csv"))
+					.openConnection().getInputStream();
+			wifiStream = (new URL("http://localhost:8080/data/wifi.csv"))
+					.openConnection().getInputStream();
+		} catch (IOException e) {
+			try {
+				baseStationStream.close();
+				batteryStream.close();
+				gpsStream.close();
+				wifiStream.close();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		} finally {
+		}
+	
+		
 		baseStationReaded = false;
 		batteryReaded = false;
 		gpsReaded = false;
@@ -301,7 +316,7 @@ public class DataReader {
 				}
 			}
 		}
-
+		stream.close();
 		return map;
 	}
 

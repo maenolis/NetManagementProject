@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Bar Diagram Levels</title>
+<title>Low Battery Levels</title>
 <script language="javascript" type="text/javascript" src="/NetManagementProject/lib/js/canvas.js"></script>
 <script>
 		//Create instance of class and pass the arrays

@@ -10,7 +10,14 @@
 <script src="/NetManagementProject/lib/jquery/jquery.min.js"></script>
 <script src="/NetManagementProject/lib/bootstrap/js/bootstrap.min.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
-<title>Level/Battery Diagram</title>
+<title>Low Battery Levels</title>
+<script language="javascript" type="text/javascript" src="/NetManagementProject/lib/js/canvas.js"></script>
+<script>
+		//Create instance of class and pass the arrays
+		//var canvasCreator = new painter("${sessionScope.lowLevels}", "${sessionScope.percentages}");
+		//Change onload function to get the job done
+		//window.onload = canvasCreator.paintCanvas;
+	</script>
 </head>
 <body>
 	<div class="container">
@@ -24,8 +31,9 @@
 					Connection Cells</a></li>
 		</ul>
 	</div>
-	<br />
-	<br />
-	<IMG SRC="pic.png" WIDTH="600" HEIGHT="400" BORDER="0" USEMAP="#chart">
+	<h3 align="center">Bar Diagram Levels</h3>
+	<canvas id="myCanvas" width="1200" height="600" align="center" style="border: 1px solid #000000;" >
+	
+	</canvas>
 </body>
 </html>
