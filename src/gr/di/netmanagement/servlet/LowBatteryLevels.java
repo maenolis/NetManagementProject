@@ -5,13 +5,14 @@ import gr.di.netmanagement.processdata.DataProcessor;
 
 import java.io.IOException;
 import java.util.HashMap;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-// TODO: Auto-generated Javadoc
 /**
  * Servlet implementation class BarDiagram.
  */
@@ -46,8 +47,18 @@ public class LowBatteryLevels extends HttpServlet {
 	protected void doGet(final HttpServletRequest request,
 			final HttpServletResponse response) throws ServletException,
 			IOException {
-		/*DataProcessor instance for data manipulation*/
-		DataProcessor dataProcessor = new DataProcessor();
+		HttpSession session = request.getSession();
+		
+		/*if dataProcessor is set in session skip dataProcessor creation,
+		 * data reading, streams etc*/
+		if (session.getAttribute("dataProcessor") == null) {
+			/*DataProcessor instance for data manipulation*/
+			DataProcessor dataProcessor = new DataProcessor();
+			session.setAttribute("dataProcessor", dataProcessor);
+		}
+		
+		DataProcessor dataProcessor = (DataProcessor) session.getAttribute("dataProcessor");
+		
 		/*map with dates as keys and lowlevels as value*/
 		HashMap<String, Float> lowLevels = BatteryDataProcessor.getLowLevels(dataProcessor.getBatteryMap());
 		/*String[] dates as string(js argument)*/
