@@ -41,7 +41,7 @@
     	</c:forEach>
     	<script>
 	    	//Create instance of class and pass the arrays
-			var canvasCreator = new painter(<%out.print(session.getAttribute("lowLevels"));%>, array);
+			var canvasCreator = new painter(<%out.print(session.getAttribute("dates"));%>, array);
 			//Change onload function to get the job done
 			window.onload = canvasCreator.paintCanvas;
     	</script>

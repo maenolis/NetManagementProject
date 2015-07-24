@@ -1,14 +1,10 @@
 package gr.di.netmanagement.servlet;
 
-import gr.di.netmanagement.beans.Battery;
+import gr.di.netmanagement.processdata.BatteryDataProcessor;
 import gr.di.netmanagement.processdata.DataProcessor;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -50,85 +46,19 @@ public class LowBatteryLevels extends HttpServlet {
 	protected void doGet(final HttpServletRequest request,
 			final HttpServletResponse response) throws ServletException,
 			IOException {
+		/*DataProcessor instance for data manipulation*/
 		DataProcessor dataProcessor = new DataProcessor();
-		HashMap<String, Float> lowLevels = getLowLevels(dataProcessor.getBatteryMap());
-		String str = getStringArrayString(lowLevels.keySet().toArray());
-		System.out.println("values " + lowLevels.values());
-		System.out.println("keys " + lowLevels.keySet());
-		System.out.println(lowLevels);
-		System.out.println(convertToPercentages(lowLevels, dataProcessor.getUsersSet().size()));
-		//response.getWriter().println(lowLevels.keySet());
-		//response.getWriter().println("<br />");
-		//response.getWriter().println("<br />");
-		//response.getWriter().println(lowLevels);
-		request.getSession().setAttribute("lowLevels", str);
-		request.getSession().setAttribute("percentages", convertToPercentages(lowLevels, dataProcessor.getUsersSet().size()));
-		request.getSession().setAttribute("size", convertToPercentages(lowLevels, dataProcessor.getUsersSet().size()).length);
+		/*map with dates as keys and lowlevels as value*/
+		HashMap<String, Float> lowLevels = BatteryDataProcessor.getLowLevels(dataProcessor.getBatteryMap());
+		/*String[] dates as string(js argument)*/
+		String dates = BatteryDataProcessor.getStringArrayString(lowLevels.keySet().toArray());
+		request.getSession().setAttribute("dates", dates);
+		/*Float[] user percentages found under 15%*/
+		Float[] percentages = BatteryDataProcessor.convertToPercentages(lowLevels, dataProcessor.getUsersSet().size());
+		request.getSession().setAttribute("percentages", percentages);
+		/*redirect to jsp with canvas presentation*/
 		response.sendRedirect("LevelBatteryDiagram.jsp");
 	}
-	
-	/**
-	 * Gets the low levels.
-	 *
-	 * @param batteryMap the battery map
-	 * @return the low levels
-	 */
-	private HashMap<String, Float> getLowLevels(HashMap<String, ArrayList<Object>> batteryMap) {
-		HashMap<String, Float> dateMap = new HashMap<String, Float>();
-		HashMap<String, HashSet<String>> dateUserMap = new HashMap<String, HashSet<String>>();
-		
-		for (ArrayList<Object> batteries : batteryMap.values()) {
-			for (Object battery : batteries) {
-				if (!dateMap.containsKey((((Battery)battery).toShortString()))) {
-					dateMap.put((((Battery)battery).toShortString()), 0.0f);
-					dateUserMap.put((((Battery)battery).toShortString()), new HashSet<String>());
-				}
-				if (((Battery)battery).getLevel() <= 15) {
-					if (!dateUserMap.get((((Battery)battery).toShortString())).contains(((Battery)battery).getUser())) {
-						dateUserMap.get((((Battery)battery).toShortString())).add(((Battery)battery).getUser());
-						dateMap.put((((Battery)battery).toShortString()), dateMap.get((((Battery)battery).toShortString())) + 1.0f);
-					}
-				}
-			}
-			
-		}
-		System.out.println("dateMap before " + dateMap);
-		return dateMap;
-	}
-	
-	private Float[] convertToPercentages(HashMap<String, Float> dateMap, int size) {
-		Set<String> set = dateMap.keySet();
-		for (String key : set) {
-			dateMap.put(key, dateMap.get(key) / size * 100.0f);
-		}
-		System.out.println("dateMap after " + dateMap);
-		Float[] newArray = new Float[dateMap.values().size()];
-		int i = 0;
-		for (Object obj :dateMap.values()) {
-			newArray[i++] = (Float) obj;
-		}
-		System.out.println("newArray = " + newArray);
-		for (Float f : newArray) {
-			System.out.println(f);
-		}
-		return newArray;
-	}
-	
-	
-	public String getStringArrayString(Object[] items){
-	    String result = "[";
-	    for(int i = 0; i < items.length; i++) {
-	    	String itemI = (String) items[i];
-	        result += "\"" + itemI + "\"";
-	        if(i < items.length - 1) {
-	            result += ", ";
-	        }
-	    }
-	    result += "]";
-
-	    return result;
-	}
-	
 
 	/**
 	 * Do post.
@@ -144,8 +74,6 @@ public class LowBatteryLevels extends HttpServlet {
 	protected void doPost(final HttpServletRequest request,
 			final HttpServletResponse response) throws ServletException,
 			IOException {
-
 		
 	}
-
 }

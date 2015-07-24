@@ -78,6 +78,7 @@ public class Gps {
 
 		this.id = id;
 		this.email = email;
+		/*If "No latitude || No longtitude"*/
 		if (!(latitude.charAt(0) == 'N') && !(longtitude.charAt(0) == 'N')) {
 			this.location = new Location(Double.valueOf(latitude),
 					Double.valueOf(longtitude));

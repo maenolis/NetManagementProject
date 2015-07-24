@@ -143,6 +143,7 @@ public class Wifi {
 		this.bssid = bssid;
 		this.level = level;
 		this.frequency = frequency;
+		/*If "No latitude || No longtitude"*/
 		if (!(latitude.charAt(0) == 'N') && !(longtitude.charAt(0) == 'N')) {
 			this.location = new Location(Double.valueOf(latitude),
 					Double.valueOf(longtitude));
