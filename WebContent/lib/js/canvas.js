@@ -16,7 +16,7 @@ var painter = function (xAxis, percentages) {
 		//For each bar
 		for (var i = 0; i < xAxisLabelArr.length; i += 1) {
 			ctx.fillStyle='#0000ff';
-			ctx.fillRect(10 + i * width / xAxisLabelArr.length, 30 + (height - yAxisSize[i] * height / 100), width / xAxisLabelArr.length - 20, yAxisSize[i] * height / 100);
+			ctx.fillRect(5 + i * width / xAxisLabelArr.length, 30 + (height - yAxisSize[i] * height / 100), width / xAxisLabelArr.length - 20, yAxisSize[i] * height / 100);
 			ctx.fillStyle='#000000';
 			ctx.font = "10px Arial";
 			ctx.fillText(xAxisLabelArr[i], 10 + i * width / xAxisLabelArr.length, height + 45);

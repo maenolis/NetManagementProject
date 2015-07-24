@@ -52,7 +52,7 @@ public class LowBatteryLevels extends HttpServlet {
 			IOException {
 		DataProcessor dataProcessor = new DataProcessor();
 		HashMap<String, Float> lowLevels = getLowLevels(dataProcessor.getBatteryMap());
-		String str = getArrayString(lowLevels.keySet().toArray());
+		String str = getStringArrayString(lowLevels.keySet().toArray());
 		System.out.println("values " + lowLevels.values());
 		System.out.println("keys " + lowLevels.keySet());
 		System.out.println(lowLevels);
@@ -63,6 +63,7 @@ public class LowBatteryLevels extends HttpServlet {
 		//response.getWriter().println(lowLevels);
 		request.getSession().setAttribute("lowLevels", str);
 		request.getSession().setAttribute("percentages", convertToPercentages(lowLevels, dataProcessor.getUsersSet().size()));
+		request.getSession().setAttribute("size", convertToPercentages(lowLevels, dataProcessor.getUsersSet().size()).length);
 		response.sendRedirect("LevelBatteryDiagram.jsp");
 	}
 	
@@ -101,11 +102,20 @@ public class LowBatteryLevels extends HttpServlet {
 			dateMap.put(key, dateMap.get(key) / size * 100.0f);
 		}
 		System.out.println("dateMap after " + dateMap);
-		return (Float[]) dateMap.values().toArray();
+		Float[] newArray = new Float[dateMap.values().size()];
+		int i = 0;
+		for (Object obj :dateMap.values()) {
+			newArray[i++] = (Float) obj;
+		}
+		System.out.println("newArray = " + newArray);
+		for (Float f : newArray) {
+			System.out.println(f);
+		}
+		return newArray;
 	}
 	
 	
-	public String getArrayString(Object[] items){
+	public String getStringArrayString(Object[] items){
 	    String result = "[";
 	    for(int i = 0; i < items.length; i++) {
 	    	String itemI = (String) items[i];
@@ -118,6 +128,7 @@ public class LowBatteryLevels extends HttpServlet {
 
 	    return result;
 	}
+	
 
 	/**
 	 * Do post.
