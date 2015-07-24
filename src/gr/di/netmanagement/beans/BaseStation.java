@@ -70,15 +70,7 @@ public class BaseStation {
 		this.mnc = mnc;
 		this.cid = cid;
 		this.lac = lac;
-		
-		/*If "No latitude || No longtitude"*/
-		if (!(latitude.charAt(0) == 'N') && !(longtitude.charAt(0) == 'N')) {
-			this.location = new Location(Double.valueOf(latitude),
-					Double.valueOf(longtitude));
-		} else {
-			this.location = new Location(-1.0f, -1.0f);
-		}
-
+		this.location = new Location(latitude, longtitude);
 		this.timestamp = timestamp;
 	}
 

@@ -40,10 +40,16 @@ public class Location {
 	 * @param longtitude
 	 *            the longtitude
 	 */
-	public Location(final double latitude, final double longtitude) {
+	public Location(final String latitude, final String longtitude) {
 
-		this.latitude = latitude;
-		this.longtitude = longtitude;
+		/* If "No latitude && No longtitude" */
+		if (!(latitude.charAt(0) == 'N') && !(longtitude.charAt(0) == 'N')) {
+			this.latitude = Double.valueOf(latitude);
+			this.longtitude = Double.valueOf(longtitude);
+		} else {
+			this.latitude = -1.0f;
+			this.longtitude = -1.0f;
+		}
 	}
 
 	/*
