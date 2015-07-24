@@ -19,8 +19,8 @@ var painter = function (xAxis, percentages) {
 			ctx.fillRect(5 + i * width / xAxisLabelArr.length, 30 + (height - yAxisSize[i] * height / 100), width / xAxisLabelArr.length - 20, yAxisSize[i] * height / 100);
 			ctx.fillStyle='#000000';
 			ctx.font = "10px Arial";
-			ctx.fillText(xAxisLabelArr[i], 10 + i * width / xAxisLabelArr.length, height + 45);
-			ctx.fillText(yAxisSize[i], 10 + i * width / xAxisLabelArr.length, 25 + (height - yAxisSize[i] * height / 100));
+			ctx.fillText(xAxisLabelArr[i], 5 + i * width / xAxisLabelArr.length, height + 45);
+			ctx.fillText(yAxisSize[i], 5 + i * width / xAxisLabelArr.length, 25 + (height - yAxisSize[i] * height / 100));
 			ctx.fillStyle='#ff00ff';
 		}
 		

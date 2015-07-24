@@ -141,8 +141,9 @@ public class Battery {
 				+ ", plugged=" + plugged + ", temperature=" + temperature
 				+ ", voltage=" + voltage + ", timestamp=" + timestamp + "]";
 	}
-	
+
 	public String toShortString() {
-		return timestamp.toString().substring(0, 10);
+
+		return timestamp.toString().substring(8, 10) + "/1";
 	}
 }
