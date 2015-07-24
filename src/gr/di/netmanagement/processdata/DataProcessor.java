@@ -80,56 +80,67 @@ public class DataProcessor {
 
 	public void setBaseStationMap(
 			final HashMap<String, ArrayList<Object>> baseStationMap) {
+
 		this.baseStationMap = baseStationMap;
 	}
 
 	public HashMap<String, ArrayList<Object>> getBatteryMap() {
-		/*Null pointer prevention.*/
+
+		/* Null pointer prevention. */
 		readBatteries();
 		return batteryMap;
 	}
 
 	public void setBatteryMap(
 			final HashMap<String, ArrayList<Object>> batteryMap) {
+
 		this.batteryMap = batteryMap;
 	}
 
 	public HashMap<String, ArrayList<Object>> getGpsMap() {
-		/*Null pointer prevention.*/
+
+		/* Null pointer prevention. */
 		readGps();
 		return gpsMap;
 	}
 
 	public void setGpsMap(final HashMap<String, ArrayList<Object>> gpsMap) {
+
 		this.gpsMap = gpsMap;
 	}
 
 	public HashMap<String, ArrayList<Object>> getWifiMap() {
-		/*Null pointer prevention.*/
+
+		/* Null pointer prevention. */
 		readWifis();
 		return wifiMap;
 	}
 
 	public void setWifiMap(final HashMap<String, ArrayList<Object>> wifiMap) {
+
 		this.wifiMap = wifiMap;
 	}
 
 	public HashMap<String, Location> getWifiLocations() {
-		/*Null pointer prevention.*/
+
+		/* Null pointer prevention. */
 		readWifis();
 		return wifiLocations;
 	}
 
 	public void setWifiLocations(final HashMap<String, Location> wifiLocations) {
+
 		this.wifiLocations = wifiLocations;
 	}
 
 	public HashSet<String> getUsersSet() {
+
 		readUsers();
 		return usersSet;
 	}
 
 	public void setUsersSet(final HashSet<String> usersSet) {
+
 		this.usersSet = usersSet;
 	}
 
@@ -143,7 +154,7 @@ public class DataProcessor {
 	 */
 	public DataProcessor() {
 
-		/*Open streams for file reading from file server(tomcat).*/
+		/* Open streams for file reading from file server(tomcat). */
 		try {
 			baseStationStream = (new URL(
 					"http://localhost:8080/data/base_station.csv"))
@@ -165,8 +176,8 @@ public class DataProcessor {
 			}
 			e.printStackTrace();
 		}
-	
-		/*Initialize variables*/
+
+		/* Initialize variables */
 		baseStationReaded = false;
 		batteryReaded = false;
 		gpsReaded = false;
@@ -188,19 +199,19 @@ public class DataProcessor {
 	public HashMap<String, ArrayList<Object>> readFile(final FileType fileType)
 			throws Exception {
 
-		/*return object*/
+		/* return object */
 		HashMap<String, ArrayList<Object>> map = new HashMap<String, ArrayList<Object>>();
 		BufferedReader br = null;
 		String line = null;
-		
-		/*date formatting object*/
+
+		/* date formatting object */
 		String[] splittedLine = null;
 		SimpleDateFormat sf = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
 		Date date = null;
 		InputStream stream = null;
 		boolean firstLine = true;
 		try {
-			/*choose stream*/
+			/* choose stream */
 			switch (fileType) {
 			case BASE_STATION:
 				stream = baseStationStream;
@@ -218,115 +229,115 @@ public class DataProcessor {
 				throw new Exception("Wrong FileType given.");
 			}
 
-			/*read the entire stream*/
+			/* read the entire stream */
 			br = new BufferedReader(new InputStreamReader(stream), 1024);
 			while ((line = br.readLine()) != null) {
-				
+
 				if (line.isEmpty()) {
 					break;
 				}
-				
-				/*avoid first line*/
+
+				/* avoid first line */
 				if (firstLine) {
 					firstLine = false;
 					continue;
 				}
-				
-				/*choose file type*/
+
+				/* choose file type */
 				switch (fileType) {
 				case BASE_STATION:
-					/*split line*/
+					/* split line */
 					splittedLine = new String[10];
 					splittedLine = line.split("\\t");
-					/*parse date*/
+					/* parse date */
 					date = sf.parse(splittedLine[9]);
-					/*add user to users set*/
+					/* add user to users set */
 					usersSet.add(splittedLine[1]);
-					/*create bean*/
+					/* create bean */
 					BaseStation baseStation = new BaseStation(
 							Integer.valueOf(splittedLine[0]), splittedLine[1],
 							splittedLine[2], splittedLine[3], splittedLine[4],
 							splittedLine[5], splittedLine[6], splittedLine[7],
 							splittedLine[8], date);
-					/*check if key exists*/
+					/* check if key exists */
 					if (!map.containsKey(splittedLine[1])) {
-						/*add empty list with first element*/
+						/* add empty list with first element */
 						ArrayList<Object> list = new ArrayList<Object>();
 						list.add(baseStation);
 						map.put(splittedLine[1], list);
 					} else {
-						/*add element to existing list*/
+						/* add element to existing list */
 						map.get(splittedLine[1]).add(baseStation);
 					}
 
 					break;
 				case BATTERY:
-					/*split line*/
+					/* split line */
 					splittedLine = new String[7];
 					splittedLine = line.split("\\t");
-					/*parse date*/
+					/* parse date */
 					date = sf.parse(splittedLine[6]);
-					/*create bean*/
+					/* create bean */
 					Battery battery = new Battery(
 							Integer.valueOf(splittedLine[0]), splittedLine[1],
 							Integer.valueOf(splittedLine[2]),
 							Integer.valueOf(splittedLine[3]),
 							Integer.valueOf(splittedLine[4]),
 							Integer.valueOf(splittedLine[5]), date);
-					/*check if key exists*/
+					/* check if key exists */
 					if (!map.containsKey(splittedLine[1])) {
-						/*add empty list with first element*/
+						/* add empty list with first element */
 						ArrayList<Object> list = new ArrayList<Object>();
 						list.add(battery);
 						map.put(splittedLine[1], list);
 					} else {
-						/*add element to existing list*/
+						/* add element to existing list */
 						map.get(splittedLine[1]).add(battery);
 					}
 					break;
 				case WIFI:
-					/*split line*/
+					/* split line */
 					splittedLine = new String[9];
 					splittedLine = line.split("\\t");
-					/*parse date*/
+					/* parse date */
 					date = sf.parse(splittedLine[8]);
-					/*add user to users set*/
+					/* add user to users set */
 					usersSet.add(splittedLine[1]);
-					/*create bean*/
+					/* create bean */
 					Wifi wifi = new Wifi(Integer.valueOf(splittedLine[0]),
 							splittedLine[1], splittedLine[2], splittedLine[3],
 							Integer.valueOf(splittedLine[4]),
 							Integer.valueOf(splittedLine[5]), splittedLine[6],
 							splittedLine[7], date);
-					/*check if key exists*/
+					/* check if key exists */
 					if (!map.containsKey(splittedLine[1])) {
-						/*add empty list with first element*/
+						/* add empty list with first element */
 						ArrayList<Object> list = new ArrayList<Object>();
 						list.add(wifi);
 						map.put(splittedLine[3], list);
 					} else {
-						/*add element to existing list*/
+						/* add element to existing list */
 						map.get(splittedLine[3]).add(wifi);
 					}
 					break;
 				case GPS:
-					/*split line*/
+					/* split line */
 					splittedLine = new String[5];
 					splittedLine = line.split("\\t");
-					/*parse date*/
+					/* parse date */
 					date = sf.parse(splittedLine[4]);
-					/*create bean*/
+					/* create bean */
 					Gps gps = new Gps(Integer.valueOf(splittedLine[0]),
 							splittedLine[1], splittedLine[2], splittedLine[3],
 							date);
-					/*check if key exists*/
+					/* check if key exists */
 					if (!map.containsKey(splittedLine[1])) {
-						/*add empty list with first element*/
+						/* add empty list with first element */
 						ArrayList<Object> list = new ArrayList<Object>();
 						list.add(gps);
 						map.put(splittedLine[3], list);
 					} else {
-						/*add element to existing list*/
+						/* add element to existing list */
 						map.get(splittedLine[3]).add(gps);
 					}
 					break;
@@ -338,7 +349,7 @@ public class DataProcessor {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 		} finally {
-			/*close reader if exists*/
+			/* close reader if exists */
 			if (br != null) {
 				try {
 					br.close();
@@ -348,7 +359,7 @@ public class DataProcessor {
 				}
 			}
 		}
-		/*close stream*/
+		/* close stream */
 		stream.close();
 		return map;
 	}
@@ -431,7 +442,7 @@ public class DataProcessor {
 	 */
 	public void computeAccessPointsLocation() {
 
-		/*populate wifiMap*/
+		/* populate wifiMap */
 		readWifis();
 		for (String key : wifiMap.keySet()) {
 			double totalweight = 0.0, latitudeSum = 0.0, longtitudeSum = 0.0, latitude, longtitude;
@@ -439,7 +450,7 @@ public class DataProcessor {
 			double weight = 0;
 
 			ArrayList<Object> list = wifiMap.get(key);
-			/*if only one record skip*/
+			/* if only one record skip */
 			if (list.size() < 2) {
 				wifiLocations.put(key, ((Wifi) list.get(0)).getLocation());
 				continue;
@@ -448,32 +459,34 @@ public class DataProcessor {
 			for (Object ap : list) {
 				latitude = ((Wifi) ap).getLocation().getLatitude();
 				longtitude = ((Wifi) ap).getLocation().getLongtitude();
-				/*if no location skip*/
+				/* if no location skip */
 				if (latitude == -1.0f && longtitude == -1.0f) {
 					System.out.println("No location for this ap.");
 					continue;
 				}
 				rssi = ((Wifi) ap).getLevel();
 
-				/*Convert latitude and longtitude from degrees to radians.*/
+				/* Convert latitude and longtitude from degrees to radians. */
 				latitude = latitude * PI / 180;
 				longtitude = longtitude * PI / 180;
 
-				/*Convert dBm to mW.*/
+				/* Convert dBm to mW. */
 				weight = Math.pow(10, rssi / 10);
 				totalweight += weight;
 
-				/*Calculate latitude*weight and longtitude*weight */
+				/* Calculate latitude*weight and longtitude*weight */
 				latitudeSum += latitude * weight;
 				longtitudeSum += longtitude * weight;
 			}
-			/*Calculate the weighted latitude and longtitude.*/
+			/* Calculate the weighted latitude and longtitude. */
 			latitude = latitudeSum / totalweight;
 			longtitude = longtitudeSum / totalweight;
 
-			/*add computed location to map*/
-			wifiLocations.put(key, new Location(latitude / (PI / 180),
-					longtitude / (PI / 180)));
+			/* add computed location to map */
+			wifiLocations.put(
+					key,
+					new Location(String.valueOf(latitude / (PI / 180)), String
+							.valueOf(longtitude / (PI / 180))));
 		}
 	}
 }
