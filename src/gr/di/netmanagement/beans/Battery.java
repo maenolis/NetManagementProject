@@ -1,5 +1,6 @@
 package gr.di.netmanagement.beans;
 
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -144,6 +145,10 @@ public class Battery {
 
 	public String toShortString() {
 
-		return timestamp.toString().substring(8, 10) + "/1";
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(timestamp);
+
+		return String.valueOf(cal.get(Calendar.DAY_OF_MONTH)) + "/"
+				+ String.valueOf(cal.get(Calendar.MONTH) + 1);
 	}
 }

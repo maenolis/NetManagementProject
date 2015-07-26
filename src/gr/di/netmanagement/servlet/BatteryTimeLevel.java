@@ -28,6 +28,12 @@ public class BatteryTimeLevel extends HttpServlet {
 			final HttpServletResponse response) throws ServletException,
 			IOException {
 
+		HttpSession session = request.getSession();
+
+		DataProcessor dataProcessor = DataProcessor.getInstance(session);
+		response.getWriter().println(dataProcessor.getWifiMap());
+
+		response.sendRedirect("BatteryTimeLevel.jsp");
 	}
 
 	@Override
@@ -35,20 +41,6 @@ public class BatteryTimeLevel extends HttpServlet {
 			final HttpServletResponse response) throws ServletException,
 			IOException {
 
-		HttpSession session = request.getSession();
-		String minuteFrom = (String) session.getAttribute("minuteFrom");
-		String hourFrom = (String) session.getAttribute("hourFrom");
-		String dayFrom = (String) session.getAttribute("dayFrom");
-		String monthFrom = (String) session.getAttribute("monthFrom");
-		String yearFrom = (String) session.getAttribute("yearFrom");
-		String minuteTo = (String) session.getAttribute("minuteTo");
-		String hourTo = (String) session.getAttribute("hourTo");
-		String dayTo = (String) session.getAttribute("dayTo");
-		String monthTo = (String) session.getAttribute("monthTo");
-		String yearTo = (String) session.getAttribute("yearTo");
-		String user = (String) session.getAttribute("user");
-
-		DataProcessor dataProcessor = DataProcessor.getInstance(session);
 	}
 
 }

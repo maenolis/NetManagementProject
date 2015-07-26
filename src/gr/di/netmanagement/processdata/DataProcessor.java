@@ -65,7 +65,7 @@ public class DataProcessor {
 
 	/** The wifi locations. */
 	private HashMap<String, Location> wifiLocations;
-	
+
 	/** The base station locations. */
 	private HashMap<String, Location> bsLocations;
 
@@ -137,7 +137,7 @@ public class DataProcessor {
 
 		this.wifiLocations = wifiLocations;
 	}
-	
+
 	public HashMap<String, Location> getbsLocations() {
 
 		/* Null pointer prevention. */
@@ -237,7 +237,7 @@ public class DataProcessor {
 
 		/* date formatting object */
 		String[] splittedLine = null;
-		SimpleDateFormat sf = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
+		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date date = null;
 		InputStream stream = null;
 		boolean firstLine = true;
