@@ -15,41 +15,78 @@
 
 <form action="${pageContext.request.contextPath}/HelloWorldServlet" method="post">
 	
-	<h4>Select minute:</h4>
-	<select name="minute" id="minute" onchange="" size="1">
+	<h4>Select start minute:</h4>
+	<select name="minuteFrom" id="minuteFrom" onchange="" size="1">
 	
     	 <c:forEach items="${minutes}" var="minuteIterator">
     	 	<option value="${minuteIterator}">${minuteIterator}</option>
     	 </c:forEach>
 	</select>
 	
-	<h4>Select hour:</h4>
-	<select name="hour" id="hour" onchange="" size="1">
+	<h4>Select start hour:</h4>
+	<select name="hourFrom" id="hourFrom" onchange="" size="1">
 	
     	 <c:forEach items="${hours}" var="hourIterator">
     	 	<option value="${hourIterator}">${hourIterator}</option>
     	 </c:forEach>
 	</select>
 	
-	<h4>Select day:</h4>
-	<select name="day" id="day" onchange="" size="1">
+	<h4>Select start day:</h4>
+	<select name="dayFrom" id="dayFrom" onchange="" size="1">
 	
     	 <c:forEach items="${days}" var="dayIterator">
     	 	<option value="${dayIterator}">${dayIterator}</option>
     	 </c:forEach>
 	</select>
 	
-	<h4>Select month:</h4>
-	<select name="month" id="month" onchange="" size="1">
+	<h4>Select start month:</h4>
+	<select name="monthFrom" id="monthFrom" onchange="" size="1">
     	
     	<c:forEach items="${months}" var="monthIterator">
     	 	<option value="${monthIterator}">${monthIterator}</option>
     	 </c:forEach>
 	</select>
-	<h4>Select year:</h4>
-	<select name="year" id="year" onchange="" size="1">
+	<h4>Select start year:</h4>
+	<select name="yearFrom" id="yearFrom" onchange="" size="1">
 		<option value="2015">2015</option>
 	</select>
+	
+	<h4>Select end minute:</h4>
+	<select name="minuteTo" id="minuteTo" onchange="" size="1">
+	
+    	 <c:forEach items="${minutes}" var="minuteIterator">
+    	 	<option value="${minuteIterator}">${minuteIterator}</option>
+    	 </c:forEach>
+	</select>
+	
+	<h4>Select end hour:</h4>
+	<select name="hourTo" id="hourTo" onchange="" size="1">
+	
+    	 <c:forEach items="${hours}" var="hourIterator">
+    	 	<option value="${hourIterator}">${hourIterator}</option>
+    	 </c:forEach>
+	</select>
+	
+	<h4>Select end day:</h4>
+	<select name="dayTo" id="dayTo" onchange="" size="1">
+	
+    	 <c:forEach items="${days}" var="dayIterator">
+    	 	<option value="${dayIterator}">${dayIterator}</option>
+    	 </c:forEach>
+	</select>
+	
+	<h4>Select end month:</h4>
+	<select name="monthTo" id="monthTo" onchange="" size="1">
+    	
+    	<c:forEach items="${months}" var="monthIterator">
+    	 	<option value="${monthIterator}">${monthIterator}</option>
+    	 </c:forEach>
+	</select>
+	<h4>Select end year:</h4>
+	<select name="yearTo" id="yearTo" onchange="" size="1">
+		<option value="2015">2015</option>
+	</select>
+	
 	<h4>Select user:</h4>
 	
 	<select name="user" id="user" onchange="" size="1">
