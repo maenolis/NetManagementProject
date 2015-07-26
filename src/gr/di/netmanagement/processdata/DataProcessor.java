@@ -65,6 +65,9 @@ public class DataProcessor {
 
 	/** The wifi locations. */
 	private HashMap<String, Location> wifiLocations;
+	
+	/** The base station locations. */
+	private HashMap<String, Location> bsLocations;
 
 	/** The users set. */
 	private HashSet<String> usersSet;
@@ -134,6 +137,18 @@ public class DataProcessor {
 
 		this.wifiLocations = wifiLocations;
 	}
+	
+	public HashMap<String, Location> getbsLocations() {
+
+		/* Null pointer prevention. */
+		readBaseStations();
+		return bsLocations;
+	}
+
+	public void setbsLocations(final HashMap<String, Location> bsLocations) {
+
+		this.bsLocations = bsLocations;
+	}
 
 	public HashSet<String> getUsersSet() {
 
@@ -186,6 +201,7 @@ public class DataProcessor {
 		wifiReaded = false;
 		usersReaded = false;
 		wifiLocations = new HashMap<String, Location>();
+		bsLocations = new HashMap<String, Location>();
 		usersSet = new HashSet<String>();
 	}
 
