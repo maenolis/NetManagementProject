@@ -14,70 +14,52 @@
 <body>
 
 <form action="${pageContext.request.contextPath}/HelloWorldServlet" method="post">
-	<h4>Select a day:</h4>
+	
+	<h4>Select minute:</h4>
+	<select name="minute" id="minute" onchange="" size="1">
+	
+    	 <c:forEach items="${minutes}" var="minuteIterator">
+    	 	<option value="${minuteIterator}">${minuteIterator}</option>
+    	 </c:forEach>
+	</select>
+	
+	<h4>Select hour:</h4>
+	<select name="hour" id="hour" onchange="" size="1">
+	
+    	 <c:forEach items="${hours}" var="hourIterator">
+    	 	<option value="${hourIterator}">${hourIterator}</option>
+    	 </c:forEach>
+	</select>
+	
+	<h4>Select day:</h4>
 	<select name="day" id="day" onchange="" size="1">
-    	<option value="01">01</option>
-    	<option value="02">02</option>
-    	<option value="03">03</option>
-    	<option value="04">04</option>
-    	<option value="05">05</option>
-    	<option value="06">06</option>
-    	<option value="07">07</option>
-    	<option value="08">08</option>
-    	<option value="09">09</option>
-    	<option value="10">10</option>
-    	<option value="11">11</option>
-    	<option value="12">12</option>
-    	<option value="13">13</option>
-    	<option value="14">14</option>
-    	<option value="15">15</option>
-    	<option value="16">16</option>
-    	<option value="17">17</option>
-    	<option value="18">18</option>
-    	<option value="19">19</option>
-    	<option value="20">20</option>
-    	<option value="21">21</option>
-    	<option value="22">22</option>
-    	<option value="23">23</option>
-    	<option value="24">24</option>
-    	<option value="25">25</option>
-    	<option value="26">26</option>
-    	<option value="27">27</option>
-    	<option value="28">28</option>
-    	<option value="29">29</option>
-    	<option value="30">30</option>
-    	<option value="31">31</option>
+	
+    	 <c:forEach items="${days}" var="dayIterator">
+    	 	<option value="${dayIterator}">${dayIterator}</option>
+    	 </c:forEach>
 	</select>
-	<h4>Select a month:</h4>
+	
+	<h4>Select month:</h4>
 	<select name="month" id="month" onchange="" size="1">
-    	<option value="01">January</option>
-    	<option value="02">February</option>
-    	<option value="03">March</option>
-    	<option value="04">April</option>
-    	<option value="05">May</option>
-    	<option value="06">June</option>
-    	<option value="07">July</option>
-    	<option value="08">August</option>
-    	<option value="09">September</option>
-    	<option value="10">October</option>
-    	<option value="11">November</option>
-    	<option value="12">December</option>
+    	
+    	<c:forEach items="${months}" var="monthIterator">
+    	 	<option value="${monthIterator}">${monthIterator}</option>
+    	 </c:forEach>
 	</select>
-	<h4>Select a year:</h4>
+	<h4>Select year:</h4>
 	<select name="year" id="year" onchange="" size="1">
 		<option value="2015">2015</option>
 	</select>
-	<h4>Select a user:</h4>
+	<h4>Select user:</h4>
 	
-	<select name="users" id="users" onchange="" size="1">
-		<c:forEach items="${users}" var="users"> <option>${users}</option> </c:forEach>
+	<select name="user" id="user" onchange="" size="1">
+		<c:forEach items="${users}" var="userIterator"> <option value="${userIterator}">${userIterator}</option> </c:forEach>
 	</select>
 	<p>
 	<p>
 		<input type="submit" name="submit" value="Submit" />
 		
 	</form>
-	
 
 </body>
 </html>

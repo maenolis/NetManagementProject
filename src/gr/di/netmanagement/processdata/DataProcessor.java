@@ -19,6 +19,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 
+import javax.servlet.http.HttpSession;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class DataReader.
@@ -185,6 +187,19 @@ public class DataProcessor {
 		usersReaded = false;
 		wifiLocations = new HashMap<String, Location>();
 		usersSet = new HashSet<String>();
+	}
+
+	public static DataProcessor getInstance(final HttpSession session) {
+
+		/*
+		 * if dataProcessor is set in session skip dataProcessor creation, data
+		 * reading, streams etc
+		 */
+		if (session.getAttribute("dataProcessor") == null) {
+			session.setAttribute("dataProcessor", new DataProcessor());
+		}
+
+		return (DataProcessor) session.getAttribute("dataProcessor");
 	}
 
 	/**

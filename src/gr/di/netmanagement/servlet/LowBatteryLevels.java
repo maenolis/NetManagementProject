@@ -36,10 +36,14 @@ public class LowBatteryLevels extends HttpServlet {
 	/**
 	 * Do get.
 	 *
-	 * @param request the request
-	 * @param response the response
-	 * @throws ServletException the servlet exception
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @param request
+	 *            the request
+	 * @param response
+	 *            the response
+	 * @throws ServletException
+	 *             the servlet exception
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
@@ -47,37 +51,36 @@ public class LowBatteryLevels extends HttpServlet {
 	protected void doGet(final HttpServletRequest request,
 			final HttpServletResponse response) throws ServletException,
 			IOException {
+
 		HttpSession session = request.getSession();
-		
-		/*if dataProcessor is set in session skip dataProcessor creation,
-		 * data reading, streams etc*/
-		if (session.getAttribute("dataProcessor") == null) {
-			/*DataProcessor instance for data manipulation*/
-			DataProcessor dataProcessor = new DataProcessor();
-			session.setAttribute("dataProcessor", dataProcessor);
-		}
-		
-		DataProcessor dataProcessor = (DataProcessor) session.getAttribute("dataProcessor");
-		
-		/*map with dates as keys and lowlevels as value*/
-		HashMap<String, Float> lowLevels = BatteryDataProcessor.getLowLevels(dataProcessor.getBatteryMap());
-		/*String[] dates as string(js argument)*/
-		String dates = BatteryDataProcessor.getStringArrayString(lowLevels.keySet().toArray());
+		DataProcessor dataProcessor = DataProcessor.getInstance(session);
+
+		/* map with dates as keys and lowlevels as value */
+		HashMap<String, Float> lowLevels = BatteryDataProcessor
+				.getLowLevels(dataProcessor.getBatteryMap());
+		/* String[] dates as string(js argument) */
+		String dates = BatteryDataProcessor.getStringArrayString(lowLevels
+				.keySet().toArray());
 		request.getSession().setAttribute("dates", dates);
-		/*Float[] user percentages found under 15%*/
-		Float[] percentages = BatteryDataProcessor.convertToPercentages(lowLevels, dataProcessor.getUsersSet().size());
+		/* Float[] user percentages found under 15% */
+		Float[] percentages = BatteryDataProcessor.convertToPercentages(
+				lowLevels, dataProcessor.getUsersSet().size());
 		request.getSession().setAttribute("percentages", percentages);
-		/*redirect to jsp with canvas presentation*/
+		/* redirect to jsp with canvas presentation */
 		response.sendRedirect("LevelBatteryDiagram.jsp");
 	}
 
 	/**
 	 * Do post.
 	 *
-	 * @param request the request
-	 * @param response the response
-	 * @throws ServletException the servlet exception
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @param request
+	 *            the request
+	 * @param response
+	 *            the response
+	 * @throws ServletException
+	 *             the servlet exception
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
@@ -85,6 +88,6 @@ public class LowBatteryLevels extends HttpServlet {
 	protected void doPost(final HttpServletRequest request,
 			final HttpServletResponse response) throws ServletException,
 			IOException {
-		
+
 	}
 }
