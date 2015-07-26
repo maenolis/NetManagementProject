@@ -36,15 +36,7 @@ public class Cells extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		HttpSession session = request.getSession();
-		/*if dataProcessor is set in session skip dataProcessor creation,
-		 * data reading, streams etc*/
-		if (session.getAttribute("dataProcessor") == null) {
-			/*DataProcessor instance for data manipulation*/
-			DataProcessor dp = new DataProcessor();
-			session.setAttribute("dataProcessor", dp);
-		}
-	
-		DataProcessor dp = (DataProcessor) session.getAttribute("dataProcessor");
+		DataProcessor dp = DataProcessor.getInstance(session);
 		
 		dp.readBaseStations();
 		HashMap<String,ArrayList<Object>> bsmap = dp.getBaseStationMap();
@@ -62,14 +54,15 @@ public class Cells extends HttpServlet {
 				else dp.getbsLocations().put(key, ((BaseStation) list.get(0)).getLocation());
 			}
 		}
-		System.out.println(dp.getbsLocations());
-		String user="user11";
-		//String user = (String)request.getSession().getAttribute("users");
+		String user = (String)request.getSession().getAttribute("user");
 		System.out.println(user);
-		System.out.println(dp.getbsLocations().get(user).toString());
+		System.out.println(dp.getbsLocations().get(user));
 		String url = "/Cells.jsp";
-		request.getSession().setAttribute("user",user);
-		System.out.println("LALALALAL");
+		Double lat = dp.getbsLocations().get(user).getLatitude();
+		Double lon = dp.getbsLocations().get(user).getLongtitude();
+		request.getSession().setAttribute("latitude", lat);
+		request.getSession().setAttribute("longtitude", lon);
+		//request.getSession().setAttribute("user",user);
 		RequestDispatcher rd = getServletContext().getRequestDispatcher(url);  
 		rd.forward(request, response);
 	}
@@ -80,7 +73,6 @@ public class Cells extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String url = "/Cells.jsp";
-		System.out.println("LALALALAL2");
 		String user = (String)request.getSession().getAttribute("users");
 		System.out.println(user);
 		request.getSession().setAttribute("user",user);

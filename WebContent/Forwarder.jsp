@@ -18,7 +18,7 @@
 						Points Stickers </a></li>
 				<li><a href="${pageContext.request.contextPath}/#">User Route</a></li>
 				<li><a href="${pageContext.request.contextPath}/LowBatteryLevels">Level/Battery Diagram</a></li>
-				<li><a href="${pageContext.request.contextPath}/#">User
+				<li><a href="${pageContext.request.contextPath}/Cells">User
 						Connection Cells</a></li>
 			</ul>
 		</div>
