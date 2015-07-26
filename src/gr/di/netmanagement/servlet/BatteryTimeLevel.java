@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @WebServlet("/BatteryTimeLevel")
 public class BatteryTimeLevel extends HttpServlet {
@@ -34,16 +35,20 @@ public class BatteryTimeLevel extends HttpServlet {
 			final HttpServletResponse response) throws ServletException,
 			IOException {
 
-		String dayFrom = request.getParameter("dayFrom");
-		String monthFrom = request.getParameter("monthFrom");
-		String yearFrom = request.getParameter("yearFrom");
-		String dayTo = request.getParameter("dayTo");
-		String monthTo = request.getParameter("monthTo");
-		String yearTo = request.getParameter("yearTo");
-		String user = request.getParameter("user");
+		HttpSession session = request.getSession();
+		String minuteFrom = (String) session.getAttribute("minuteFrom");
+		String hourFrom = (String) session.getAttribute("hourFrom");
+		String dayFrom = (String) session.getAttribute("dayFrom");
+		String monthFrom = (String) session.getAttribute("monthFrom");
+		String yearFrom = (String) session.getAttribute("yearFrom");
+		String minuteTo = (String) session.getAttribute("minuteTo");
+		String hourTo = (String) session.getAttribute("hourTo");
+		String dayTo = (String) session.getAttribute("dayTo");
+		String monthTo = (String) session.getAttribute("monthTo");
+		String yearTo = (String) session.getAttribute("yearTo");
+		String user = (String) session.getAttribute("user");
 
-		DataProcessor dataProcessor = DataProcessor.getInstance(request
-				.getSession());
+		DataProcessor dataProcessor = DataProcessor.getInstance(session);
 	}
 
 }

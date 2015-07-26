@@ -21,8 +21,7 @@
 		<ul class="nav nav-tabs nav-justified">
 			<li><a href="/NetManagementProject/APStickers.jsp">Access
 					Points Stickers </a></li>
-			<li><a href="/NetManagementProject/GMapRoute.jsp">User Route</a>
-				<div id="map-canvas"></div></li>
+			<li><a href="/NetManagementProject/GMapRoute.jsp">User Route</a></li>
 			<li class="active"><a href="#">Level/Battery Diagram</a></li>
 			<li><a href="/NetManagementProject/Cells.jsp">User
 					Connection Cells</a></li>

@@ -13,7 +13,7 @@
 </head>
 <body>
 
-<form action="${pageContext.request.contextPath}/HelloWorldServlet" method="post">
+<form action="${pageContext.request.contextPath}/Forwarder" method="post">
 	
 	<h4>Select start minute:</h4>
 	<select name="minuteFrom" id="minuteFrom" onchange="" size="1">
