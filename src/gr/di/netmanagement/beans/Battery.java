@@ -147,8 +147,13 @@ public class Battery {
 
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(timestamp);
-
-		return String.valueOf(cal.get(Calendar.DAY_OF_MONTH)) + "/"
-				+ String.valueOf(cal.get(Calendar.MONTH) + 1);
+		
+		String ret = String.valueOf(cal.get(Calendar.MONTH) + 1) + "/";
+		if (String.valueOf(cal.get(Calendar.DAY_OF_MONTH)).length() < 2) {
+			ret = ret + "0";
+		}
+		ret = ret + String.valueOf(cal.get(Calendar.DAY_OF_MONTH));
+		
+		return ret;
 	}
 }

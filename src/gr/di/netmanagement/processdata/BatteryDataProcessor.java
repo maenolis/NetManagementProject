@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeMap;
 
 /**
  * The Class BatteryDataProcessor.
@@ -23,11 +24,11 @@ public class BatteryDataProcessor {
 	 *            the battery map
 	 * @return the low levels
 	 */
-	public static HashMap<String, Float> getLowLevels(
+	public static TreeMap<String, Float> getLowLevels(
 			final HashMap<String, ArrayList<Object>> batteryMap) {
 
 		/* map: date as key, number of users found as value */
-		HashMap<String, Float> dateMap = new HashMap<String, Float>();
+		TreeMap<String, Float> dateMap = new TreeMap<String, Float>();
 		/* map: date as key, unique users as value */
 		HashMap<String, HashSet<String>> dateUserMap = new HashMap<String, HashSet<String>>();
 
@@ -67,7 +68,7 @@ public class BatteryDataProcessor {
 	 * @return the float[]
 	 */
 	public static Float[] convertToPercentages(
-			final HashMap<String, Float> dateMap, final int size) {
+			final TreeMap<String, Float> dateMap, final int size) {
 
 		Set<String> set = dateMap.keySet();
 		for (String key : set) {
@@ -116,13 +117,13 @@ public class BatteryDataProcessor {
 		return bd;
 	}
 
-	public static HashMap<Date, Integer> getUserLevelsWithinDates(
+	public static TreeMap<Date, Integer> getUserLevelsWithinDates(
 			final Date from, final Date to, final ArrayList<Object> list) {
 
 		if (to.before(from)) {
 			return null;
 		}
-		HashMap<Date, Integer> retMap = new HashMap<Date, Integer>();
+		TreeMap<Date, Integer> retMap = new TreeMap<Date, Integer>();
 		// Calendar cal = Calendar.getInstance();
 		for (Object battery : list) {
 			/* if battery is within dates given */
@@ -132,9 +133,6 @@ public class BatteryDataProcessor {
 						((Battery) battery).getLevel());
 			}
 		}
-		List list2 = new ArrayList(retMap.keySet());
-		Collections.sort(list2);
-		System.out.println(list2);
 
 		return retMap;
 

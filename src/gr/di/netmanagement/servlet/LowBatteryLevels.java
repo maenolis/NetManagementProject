@@ -5,6 +5,7 @@ import gr.di.netmanagement.processdata.DataProcessor;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.TreeMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -56,7 +57,7 @@ public class LowBatteryLevels extends HttpServlet {
 		DataProcessor dataProcessor = DataProcessor.getInstance(session);
 
 		/* map with dates as keys and lowlevels as value */
-		HashMap<String, Float> lowLevels = BatteryDataProcessor
+		TreeMap<String, Float> lowLevels = BatteryDataProcessor
 				.getLowLevels(dataProcessor.getBatteryMap());
 		/* String[] dates as string(js argument) */
 		String dates = BatteryDataProcessor.getStringArrayString(lowLevels

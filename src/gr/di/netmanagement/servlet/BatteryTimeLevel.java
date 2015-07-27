@@ -54,10 +54,7 @@ public class BatteryTimeLevel extends HttpServlet {
 			final HttpServletResponse response) throws ServletException,
 			IOException {
 
-		HttpSession session = request.getSession();
-
-		DataProcessor dataProcessor = DataProcessor.getInstance(session);
-		response.sendRedirect("BatteryTimeLevel.jsp");
+		
 	}
 
 }
