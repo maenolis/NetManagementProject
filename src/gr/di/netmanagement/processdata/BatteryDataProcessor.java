@@ -4,8 +4,11 @@ import gr.di.netmanagement.beans.Battery;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -23,17 +26,22 @@ public class BatteryDataProcessor {
 	public static HashMap<String, Float> getLowLevels(
 			final HashMap<String, ArrayList<Object>> batteryMap) {
 
+		/* map: date as key, number of users found as value */
 		HashMap<String, Float> dateMap = new HashMap<String, Float>();
+		/* map: date as key, unique users as value */
 		HashMap<String, HashSet<String>> dateUserMap = new HashMap<String, HashSet<String>>();
 
 		for (ArrayList<Object> batteries : batteryMap.values()) {
 			for (Object battery : batteries) {
+				/* if date has not recorded yet */
 				if (!dateMap.containsKey((((Battery) battery).toShortString()))) {
 					dateMap.put((((Battery) battery).toShortString()), 0.0f);
 					dateUserMap.put((((Battery) battery).toShortString()),
 							new HashSet<String>());
 				}
+				/* if battery was low */
 				if (((Battery) battery).getLevel() <= 15) {
+					/* if user was not found in that date */
 					if (!dateUserMap.get((((Battery) battery).toShortString()))
 							.contains(((Battery) battery).getUser())) {
 						dateUserMap.get((((Battery) battery).toShortString()))
@@ -106,5 +114,29 @@ public class BatteryDataProcessor {
 		BigDecimal bd = new BigDecimal(Float.toString(d));
 		bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);
 		return bd;
+	}
+
+	public static HashMap<Date, Integer> getUserLevelsWithinDates(
+			final Date from, final Date to, final ArrayList<Object> list) {
+
+		if (to.before(from)) {
+			return null;
+		}
+		HashMap<Date, Integer> retMap = new HashMap<Date, Integer>();
+		// Calendar cal = Calendar.getInstance();
+		for (Object battery : list) {
+			/* if battery is within dates given */
+			if (((Battery) battery).getTimestamp().after(from)
+					&& ((Battery) battery).getTimestamp().before(to)) {
+				retMap.put(((Battery) battery).getTimestamp(),
+						((Battery) battery).getLevel());
+			}
+		}
+		List list2 = new ArrayList(retMap.keySet());
+		Collections.sort(list2);
+		System.out.println(list2);
+
+		return retMap;
+
 	}
 }
