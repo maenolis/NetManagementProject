@@ -4,7 +4,6 @@ import gr.di.netmanagement.processdata.BatteryDataProcessor;
 import gr.di.netmanagement.processdata.DataProcessor;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.TreeMap;
 
 import javax.servlet.ServletException;
@@ -17,8 +16,8 @@ import javax.servlet.http.HttpSession;
 /**
  * Servlet implementation class BarDiagram.
  */
-@WebServlet("/LowBatteryLevels")
-public class LowBatteryLevels extends HttpServlet {
+@WebServlet("/LowLevels")
+public class LowLevels extends HttpServlet {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
@@ -28,7 +27,7 @@ public class LowBatteryLevels extends HttpServlet {
 	 *
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public LowBatteryLevels() {
+	public LowLevels() {
 
 		super();
 		// TODO Auto-generated constructor stub
@@ -68,7 +67,7 @@ public class LowBatteryLevels extends HttpServlet {
 				lowLevels, dataProcessor.getUsersSet().size());
 		request.getSession().setAttribute("percentages", percentages);
 		/* redirect to jsp with canvas presentation */
-		response.sendRedirect("LevelBatteryDiagram.jsp");
+		response.sendRedirect("LowLevels.jsp");
 	}
 
 	/**
