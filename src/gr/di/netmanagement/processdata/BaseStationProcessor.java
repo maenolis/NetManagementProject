@@ -1,0 +1,47 @@
+package gr.di.netmanagement.processdata;
+
+import gr.di.netmanagement.beans.BaseStation;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Set;
+import java.util.TreeMap;
+
+public class BaseStationProcessor {
+
+	public static TreeMap<String, Integer> companiesMap(
+			final HashMap<String, ArrayList<Object>> baseStationMap) {
+
+		TreeMap<String, Integer> retMap = new TreeMap<String, Integer>();
+		Set<String> keysSet = baseStationMap.keySet();
+		for (String tmp : keysSet) {
+			BaseStation bs = (BaseStation) baseStationMap.get(tmp).get(0);
+			if (retMap.containsKey(bs.getOperator())) {
+				retMap.put(bs.getOperator(), retMap.get(bs.getOperator()) + 1);
+			} else {
+				retMap.put(bs.getOperator(), 1);
+			}
+		}
+
+		return retMap;
+	}
+
+	public static String[] objectArrayToString(final Object[] objArray) {
+
+		String[] retArray = new String[objArray.length];
+		for (int i = 0; i < objArray.length; i++) {
+			retArray[i] = (String) objArray[i];
+		}
+		return retArray;
+	}
+
+	public static Integer[] objectArrayToInt(final Object[] objArray) {
+
+		Integer[] retArray = new Integer[objArray.length];
+		for (int i = 0; i < objArray.length; i++) {
+			retArray[i] = (Integer) objArray[i];
+		}
+		return retArray;
+	}
+
+}

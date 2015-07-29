@@ -96,6 +96,17 @@ public class BaseStation {
 
 	public String getOperator() {
 
+		String tmp = operator.toLowerCase();
+
+		if (tmp.contains("cosmot")) {
+			return "Cosmote";
+		}
+		if (tmp.contains("vodafon") || tmp.contains("cu")) {
+			return "Vodafone";
+		}
+		if (tmp.contains("wind")) {
+			return "Wind";
+		}
 		return operator;
 	}
 

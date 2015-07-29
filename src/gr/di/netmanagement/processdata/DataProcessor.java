@@ -80,6 +80,7 @@ public class DataProcessor {
 
 	public HashMap<String, ArrayList<Object>> getBaseStationMap() {
 
+		readBaseStations();
 		return baseStationMap;
 	}
 
