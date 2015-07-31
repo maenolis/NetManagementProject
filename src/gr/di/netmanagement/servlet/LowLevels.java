@@ -2,6 +2,7 @@ package gr.di.netmanagement.servlet;
 
 import gr.di.netmanagement.processdata.BatteryDataProcessor;
 import gr.di.netmanagement.processdata.DataProcessor;
+import gr.di.netmanagement.processdata.JsArgsProcessor;
 
 import java.io.IOException;
 import java.util.TreeMap;
@@ -59,7 +60,7 @@ public class LowLevels extends HttpServlet {
 		TreeMap<String, Float> lowLevels = BatteryDataProcessor
 				.getLowLevels(dataProcessor.getBatteryMap());
 		/* String[] dates as string(js argument) */
-		String dates = BatteryDataProcessor.getStringArrayString(lowLevels
+		String dates = JsArgsProcessor.getArrayString(lowLevels
 				.keySet().toArray());
 		request.getSession().setAttribute("dates", dates);
 		/* Float[] user percentages found under 15% */

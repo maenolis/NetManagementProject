@@ -10,6 +10,10 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeMap;
 
+import com.orsoncharts.util.json.JSONArray;
+import com.orsoncharts.util.json.JSONObject;
+
+
 /**
  * The Class BatteryDataProcessor.
  */
@@ -33,21 +37,21 @@ public class BatteryDataProcessor {
 		for (ArrayList<Object> batteries : batteryMap.values()) {
 			for (Object battery : batteries) {
 				/* if date has not recorded yet */
-				if (!dateMap.containsKey((((Battery) battery).toShortString()))) {
-					dateMap.put((((Battery) battery).toShortString()), 0.0f);
-					dateUserMap.put((((Battery) battery).toShortString()),
+				if (!dateMap.containsKey((((Battery) battery).getTimestampShortString()))) {
+					dateMap.put((((Battery) battery).getTimestampShortString()), 0.0f);
+					dateUserMap.put((((Battery) battery).getTimestampShortString()),
 							new HashSet<String>());
 				}
 				/* if battery was low */
 				if (((Battery) battery).getLevel() <= 15) {
 					/* if user was not found in that date */
-					if (!dateUserMap.get((((Battery) battery).toShortString()))
+					if (!dateUserMap.get((((Battery) battery).getTimestampShortString()))
 							.contains(((Battery) battery).getUser())) {
-						dateUserMap.get((((Battery) battery).toShortString()))
+						dateUserMap.get((((Battery) battery).getTimestampShortString()))
 								.add(((Battery) battery).getUser());
-						dateMap.put((((Battery) battery).toShortString()),
+						dateMap.put((((Battery) battery).getTimestampShortString()),
 								dateMap.get((((Battery) battery)
-										.toShortString())) + 1.0f);
+										.getTimestampShortString())) + 1.0f);
 					}
 				}
 			}
@@ -77,7 +81,7 @@ public class BatteryDataProcessor {
 		int i = 0;
 		for (Object obj : dateMap.values()) {
 			/* round up to 2 decimal digits */
-			newArray[i++] = round(((Float) obj), 2).floatValue();
+			newArray[i++] = round(((Float) obj), 1).floatValue();
 		}
 		System.out.println("newArray = " + newArray);
 		for (Float f : newArray) {
@@ -86,27 +90,6 @@ public class BatteryDataProcessor {
 		return newArray;
 	}
 
-	/**
-	 * Prepares a String array for javascript.
-	 *
-	 * @param items
-	 *            the items
-	 * @return the string array string
-	 */
-	public static String getStringArrayString(final Object[] items) {
-
-		String result = "[";
-		for (int i = 0; i < items.length; i++) {
-			String itemI = (String) items[i];
-			result += "\"" + itemI + "\"";
-			if (i < items.length - 1) {
-				result += ", ";
-			}
-		}
-		result += "]";
-
-		return result;
-	}
 
 	public static BigDecimal round(final float d, final int decimalPlace) {
 
@@ -115,24 +98,48 @@ public class BatteryDataProcessor {
 		return bd;
 	}
 
-	public static TreeMap<Date, Integer> getUserLevelsWithinDates(
+	public static TreeMap<String, Integer> getUserLevelsWithinDates(
 			final Date from, final Date to, final ArrayList<Object> list) {
 
 		if (to.before(from)) {
 			return null;
 		}
-		TreeMap<Date, Integer> retMap = new TreeMap<Date, Integer>();
+		TreeMap<String, Integer> retMap = new TreeMap<String, Integer>();
 		// Calendar cal = Calendar.getInstance();
 		for (Object battery : list) {
 			/* if battery is within dates given */
 			if (((Battery) battery).getTimestamp().after(from)
 					&& ((Battery) battery).getTimestamp().before(to)) {
-				retMap.put(((Battery) battery).getTimestamp(),
+				retMap.put(((Battery) battery).getTimestamp().toString(),
 						((Battery) battery).getLevel());
 			}
 		}
 
 		return retMap;
 
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static void foo() {
+		JSONObject json = new JSONObject();
+		json.put("1", "test1");
+		json.put("2", "test2");
+		json.put("4", 3);
+		System.out.println(json);
+		
+		JSONArray array = new JSONArray();
+		array.add(json);
+		array.add(json);
+		array.add(json);
+		array.add(4);
+		System.out.println("array " + array);
+		System.out.println("array.toJSONString() " + array.toJSONString());
+		System.out.println("array.toString() " + array.toString());
+		
+		
+	}
+	
+	public static void main(String[] args) {
+		foo();
 	}
 }

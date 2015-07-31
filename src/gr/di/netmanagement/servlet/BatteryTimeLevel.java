@@ -2,11 +2,14 @@ package gr.di.netmanagement.servlet;
 
 import gr.di.netmanagement.processdata.BatteryDataProcessor;
 import gr.di.netmanagement.processdata.DataProcessor;
+import gr.di.netmanagement.processdata.JsArgsProcessor;
 
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.TreeMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -45,8 +48,15 @@ public class BatteryTimeLevel extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println(BatteryDataProcessor.getUserLevelsWithinDates(from,
-				to, dataProcessor.getBatteryMap().get("user31")));
+		String user = "user31";
+		ArrayList<Object> list = dataProcessor.getBatteryMap().get(user);
+		System.out.println(list.toString());
+		TreeMap<String, Integer> uMap = BatteryDataProcessor.getUserLevelsWithinDates(from, to, list);
+		System.out.println(uMap);
+		String dates = JsArgsProcessor.getArrayString(uMap.keySet().toArray());
+		System.out.println(dates);
+		response.getWriter().println(dates);
+		response.getWriter().println("\n\nsize : " + uMap.keySet().size());
 	}
 
 	@Override
