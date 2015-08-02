@@ -10,9 +10,9 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeMap;
 
-import com.orsoncharts.util.json.JSONArray;
-import com.orsoncharts.util.json.JSONObject;
-
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * The Class BatteryDataProcessor.
@@ -37,20 +37,28 @@ public class BatteryDataProcessor {
 		for (ArrayList<Object> batteries : batteryMap.values()) {
 			for (Object battery : batteries) {
 				/* if date has not recorded yet */
-				if (!dateMap.containsKey((((Battery) battery).getTimestampShortString()))) {
-					dateMap.put((((Battery) battery).getTimestampShortString()), 0.0f);
-					dateUserMap.put((((Battery) battery).getTimestampShortString()),
+				if (!dateMap.containsKey((((Battery) battery)
+						.getTimestampShortString()))) {
+					dateMap.put(
+							(((Battery) battery).getTimestampShortString()),
+							0.0f);
+					dateUserMap.put(
+							(((Battery) battery).getTimestampShortString()),
 							new HashSet<String>());
 				}
 				/* if battery was low */
 				if (((Battery) battery).getLevel() <= 15) {
 					/* if user was not found in that date */
-					if (!dateUserMap.get((((Battery) battery).getTimestampShortString()))
+					if (!dateUserMap.get(
+							(((Battery) battery).getTimestampShortString()))
 							.contains(((Battery) battery).getUser())) {
-						dateUserMap.get((((Battery) battery).getTimestampShortString()))
-								.add(((Battery) battery).getUser());
-						dateMap.put((((Battery) battery).getTimestampShortString()),
-								dateMap.get((((Battery) battery)
+						dateUserMap
+								.get((((Battery) battery)
+										.getTimestampShortString())).add(
+										((Battery) battery).getUser());
+						dateMap.put((((Battery) battery)
+								.getTimestampShortString()), dateMap
+								.get((((Battery) battery)
 										.getTimestampShortString())) + 1.0f);
 					}
 				}
@@ -90,7 +98,6 @@ public class BatteryDataProcessor {
 		return newArray;
 	}
 
-
 	public static BigDecimal round(final float d, final int decimalPlace) {
 
 		BigDecimal bd = new BigDecimal(Float.toString(d));
@@ -118,28 +125,29 @@ public class BatteryDataProcessor {
 		return retMap;
 
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	public static void foo() {
+	public static void foo() throws JSONException {
+
 		JSONObject json = new JSONObject();
 		json.put("1", "test1");
 		json.put("2", "test2");
 		json.put("4", 3);
 		System.out.println(json);
-		
+
 		JSONArray array = new JSONArray();
-		array.add(json);
-		array.add(json);
-		array.add(json);
-		array.add(4);
+		array.put(json);
+		array.put(json);
+		array.put(json);
+		array.put(4);
 		System.out.println("array " + array);
-		System.out.println("array.toJSONString() " + array.toJSONString());
+		System.out.println("array.toJSONString() " + array.toString());
 		System.out.println("array.toString() " + array.toString());
-		
-		
+
 	}
-	
-	public static void main(String[] args) {
+
+	public static void main(final String[] args) throws JSONException {
+
 		foo();
 	}
 }

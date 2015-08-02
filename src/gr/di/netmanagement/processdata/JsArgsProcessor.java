@@ -1,8 +1,9 @@
 package gr.di.netmanagement.processdata;
 
-import com.orsoncharts.util.json.JSONArray;
+import org.json.JSONArray;
 
 public class JsArgsProcessor {
+
 	/**
 	 * Prepares a String array for javascript.
 	 *
@@ -12,11 +13,12 @@ public class JsArgsProcessor {
 	 */
 	@SuppressWarnings("unchecked")
 	public static String getArrayString(final Object[] items) {
+
 		JSONArray jsonArray = new JSONArray();
 		for (Object obj : items) {
-			jsonArray.add(obj);
+			jsonArray.put(obj);
 		}
-		return jsonArray.toJSONString();
+		return jsonArray.toString();
 	}
 
 }
