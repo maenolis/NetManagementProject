@@ -68,6 +68,40 @@ public class BatteryDataProcessor {
 		return dateMap;
 	}
 
+	public static TreeMap<Date, Float> getLowLevels2(
+			final HashMap<String, ArrayList<Object>> batteryMap) {
+
+		/* map: date as key, number of users found as value */
+		TreeMap<Date, Float> dateMap = new TreeMap<Date, Float>();
+		/* map: date as key, unique users as value */
+		HashMap<Date, HashSet<String>> dateUserMap = new HashMap<Date, HashSet<String>>();
+
+		for (ArrayList<Object> batteries : batteryMap.values()) {
+			for (Object batteryObj : batteries) {
+				Battery battery = (Battery) batteryObj;
+				/* if date has not recorded yet */
+				if (!dateMap.containsKey((battery.getTimestamp()))) {
+					dateMap.put((battery.getTimestamp()), 0.0f);
+					dateUserMap.put((battery.getTimestamp()),
+							new HashSet<String>());
+				}
+				/* if battery was low */
+				if (battery.getLevel() <= 15) {
+					/* if user was not found in that date */
+					if (!dateUserMap.get((battery.getTimestamp())).contains(
+							battery.getUser())) {
+						dateUserMap.get((battery.getTimestamp())).add(
+								battery.getUser());
+						dateMap.put((battery.getTimestamp()),
+								new Float(dateUserMap.get((battery.getTimestamp())).size()));
+					}
+				}
+			}
+
+		}
+		return dateMap;
+	}
+
 	/**
 	 * Convert user numbers to percentages.
 	 *
@@ -148,6 +182,9 @@ public class BatteryDataProcessor {
 
 	public static void main(final String[] args) throws JSONException {
 
-		foo();
+		BigDecimal bd = new BigDecimal("12");
+		bd.setScale(2, BigDecimal.ROUND_HALF_UP);
+		String str = "12.8";
+		System.out.println(str.replace(".", ""));
 	}
 }
