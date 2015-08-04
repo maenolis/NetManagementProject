@@ -68,32 +68,35 @@ public class BatteryDataProcessor {
 		return dateMap;
 	}
 
-	public static TreeMap<Date, Float> getLowLevels2(
+	public static TreeMap<String, Float> getLowLevels2(
 			final HashMap<String, ArrayList<Object>> batteryMap) {
 
 		/* map: date as key, number of users found as value */
-		TreeMap<Date, Float> dateMap = new TreeMap<Date, Float>();
+		TreeMap<String, Float> dateMap = new TreeMap<String, Float>();
 		/* map: date as key, unique users as value */
-		HashMap<Date, HashSet<String>> dateUserMap = new HashMap<Date, HashSet<String>>();
+		HashMap<String, HashSet<String>> dateUserMap = new HashMap<String, HashSet<String>>();
 
 		for (ArrayList<Object> batteries : batteryMap.values()) {
 			for (Object batteryObj : batteries) {
 				Battery battery = (Battery) batteryObj;
 				/* if date has not recorded yet */
-				if (!dateMap.containsKey((battery.getTimestamp()))) {
-					dateMap.put((battery.getTimestamp()), 0.0f);
-					dateUserMap.put((battery.getTimestamp()),
+				if (!dateMap.containsKey((battery.getTimestampShortString()))) {
+					dateMap.put((battery.getTimestampShortString()), 0.0f);
+					dateUserMap.put((battery.getTimestampShortString()),
 							new HashSet<String>());
 				}
 				/* if battery was low */
 				if (battery.getLevel() <= 15) {
 					/* if user was not found in that date */
-					if (!dateUserMap.get((battery.getTimestamp())).contains(
-							battery.getUser())) {
-						dateUserMap.get((battery.getTimestamp())).add(
-								battery.getUser());
-						dateMap.put((battery.getTimestamp()),
-								new Float(dateUserMap.get((battery.getTimestamp())).size()));
+					if (!dateUserMap.get((battery.getTimestampShortString()))
+							.contains(battery.getUser())) {
+						dateUserMap.get((battery.getTimestampShortString()))
+								.add(battery.getUser());
+						dateMap.put(
+								(battery.getTimestampShortString()),
+								new Float(dateUserMap.get(
+										(battery.getTimestampShortString()))
+										.size()));
 					}
 				}
 			}
@@ -160,7 +163,6 @@ public class BatteryDataProcessor {
 
 	}
 
-	@SuppressWarnings("unchecked")
 	public static void foo() throws JSONException {
 
 		JSONObject json = new JSONObject();

@@ -1,6 +1,7 @@
 package gr.di.netmanagement.beans;
 
-import java.util.Calendar;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -124,19 +125,12 @@ public class Battery {
 
 		return timestamp;
 	}
-	
+
+	/* Short date representation. */
 	public String getTimestampShortString() {
 
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(timestamp);
-		
-		String ret = String.valueOf(cal.get(Calendar.MONTH) + 1) + "/";
-		if (String.valueOf(cal.get(Calendar.DAY_OF_MONTH)).length() < 2) {
-			ret = ret + "0";
-		}
-		ret = ret + String.valueOf(cal.get(Calendar.DAY_OF_MONTH));
-		
-		return ret;
+		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+		return sf.format(this.timestamp);
 	}
 
 	public void setTimestamp(final Date timestamp) {
@@ -155,5 +149,14 @@ public class Battery {
 		return "Battery [id=" + id + ", user=" + user + ", level=" + level
 				+ ", plugged=" + plugged + ", temperature=" + temperature
 				+ ", voltage=" + voltage + ", timestamp=" + timestamp + "]";
+	}
+
+	public static void main(final String[] args) throws ParseException {
+
+		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+		Battery bat = new Battery(0, null, 0, 0, 0, 0,
+				sf.parse("1818-11-11 12:12:12"));
+		System.out.println(bat.getTimestampShortString());
 	}
 }

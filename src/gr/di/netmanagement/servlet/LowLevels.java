@@ -5,7 +5,6 @@ import gr.di.netmanagement.processdata.DataProcessor;
 import gr.di.netmanagement.processdata.JsArgsProcessor;
 
 import java.io.IOException;
-import java.util.TreeMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -53,26 +52,31 @@ public class LowLevels extends HttpServlet {
 			final HttpServletResponse response) throws ServletException,
 			IOException {
 
-//		HttpSession session = request.getSession();
-//		DataProcessor dataProcessor = DataProcessor.getInstance(session);
-//
-//		/* map with dates as keys and lowlevels as value */
-//		TreeMap<String, Float> lowLevels = BatteryDataProcessor
-//				.getLowLevels(dataProcessor.getBatteryMap());
-//		/* String[] dates as string(js argument) */
-//		String dates = JsArgsProcessor.getArrayString(lowLevels
-//				.keySet().toArray());
-//		request.getSession().setAttribute("dates", dates);
-//		/* Float[] user percentages found under 15% */
-//		Float[] percentages = BatteryDataProcessor.convertToPercentages(
-//				lowLevels, dataProcessor.getUsersSet().size());
-//		request.getSession().setAttribute("percentages", percentages);
-//		/* redirect to jsp with canvas presentation */
-//		response.sendRedirect("LowLevels.jsp");
-		
+		// HttpSession session = request.getSession();
+		// DataProcessor dataProcessor = DataProcessor.getInstance(session);
+		//
+		// /* map with dates as keys and lowlevels as value */
+		// TreeMap<String, Float> lowLevels = BatteryDataProcessor
+		// .getLowLevels(dataProcessor.getBatteryMap());
+		// /* String[] dates as string(js argument) */
+		// String dates = JsArgsProcessor.getArrayString(lowLevels.keySet()
+		// .toArray());
+		// request.getSession().setAttribute("dates", dates);
+		// /* Float[] user percentages found under 15% */
+		// Float[] percentages = BatteryDataProcessor.convertToPercentages(
+		// lowLevels, dataProcessor.getUsersSet().size());
+		// request.getSession().setAttribute("percentages", percentages);
+		// /* redirect to jsp with canvas presentation */
+		// response.sendRedirect("LowLevels.jsp");
+		//
 		HttpSession session = request.getSession();
 		DataProcessor dataProcessor = DataProcessor.getInstance(session);
-		System.out.println(BatteryDataProcessor.getLowLevels2(dataProcessor.getBatteryMap()));
+
+		System.out.println(BatteryDataProcessor.getLowLevels2(dataProcessor
+				.getBatteryMap()));
+		System.out.println(JsArgsProcessor
+				.datesPercentagesJsArg(BatteryDataProcessor
+						.getLowLevels2(dataProcessor.getBatteryMap())));
 	}
 
 	/**
