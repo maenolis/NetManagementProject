@@ -2,7 +2,8 @@ package gr.di.netmanagement.processdata;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Set;
 import java.util.TreeMap;
 
@@ -17,7 +18,6 @@ public class JsArgsProcessor {
 	 *            the items
 	 * @return the string array string
 	 */
-	@SuppressWarnings("unchecked")
 	public static String getArrayString(final Object[] items) {
 
 		JSONArray jsonArray = new JSONArray();
@@ -27,29 +27,22 @@ public class JsArgsProcessor {
 		return jsonArray.toString();
 	}
 
-	@SuppressWarnings("deprecation")
-	public static JSONArray datesPercentagesJsArg(
+	public static JSONArray lowLevelsJsArg(
 			final TreeMap<String, Float> lowLevels) {
-
-		// public static String format(GregorianCalendar calendar){
-		// SimpleDateFormat fmt = new SimpleDateFormat("dd-MMM-yyyy");
-		// fmt.setCalendar(calendar);
-		// String dateFormatted = fmt.format(calendar.getTime());
-		// return dateFormatted;
-		// }
 
 		JSONArray retArray = new JSONArray();
 		Set<String> keys = lowLevels.keySet();
 		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
-		Date date;
+		GregorianCalendar gc = new GregorianCalendar();
+		sf.setCalendar(gc);
 		for (String key : keys) {
 			try {
-				date = sf.parse(key);
+				sf.parse(key);
 				JSONArray innerArray = new JSONArray();
 				JSONArray outerArray = new JSONArray();
-				innerArray.put(date.getYear());
-				innerArray.put(date.getMonth());
-				innerArray.put(date.getDay());
+				innerArray.put(sf.getCalendar().get(Calendar.YEAR));
+				innerArray.put(sf.getCalendar().get(Calendar.MONTH));
+				innerArray.put(sf.getCalendar().get(Calendar.DAY_OF_MONTH));
 				outerArray.put(innerArray);
 				outerArray.put(lowLevels.get(key));
 				retArray.put(outerArray);

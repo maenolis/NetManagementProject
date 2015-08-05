@@ -75,7 +75,7 @@ public class LowLevels extends HttpServlet {
 		System.out.println(BatteryDataProcessor.getLowLevels2(dataProcessor
 				.getBatteryMap()));
 		System.out.println(JsArgsProcessor
-				.datesPercentagesJsArg(BatteryDataProcessor
+				.lowLevelsJsArg(BatteryDataProcessor
 						.getLowLevels2(dataProcessor.getBatteryMap())));
 	}
 
