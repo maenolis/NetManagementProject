@@ -63,4 +63,25 @@ public class JsArgsProcessor {
 		return retArray;
 	}
 
+	/**
+	 * Company users js arg.
+	 *
+	 * @param cMap
+	 *            the c map
+	 * @return the JSON array
+	 */
+	public static JSONArray companyUsersJsArg(
+			final TreeMap<String, Integer> cMap) {
+
+		JSONArray retArray = new JSONArray();
+		Set<String> keys = cMap.keySet();
+		for (String key : keys) {
+			JSONArray array = new JSONArray();
+			array.put(key);
+			array.put(cMap.get(key));
+			retArray.put(array);
+		}
+		return retArray;
+	}
+
 }

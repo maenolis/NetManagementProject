@@ -10,7 +10,7 @@
 <script src="/NetManagementProject/lib/jquery/jquery.min.js"></script>
 <script src="/NetManagementProject/lib/bootstrap/js/bootstrap.min.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
-<script src="/NetManagementProject/lib/js/bars.js"></script>
+<script src="/NetManagementProject/lib/js/lowLevels.js"></script>
 <title>Low Levels</title>
 </head>
 <body>
@@ -27,7 +27,7 @@
 	</div>
 
 	
-	<div id="chart_div" ></div>
+	<div id="chart_div" style="margin-left:50px;margin-top:50px;"></div>
 	<script>
 		var chart = new drawChart(<%out.print(session.getAttribute("lowLevelsPercentages"));%>);
 		window.onload = chart.paint;
