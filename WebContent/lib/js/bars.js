@@ -1,15 +1,20 @@
-google.load('visualization', '1', {
+	google.load('visualization', '1', {
 	packages : [ 'corechart' ]
 });
 //google.setOnLoadCallback(drawChart);
 
-function drawChart() {
+function drawChart(array) {
 
 	var data = new google.visualization.DataTable();
 	data.addColumn('date', 'Day');
 	data.addColumn('number', 'percentage');
+	var datesPercentages = [];
+	for (var i = 0; i < array.length; i++) {
+		datesPercentages.push([new Date(array[i][0][0], array[i][0][1], array[i][0][2]), array[i][1]]);
+	}
+	data.addRows(datesPercentages);
 
-	data.addRows([ [ new Date(2015, 0, 1), 12 ], [ new Date(2015, 0, 2), 12.5 ],
+	/*data.addRows([ [ new Date(2015, 0, 1), 12 ], [ new Date(2015, 0, 2), 12.5 ],
 			[ new Date(2015, 0, 3), 3 ], [ new Date(2015, 0, 4), 1 ],
 			[ new Date(2015, 0, 5), 3 ], [ new Date(2015, 0, 6), 4 ],
 			[ new Date(2015, 0, 7), 3 ], [ new Date(2015, 0, 8), 4 ],
@@ -29,16 +34,16 @@ function drawChart() {
 			[ new Date(2015, 1, 4), 7 ], [ new Date(2015, 1, 5), 9 ],
 			[ new Date(2015, 1, 6), 6 ], [ new Date(2015, 1, 7), 7 ],
 			[ new Date(2015, 1, 8), 9 ], [ new Date(2015, 1, 9), 6 ],
-			[ new Date(2015, 1, 15), 7 ], [ new Date(2015, 1, 16), 9 ] ]);
+			[ new Date(2015, 1, 15), 7 ], [ new Date(2015, 1, 16), 9 ] ]);*/
 
 	var options = {
 		title : 'battery under 15%',
 		width : 1200,
 		height : 600,
 		hAxis : {
-			format : 'd/M/yy',
+			format : 'd/M',
 			gridlines : {
-				count : 200
+				count : 32
 			},
 			title : 'Days'
 		},
@@ -50,10 +55,14 @@ function drawChart() {
 			title : 'noOfusers'
 		}
 	};
-
-	var chart = new google.visualization.ColumnChart(document
+	
+	this.paint = function () {
+		var chart = new google.visualization.ColumnChart(document
 			.getElementById('chart_div'));
 
-	chart.draw(data, options);
+		chart.draw(data, options);
+	}
+
+	
 
 }

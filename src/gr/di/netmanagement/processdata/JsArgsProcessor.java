@@ -9,6 +9,9 @@ import java.util.TreeMap;
 
 import org.json.JSONArray;
 
+/**
+ * The Class JsArgsProcessor.
+ */
 public class JsArgsProcessor {
 
 	/**
@@ -27,6 +30,13 @@ public class JsArgsProcessor {
 		return jsonArray.toString();
 	}
 
+	/**
+	 * Low levels js arg.
+	 *
+	 * @param lowLevels
+	 *            the low levels
+	 * @return the JSON array
+	 */
 	public static JSONArray lowLevelsJsArg(
 			final TreeMap<String, Float> lowLevels) {
 
