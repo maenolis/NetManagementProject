@@ -385,7 +385,6 @@ public class DataProcessor {
 			if (br != null) {
 				try {
 					br.close();
-					// fr.close();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -484,19 +483,21 @@ public class DataProcessor {
 			ArrayList<Object> list = wifiMap.get(key);
 			/* if only one record skip */
 			if (list.size() < 2) {
-				wifiLocations.put(key, ((Wifi) list.get(0)).getLocation());
+				Wifi wifi = (Wifi) list.get(0);
+				wifiLocations.put(key, wifi.getLocation());
 				continue;
 			}
 
-			for (Object ap : list) {
-				latitude = ((Wifi) ap).getLocation().getLatitude();
-				longtitude = ((Wifi) ap).getLocation().getLongtitude();
+			for (Object wifiObj : list) {
+				Wifi wifi = (Wifi) wifiObj;
+				latitude = wifi.getLocation().getLatitude();
+				longtitude = wifi.getLocation().getLongtitude();
 				/* if no location skip */
 				if (latitude == -1.0f && longtitude == -1.0f) {
 					System.out.println("No location for this ap.");
 					continue;
 				}
-				rssi = ((Wifi) ap).getLevel();
+				rssi = wifi.getLevel();
 
 				/* Convert latitude and longtitude from degrees to radians. */
 				latitude = latitude * PI / 180;

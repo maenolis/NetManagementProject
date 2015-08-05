@@ -87,12 +87,13 @@ public class BatteryDataProcessor {
 		}
 		TreeMap<String, Integer> retMap = new TreeMap<String, Integer>();
 		// Calendar cal = Calendar.getInstance();
-		for (Object battery : list) {
+		for (Object batteryObj : list) {
+			Battery battery = (Battery) batteryObj;
 			/* if battery is within dates given */
-			if (((Battery) battery).getTimestamp().after(from)
-					&& ((Battery) battery).getTimestamp().before(to)) {
-				retMap.put(((Battery) battery).getTimestamp().toString(),
-						((Battery) battery).getLevel());
+			if (battery.getTimestamp().after(from)
+					&& battery.getTimestamp().before(to)) {
+				retMap.put(battery.getTimestamp().toString(),
+						battery.getLevel());
 			}
 		}
 
