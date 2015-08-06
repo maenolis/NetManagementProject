@@ -132,6 +132,11 @@ public class Battery {
 		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
 		return sf.format(this.timestamp);
 	}
+	
+	public String getTimeStampLongString() {
+		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		return sf.format(this.timestamp);
+	}
 
 	public void setTimestamp(final Date timestamp) {
 

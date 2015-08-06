@@ -84,4 +84,30 @@ public class JsArgsProcessor {
 		return retArray;
 	}
 
+	public static JSONArray batteryTimeLevelJsArg(final TreeMap<String, Integer> uMap) {
+		JSONArray retArray = new JSONArray();
+		
+		Set<String> keys = uMap.keySet();
+		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		GregorianCalendar gc = new GregorianCalendar();
+		sf.setCalendar(gc);
+		for (String key : keys) {
+			try {
+				sf.parse(key);
+				JSONArray array = new JSONArray();
+				array.put(sf.getCalendar().get(Calendar.YEAR));
+				array.put(sf.getCalendar().get(Calendar.MONTH));
+				array.put(sf.getCalendar().get(Calendar.DAY_OF_MONTH));
+				array.put(sf.getCalendar().get(Calendar.HOUR_OF_DAY));
+				array.put(sf.getCalendar().get(Calendar.MINUTE));
+				array.put(sf.getCalendar().get(Calendar.SECOND));
+				array.put(uMap.get(key));
+				retArray.put(array);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return retArray;
+	}
 }
