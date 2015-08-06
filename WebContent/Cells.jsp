@@ -44,10 +44,10 @@
 <form action="${pageContext.request.contextPath}/Cells" method="post">
 <div class="container">
 <ul class="nav nav-tabs nav-justified">
-  <li><a href="/NetManagementProject/APStickers.jsp">Access Points Stickers
+  <li><a href="/${pageContext.request.contextPath}/APStickers">Access Points Stickers
     </a></li>
-    <li><a href="/NetManagementProject/GMapRoute.jsp">User Route</a></li>
-    <li><a href="/NetManagementProject/LevelBatteryDiagram.jsp">Level/Battery Diagram</a></li>
+    <li><a href="${pageContext.request.contextPath}/GMapRoute">User Route</a></li>
+    <li><a href="${pageContext.request.contextPath}/LevelBatteryDiagram">Level/Battery Diagram</a></li>
     <li class ="active"><a href="#">User Connection Cells</a></li>
     </ul>
     <div id = "map-canvas">
