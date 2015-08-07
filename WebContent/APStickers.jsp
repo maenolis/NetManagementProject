@@ -29,9 +29,10 @@
         	<c:forEach var="lon" items="${lon}"> 
         		longs.push("${lon}");
     		</c:forEach>
+    		
             var mapOptions = {
-                center: new google.maps.LatLng(38, 23),
-                zoom: 8,
+                center: new google.maps.LatLng(lats[0], longs[0]),
+                zoom: 11,
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             };
             var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);

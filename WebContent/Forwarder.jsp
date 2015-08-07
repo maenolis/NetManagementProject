@@ -16,7 +16,7 @@
 			<ul class="nav nav-tabs nav-justified">
 				<li><a href="${pageContext.request.contextPath}/APStickers">Access
 						Points Stickers </a></li>
-				<li><a href="${pageContext.request.contextPath}/#">User Route</a></li>
+				<li><a href="${pageContext.request.contextPath}/GMapRoute">User Route</a></li>
 				<li><a href="${pageContext.request.contextPath}/LowBatteryLevels">Level/Battery Diagram</a></li>
 				<li><a href="${pageContext.request.contextPath}/Cells">User
 						Connection Cells</a></li>

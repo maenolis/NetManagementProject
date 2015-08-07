@@ -18,16 +18,16 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class APStickers
+ * Servlet implementation class GMapRoute
  */
-@WebServlet("/APStickers")
-public class APStickers extends HttpServlet {
+@WebServlet("/GMapRoute")
+public class GMapRoute extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public APStickers() {
+    public GMapRoute() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -37,7 +37,7 @@ public class APStickers extends HttpServlet {
 	 */
 	@SuppressWarnings("unchecked")
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String url = "/APStickers.jsp";
+		String url = "/GMapRoute.jsp";
 		if(request.getSession().getAttribute("length") != null){
 			List<Double> Longtitudes = (List<Double>) request.getSession().getAttribute("lon");
 			List<Double> Latitudes = (List<Double>) request.getSession().getAttribute("lat");
@@ -77,7 +77,7 @@ public class APStickers extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String url = "/APStickers.jsp";
+		String url = "/GMapRoute.jsp";
 		String user = (String)request.getSession().getAttribute("users");
 		System.out.println(user);
 		request.getSession().setAttribute("user",user);
