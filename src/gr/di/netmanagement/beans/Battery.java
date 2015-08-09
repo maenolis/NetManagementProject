@@ -7,7 +7,7 @@ import java.util.Date;
 /**
  * The Class Battery.
  */
-public class Battery {
+public class Battery implements Bean {
 
 	/** The id. */
 	private int id;
@@ -61,6 +61,7 @@ public class Battery {
 		this.timestamp = timestamp;
 	}
 
+	@Override
 	public int getId() {
 
 		return id;
@@ -71,6 +72,7 @@ public class Battery {
 		this.id = id;
 	}
 
+	@Override
 	public String getUser() {
 
 		return user;
@@ -121,6 +123,7 @@ public class Battery {
 		this.voltage = voltage;
 	}
 
+	@Override
 	public Date getTimestamp() {
 
 		return timestamp;
@@ -132,8 +135,9 @@ public class Battery {
 		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
 		return sf.format(this.timestamp);
 	}
-	
+
 	public String getTimeStampLongString() {
+
 		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		return sf.format(this.timestamp);
 	}

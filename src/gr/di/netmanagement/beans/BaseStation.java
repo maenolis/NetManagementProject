@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * The Class BaseStation.
  */
-public class BaseStation {
+public class BaseStation implements Bean, LocationBean {
 
 	/** The id. */
 	private int id;
@@ -74,6 +74,7 @@ public class BaseStation {
 		this.timestamp = timestamp;
 	}
 
+	@Override
 	public int getId() {
 
 		return id;
@@ -84,6 +85,7 @@ public class BaseStation {
 		this.id = id;
 	}
 
+	@Override
 	public String getUser() {
 
 		return user;
@@ -155,6 +157,7 @@ public class BaseStation {
 		this.lac = lac;
 	}
 
+	@Override
 	public Location getLocation() {
 
 		return location;
@@ -165,6 +168,7 @@ public class BaseStation {
 		this.location = location;
 	}
 
+	@Override
 	public Date getTimestamp() {
 
 		return timestamp;

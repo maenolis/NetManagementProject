@@ -38,8 +38,8 @@ public class BatteryTimeLevel extends HttpServlet {
 		HttpSession session = request.getSession();
 
 		DataProcessor dataProcessor = DataProcessor.getInstance(session);
-		
-		//TODO: remove, for dev purposes only!
+
+		// TODO: remove, for dev purposes only!
 		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date from = null;
 		Date to = null;
@@ -51,8 +51,10 @@ public class BatteryTimeLevel extends HttpServlet {
 		}
 		String user = "user31";
 		ArrayList<Object> list = dataProcessor.getBatteryMap().get(user);
-		TreeMap<String, Integer> uMap = BatteryDataProcessor.getUserLevelsWithinDates(from, to, list);
-		session.setAttribute("batteryTimeLevels", JsArgsProcessor.batteryTimeLevelJsArg(uMap));
+		TreeMap<String, Integer> uMap = BatteryDataProcessor
+				.getUserLevelsWithinDates(from, to, list);
+		session.setAttribute("batteryTimeLevels",
+				JsArgsProcessor.batteryTimeLevelJsArg(uMap));
 		response.sendRedirect("BatteryTimeLevels.jsp");
 	}
 
@@ -61,7 +63,6 @@ public class BatteryTimeLevel extends HttpServlet {
 			final HttpServletResponse response) throws ServletException,
 			IOException {
 
-		
 	}
 
 }

@@ -5,13 +5,13 @@ import java.util.Date;
 /**
  * The Class Wifi.
  */
-public class Wifi {
+public class Wifi implements Bean, LocationBean {
 
 	/** The id. */
 	private int id;
 
 	/** The email. */
-	private String email;
+	private String user;
 
 	/** The ssid. */
 	private String ssid;
@@ -31,6 +31,7 @@ public class Wifi {
 	/** The timestamp. */
 	private Date timestamp;
 
+	@Override
 	public int getId() {
 
 		return id;
@@ -41,14 +42,15 @@ public class Wifi {
 		this.id = id;
 	}
 
-	public String getEmail() {
+	@Override
+	public String getUser() {
 
-		return email;
+		return user;
 	}
 
-	public void setEmail(final String email) {
+	public void setUser(final String user) {
 
-		this.email = email;
+		this.user = user;
 	}
 
 	public String getSsid() {
@@ -91,6 +93,7 @@ public class Wifi {
 		this.frequency = frequency;
 	}
 
+	@Override
 	public Location getLocation() {
 
 		return location;
@@ -101,6 +104,7 @@ public class Wifi {
 		this.location = location;
 	}
 
+	@Override
 	public Date getTimestamp() {
 
 		return timestamp;
@@ -133,12 +137,12 @@ public class Wifi {
 	 * @param timestamp
 	 *            the timestamp
 	 */
-	public Wifi(final int id, final String email, final String ssid,
+	public Wifi(final int id, final String user, final String ssid,
 			final String bssid, final int level, final int frequency,
 			final String latitude, final String longtitude, final Date timestamp) {
 
 		this.id = id;
-		this.email = email;
+		this.user = user;
 		this.ssid = ssid;
 		this.bssid = bssid;
 		this.level = level;
@@ -155,7 +159,7 @@ public class Wifi {
 	@Override
 	public String toString() {
 
-		return "Wifi [id=" + id + ", email=" + email + ", ssid=" + ssid
+		return "Wifi [id=" + id + ", user=" + user + ", ssid=" + ssid
 				+ ", bssid=" + bssid + ", level=" + level + ", frequency="
 				+ frequency + ", location=" + location + ", timestamp="
 				+ timestamp + "]";

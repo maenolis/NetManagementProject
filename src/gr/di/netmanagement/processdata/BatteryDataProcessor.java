@@ -85,8 +85,8 @@ public class BatteryDataProcessor {
 		if (to.before(from)) {
 			return null;
 		}
-		
-		//TODO: fill empty dates with 0.0 levels!!
+
+		// TODO: fill empty dates with 0.0 levels!!
 		TreeMap<String, Integer> retMap = new TreeMap<String, Integer>();
 		// Calendar cal = Calendar.getInstance();
 		for (Object batteryObj : list) {
@@ -94,8 +94,7 @@ public class BatteryDataProcessor {
 			/* if battery is within dates given */
 			if (battery.getTimestamp().after(from)
 					&& battery.getTimestamp().before(to)) {
-				retMap.put(battery.getTimeStampLongString(),
-						battery.getLevel());
+				retMap.put(battery.getTimeStampLongString(), battery.getLevel());
 			}
 		}
 

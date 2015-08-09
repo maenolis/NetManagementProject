@@ -5,13 +5,13 @@ import java.util.Date;
 /**
  * The Class Gps.
  */
-public class Gps {
+public class Gps implements Bean, LocationBean {
 
 	/** The id. */
 	private int id;
 
 	/** The email. */
-	private String email;
+	private String user;
 
 	/** The location. */
 	private Location location;
@@ -19,6 +19,7 @@ public class Gps {
 	/** The timestamp. */
 	private Date timestamp;
 
+	@Override
 	public int getId() {
 
 		return id;
@@ -29,16 +30,18 @@ public class Gps {
 		this.id = id;
 	}
 
-	public String getEmail() {
+	@Override
+	public String getUser() {
 
-		return email;
+		return user;
 	}
 
-	public void setEmail(final String email) {
+	public void setUser(final String user) {
 
-		this.email = email;
+		this.user = user;
 	}
 
+	@Override
 	public Location getLocation() {
 
 		return location;
@@ -49,6 +52,7 @@ public class Gps {
 		this.location = location;
 	}
 
+	@Override
 	public Date getTimestamp() {
 
 		return timestamp;
@@ -73,11 +77,11 @@ public class Gps {
 	 * @param timestamp
 	 *            the timestamp
 	 */
-	public Gps(final int id, final String email, final String latitude,
+	public Gps(final int id, final String user, final String latitude,
 			final String longtitude, final Date timestamp) {
 
 		this.id = id;
-		this.email = email;
+		this.user = user;
 		this.location = new Location(latitude, longtitude);
 		this.timestamp = timestamp;
 	}
@@ -90,7 +94,7 @@ public class Gps {
 	@Override
 	public String toString() {
 
-		return "Gps [id=" + id + ", email=" + email + ", location=" + location
+		return "Gps [id=" + id + ", user=" + user + ", location=" + location
 				+ ", timestamp=" + timestamp + "]";
 	}
 
