@@ -47,29 +47,41 @@ public class Cells extends HttpServlet {
 		dp.readBaseStations();
 		HashMap<String, ArrayList<Object>> bsmap = dp.getBaseStationMap();
 		double latitude, longtitude;
+		String user = (String) request.getSession().getAttribute("user");
+		Object k = null;
 		for (String key : bsmap.keySet()) {
 			ArrayList<Object> list = bsmap.get(key);
-
+			
 			for (Object ap : list) {
+				
 				latitude = ((BaseStation) ap).getLocation().getLatitude();
 				longtitude = ((BaseStation) ap).getLocation().getLongtitude();
 				/* if no location skip */
 				if (latitude == -1.0f && longtitude == -1.0f) {
 					continue;
-				} else
+				} else{
 					dp.getbsLocations().put(key,
 							((BaseStation) list.get(0)).getLocation());
+					k=ap;
+				}
 			}
 		}
-		String user = (String) request.getSession().getAttribute("user");
-		System.out.println(user);
-		System.out.println(dp.getbsLocations().get(user));
+		
 		String url = "/Cells.jsp";
+		String operator = ((BaseStation) k).getOperator();
+		String cid = ((BaseStation) k).getCid();
+		String mcc = ((BaseStation) k).getMcc();
+		String mnc = ((BaseStation) k).getMnc();
+		String lac = ((BaseStation) k).getLac();
 		Double lat = dp.getbsLocations().get(user).getLatitude();
 		Double lon = dp.getbsLocations().get(user).getLongtitude();
+		request.getSession().setAttribute("operator", operator);
+		request.getSession().setAttribute("cid", cid);
+		request.getSession().setAttribute("mcc", mcc);
+		request.getSession().setAttribute("mnc", mnc);
+		request.getSession().setAttribute("lac", lac);
 		request.getSession().setAttribute("latitude", lat);
 		request.getSession().setAttribute("longtitude", lon);
-		// request.getSession().setAttribute("user",user);
 		RequestDispatcher rd = getServletContext().getRequestDispatcher(url);
 		rd.forward(request, response);
 	}

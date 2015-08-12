@@ -22,18 +22,25 @@
         function initialize(){
         	var lon = "${longtitude}";
         	var lat = "${latitude}";
+        	var contentString = '<p> Operator : ${operator} </p>'
+        	+ '<p> Mcc : ${mcc} </p>' + '<p> Mnc : ${mnc} </p>' + '<p> Lac : ${lac} </p>' + '<p> Cid : ${cid} </p>' ;
         	var myLatlng = new google.maps.LatLng(lat,lon);
             var mapOptions = {
-                center: new google.maps.LatLng(38, 23),
+                center: new google.maps.LatLng(lat, lon),
                 zoom: 8,
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             };
             var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+            var infowindow = new google.maps.InfoWindow({
+                content: contentString
+              });
             var marker = new google.maps.Marker({
                 position: myLatlng,
-                map: map,
-                title: 'Hello World!'
+                map: map
             });
+            marker.addListener('click', function() {
+                infowindow.open(map, marker);
+              });
         }
 
         google.maps.event.addDomListener(window, 'load', initialize);
