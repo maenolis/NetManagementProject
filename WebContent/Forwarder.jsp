@@ -17,7 +17,7 @@
 				<li><a href="${pageContext.request.contextPath}/APStickers">Access
 						Points Stickers </a></li>
 				<li><a href="${pageContext.request.contextPath}/GMapRoute">User Route</a></li>
-				<li><a href="${pageContext.request.contextPath}/LowBatteryLevels">Level/Battery Diagram</a></li>
+				<li><a href="${pageContext.request.contextPath}/BatteryTimeLevel">Level/Battery Diagram</a></li>
 				<li><a href="${pageContext.request.contextPath}/Cells">User
 						Connection Cells</a></li>
 			</ul>

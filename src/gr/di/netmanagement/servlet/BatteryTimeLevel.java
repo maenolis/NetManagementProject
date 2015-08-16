@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.TreeMap;
 
@@ -18,7 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebServlet("/BatteryTimeLevels")
+@WebServlet("/BatteryTimeLevel")
 public class BatteryTimeLevel extends HttpServlet {
 
 	/**
@@ -39,23 +40,54 @@ public class BatteryTimeLevel extends HttpServlet {
 
 		DataProcessor dataProcessor = DataProcessor.getInstance(session);
 
-		// TODO: remove, for dev purposes only!
-		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		Date from = null;
-		Date to = null;
+		SimpleDateFormat sf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
+		Calendar calFrom = Calendar.getInstance();
+		Calendar calTo = Calendar.getInstance();
+		String dateF, dateT;
+		Date dateFrom, dateTo;
+		calFrom.set(
+				Integer.valueOf((String) request.getSession().getAttribute(
+						"yearFrom")),
+				Integer.valueOf((String) request.getSession().getAttribute(
+						"monthFrom")) - 1,
+				Integer.valueOf((String) request.getSession().getAttribute(
+						"dayFrom")),
+				Integer.valueOf((String) request.getSession().getAttribute(
+						"hourFrom")),
+				Integer.valueOf((String) request.getSession().getAttribute(
+						"minuteFrom")));
+		dateF = sf.format(calFrom.getTime()); // string format of user selection
+												// "from"
+		calTo.set(
+				Integer.valueOf((String) request.getSession().getAttribute(
+						"yearTo")),
+				Integer.valueOf((String) request.getSession().getAttribute(
+						"monthTo")) - 1,
+				Integer.valueOf((String) request.getSession().getAttribute(
+						"dayTo")),
+				Integer.valueOf((String) request.getSession().getAttribute(
+						"hourTo")),
+				Integer.valueOf((String) request.getSession().getAttribute(
+						"minuteTo")));
+		dateT = sf.format(calTo.getTime()); // string format of user selection
+											// "to"
+
 		try {
-			from = sf.parse("2015-04-01 00:00:00");
-			to = sf.parse("2015-04-20 00:00:00");
+			dateFrom = sf.parse(dateF);
+			dateTo = sf.parse(dateT);
+
+			ArrayList<Object> list = dataProcessor.getBatteryMap().get(
+					session.getAttribute("user"));
+			TreeMap<String, Integer> uMap = BatteryDataProcessor
+					.getUserLevelsWithinDates(dateFrom, dateTo, list);
+			session.setAttribute("batteryTimeLevels",
+					JsArgsProcessor.batteryTimeLevelJsArg(uMap));
+			response.sendRedirect("BatteryTimeLevels.jsp");
 		} catch (ParseException e) {
+
 			e.printStackTrace();
-		}
-		String user = "user31";
-		ArrayList<Object> list = dataProcessor.getBatteryMap().get(user);
-		TreeMap<String, Integer> uMap = BatteryDataProcessor
-				.getUserLevelsWithinDates(from, to, list);
-		session.setAttribute("batteryTimeLevels",
-				JsArgsProcessor.batteryTimeLevelJsArg(uMap));
-		response.sendRedirect("BatteryTimeLevels.jsp");
+		} // User-selected "From Date"
+
 	}
 
 	@Override
