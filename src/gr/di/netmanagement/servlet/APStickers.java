@@ -31,7 +31,6 @@ public class APStickers extends HttpServlet {
 	public APStickers() {
 
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -89,7 +88,6 @@ public class APStickers extends HttpServlet {
 			final HttpServletResponse response) throws ServletException,
 			IOException {
 
-		// TODO Auto-generated method stub
 		String url = "/APStickers.jsp";
 		String user = (String) request.getSession().getAttribute("users");
 		System.out.println(user);

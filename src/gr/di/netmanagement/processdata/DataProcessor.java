@@ -21,7 +21,6 @@ import java.util.HashSet;
 
 import javax.servlet.http.HttpSession;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class DataReader.
  */

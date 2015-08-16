@@ -20,7 +20,6 @@ public class NetManagementProj {
 			System.out.println("year = " + cal.get(Calendar.YEAR));
 
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

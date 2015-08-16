@@ -29,7 +29,6 @@ public class Cells extends HttpServlet {
 	public Cells() {
 
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -83,7 +82,6 @@ public class Cells extends HttpServlet {
 			final HttpServletResponse response) throws ServletException,
 			IOException {
 
-		// TODO Auto-generated method stub
 		String url = "/Cells.jsp";
 		String user = (String) request.getSession().getAttribute("users");
 		System.out.println(user);
