@@ -5,7 +5,11 @@ import gr.di.netmanagement.beans.Wifi;
 import gr.di.netmanagement.processdata.DataProcessor;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -28,55 +32,60 @@ public class APStickers extends HttpServlet {
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public APStickers() {
 
-		super();
-	}
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	@Override
-	@SuppressWarnings("unchecked")
-	protected void doGet(final HttpServletRequest request,
-			final HttpServletResponse response) throws ServletException,
-			IOException {
-
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String url = "/APStickers.jsp";
-		if (request.getSession().getAttribute("length") != null) {
-			List<Double> Longtitudes = (List<Double>) request.getSession()
-					.getAttribute("lon");
-			List<Double> Latitudes = (List<Double>) request.getSession()
-					.getAttribute("lat");
-			int length = (int) request.getSession().getAttribute("length");
-			request.getSession().setAttribute("length", length);
-			request.getSession().setAttribute("lat", Latitudes);
-			request.getSession().setAttribute("lon", Longtitudes);
-		} else {
+		SimpleDateFormat sf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
+		Calendar calFrom = Calendar.getInstance();
+		Calendar calTo = Calendar.getInstance();
+		String dateF, dateT;
+		Date dateFrom, dateTo;
+		calFrom.set(Integer.valueOf((String)request.getSession().getAttribute("yearFrom")), 
+					Integer.valueOf((String)request.getSession().getAttribute("monthFrom"))-1, 
+					Integer.valueOf((String)request.getSession().getAttribute("dayFrom")), 
+					Integer.valueOf((String)request.getSession().getAttribute("hourFrom")), 
+					Integer.valueOf((String)request.getSession().getAttribute("minuteFrom")));
+		dateF = sf.format(calFrom.getTime()); // string format of user selection "from"
+		calTo.set(Integer.valueOf((String)request.getSession().getAttribute("yearTo")), 
+				Integer.valueOf((String)request.getSession().getAttribute("monthTo"))-1, 
+				Integer.valueOf((String)request.getSession().getAttribute("dayTo")), 
+				Integer.valueOf((String)request.getSession().getAttribute("hourTo")), 
+				Integer.valueOf((String)request.getSession().getAttribute("minuteTo")));
+		dateT = sf.format(calTo.getTime()); // string format of user selection "to"
+		try {
+			dateFrom = sf.parse(dateF); // User-selected "From Date" 
+			dateTo = sf.parse(dateT); // User-selected "To Date" 
+
 			HashMap<String, Location> map;
 			HashMap<String, ArrayList<Object>> map2;
-			HttpSession session = request.getSession();
-			DataProcessor dp = DataProcessor.getInstance(session);
+			DataProcessor dp = DataProcessor.getInstance(request.getSession());
 			dp.computeAccessPointsLocation();
 			map = dp.getWifiLocations();
 			map2 = dp.getWifiMap();
 			String user = (String) request.getSession().getAttribute("user");
 			List<Double> Longtitudes = new ArrayList<Double>();
 			List<Double> Latitudes = new ArrayList<Double>();
-			for (String key : map.keySet()) {
-				if (((Wifi) map2.get(key).get(0)).getUser().equals(user)) {
+
+			for(String key : map.keySet()){
+				Date ts=(Date) ((Wifi) map2.get(key).get(0)).getTimestamp();
+				String dsUser=(String) ((Wifi) map2.get(key).get(0)).getUser();
+				if(dsUser.equals(user) && ((ts.after(dateFrom) && ts.before(dateTo)) || ts.equals(dateFrom) || ts.equals(dateTo))){
+
 					Latitudes.add(map.get(key).getLatitude());
 					Longtitudes.add(map.get(key).getLongtitude());
 				}
 			}
 			int length = Latitudes.size();
 			request.getSession().setAttribute("length", length);
-			request.getSession().setAttribute("lat", Latitudes);
-			request.getSession().setAttribute("lon", Longtitudes);
+
+			request.getSession().setAttribute("lat",Latitudes);
+			request.getSession().setAttribute("lon",Longtitudes);
+			RequestDispatcher rd = getServletContext().getRequestDispatcher(url);  
+			rd.forward(request, response);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		RequestDispatcher rd = getServletContext().getRequestDispatcher(url);
-		rd.forward(request, response);
 	}
 
 	/**
