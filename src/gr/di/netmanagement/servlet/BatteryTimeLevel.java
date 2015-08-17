@@ -82,7 +82,7 @@ public class BatteryTimeLevel extends HttpServlet {
 					.getUserLevelsWithinDates(dateFrom, dateTo, list);
 			session.setAttribute("batteryTimeLevels",
 					JsArgsProcessor.batteryTimeLevelJsArg(uMap));
-			response.sendRedirect("BatteryTimeLevels.jsp");
+			response.sendRedirect("BatteryTimeLevel.jsp");
 		} catch (ParseException e) {
 
 			e.printStackTrace();
