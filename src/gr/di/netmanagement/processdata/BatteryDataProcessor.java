@@ -3,6 +3,7 @@ package gr.di.netmanagement.processdata;
 import gr.di.netmanagement.beans.Battery;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -10,11 +11,22 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeMap;
 
+import org.apache.commons.lang3.time.DateUtils;
+
 /**
  * The Class BatteryDataProcessor.
  */
 public class BatteryDataProcessor {
 
+	/**
+	 * Gets the low levels.
+	 *
+	 * @param batteryMap
+	 *            the battery map
+	 * @param size
+	 *            the size
+	 * @return the low levels
+	 */
 	public static TreeMap<String, Float> getLowLevels(
 			final HashMap<String, ArrayList<Object>> batteryMap, final int size) {
 
@@ -72,6 +84,15 @@ public class BatteryDataProcessor {
 		return dateMap;
 	}
 
+	/**
+	 * Round.
+	 *
+	 * @param d
+	 *            the d
+	 * @param decimalPlace
+	 *            the decimal place
+	 * @return the big decimal
+	 */
 	public static BigDecimal round(final float d, final int decimalPlace) {
 
 		BigDecimal bd = new BigDecimal(Float.toString(d));
@@ -79,26 +100,77 @@ public class BatteryDataProcessor {
 		return bd;
 	}
 
+	/**
+	 * Gets the user levels within dates.
+	 *
+	 * @param from
+	 *            the from
+	 * @param to
+	 *            the to
+	 * @param list
+	 *            the list
+	 * @return the user levels within dates
+	 */
 	public static TreeMap<String, Integer> getUserLevelsWithinDates(
 			final Date from, final Date to, final ArrayList<Object> list) {
 
 		if (to.before(from)) {
 			return null;
 		}
-
-		// TODO: fill empty dates with 0.0 levels!!
 		TreeMap<String, Integer> retMap = new TreeMap<String, Integer>();
-		// Calendar cal = Calendar.getInstance();
+
+		Date previous = null;
+
 		for (Object batteryObj : list) {
 			Battery battery = (Battery) batteryObj;
 			/* if battery is within dates given */
 			if (battery.getTimestamp().after(from)
 					&& battery.getTimestamp().before(to)) {
+				if (previous != null
+						&& !areTimesClose(battery.getTimestamp(), previous)) {
+					feelGapsWithZeros(previous, battery.getTimestamp(), retMap);
+				}
 				retMap.put(battery.getTimeStampLongString(), battery.getLevel());
 			}
+			previous = battery.getTimestamp();
 		}
 
 		return retMap;
 
+	}
+
+	/**
+	 * Are times close.
+	 *
+	 * @param date1
+	 *            the date1
+	 * @param date2
+	 *            the date2
+	 * @return true, if successful
+	 */
+	private static boolean areTimesClose(final Date date1, final Date date2) {
+
+		return Math.abs(date1.getTime() - date2.getTime()) < 4 * 60 * 60 * 1000;
+	}
+
+	/**
+	 * Feel gaps with zeros.
+	 *
+	 * @param from
+	 *            the from
+	 * @param to
+	 *            the to
+	 * @param map
+	 *            the map
+	 */
+	private static void feelGapsWithZeros(final Date from, final Date to,
+			final TreeMap<String, Integer> map) {
+
+		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date iterDate = from;
+		while (iterDate.before(to)) {
+			map.put(sf.format(iterDate), 0);
+			iterDate = DateUtils.addMinutes(iterDate, 4 * 60);
+		}
 	}
 }
