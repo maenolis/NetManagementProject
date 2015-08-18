@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * The Class Gps.
  */
-public class Gps implements Bean, LocationBean {
+public class Gps implements LocationBean {
 
 	/** The id. */
 	private int id;

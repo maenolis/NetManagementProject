@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * The Class BaseStation.
  */
-public class BaseStation implements Bean, LocationBean {
+public class BaseStation implements LocationBean {
 
 	/** The id. */
 	private int id;

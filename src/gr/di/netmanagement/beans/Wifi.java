@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * The Class Wifi.
  */
-public class Wifi implements Bean, LocationBean {
+public class Wifi implements LocationBean {
 
 	/** The id. */
 	private int id;
