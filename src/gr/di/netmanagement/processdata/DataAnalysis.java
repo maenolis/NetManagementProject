@@ -14,18 +14,14 @@ import java.util.TreeSet;
  */
 public class DataAnalysis {
 
-	/** The num of stay points. */
-	private int numOfStayPoints;
-
 	/**
 	 * Instantiates a new data analysis.
 	 *
 	 * @param numOfStayPoints
 	 *            the num of stay points
 	 */
-	public DataAnalysis(final int numOfStayPoints) {
-		super();
-		this.numOfStayPoints = numOfStayPoints;
+	public DataAnalysis() {
+
 	}
 
 	/**
@@ -49,10 +45,10 @@ public class DataAnalysis {
 	 *            the max meters
 	 * @return the array list
 	 */
-	public ArrayList<Location> analizeLocations(final Date from, final Date to,
-			final String user, final DataProcessor dataProcessor,
-			final float dMin, final float dMax, final int tMax,
-			final int maxMeters) {
+	public static ArrayList<Location> analizeLocations(final Date from,
+			final Date to, final String user,
+			final DataProcessor dataProcessor, final float dMin,
+			final float dMax, final int tMax, final int maxMeters) {
 
 		ArrayList<Object> currentList = discardFromDateRange(from, to, user,
 				dataProcessor);
@@ -76,7 +72,7 @@ public class DataAnalysis {
 	 *            the data processor
 	 * @return the array list
 	 */
-	private ArrayList<Object> discardFromDateRange(final Date from,
+	private static ArrayList<Object> discardFromDateRange(final Date from,
 			final Date to, final String user, final DataProcessor dataProcessor) {
 
 		if (from.after(to)) {
@@ -120,7 +116,7 @@ public class DataAnalysis {
 	 *            the max meters
 	 * @return the array list
 	 */
-	public ArrayList<Object> discardFromTimeAndSpaceDistance(
+	public static ArrayList<Object> discardFromTimeAndSpaceDistance(
 			final ArrayList<Object> list, final int tMax, final int maxMeters) {
 
 		/* Lists with less than 3 beans check. */
@@ -198,7 +194,7 @@ public class DataAnalysis {
 	 *            the t max
 	 * @return true, if successful
 	 */
-	private boolean timeDistance(final Date date1, final Date date2,
+	private static boolean timeDistance(final Date date1, final Date date2,
 			final int tMax) {
 
 		final long diffInMilliseconds = date1.getTime() - date2.getTime();
@@ -212,7 +208,8 @@ public class DataAnalysis {
 	 *            the list
 	 * @return the array list of centroids' locations
 	 */
-	private ArrayList<Location> calculateCentroids(final ArrayList<Object> list) {
+	private static ArrayList<Location> calculateCentroids(
+			final ArrayList<Object> list) {
 
 		final ArrayList<LocationBean> currentList = new ArrayList<LocationBean>();
 		final ArrayList<Location> centroids = new ArrayList<Location>();
@@ -237,7 +234,7 @@ public class DataAnalysis {
 	 *            the list
 	 * @return the list's centroid location
 	 */
-	private Location calculateCentroid(final ArrayList<LocationBean> list) {
+	private static Location calculateCentroid(final ArrayList<LocationBean> list) {
 
 		double lons = 0.0;
 		double lats = 0.0;
@@ -260,7 +257,7 @@ public class DataAnalysis {
 	 *            the meters limit
 	 * @return true, if successful
 	 */
-	private boolean distanceInMeters(final Location location1,
+	private static boolean distanceInMeters(final Location location1,
 			final Location location2, final int metersLimit) {
 
 		final double lat1 = location1.getLatitude();
@@ -284,13 +281,5 @@ public class DataAnalysis {
 		distance = Math.pow(distance, 2);
 
 		return Math.sqrt(distance) < metersLimit;
-	}
-
-	public int getNumOfStayPoints() {
-		return numOfStayPoints;
-	}
-
-	public void setNumOfStayPoints(final int numOfStayPoints) {
-		this.numOfStayPoints = numOfStayPoints;
 	}
 }
