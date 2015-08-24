@@ -59,6 +59,8 @@ public class DataProcessor {
 	/** The wifi map. */
 	private HashMap<String, ArrayList<Object>> wifiMap;
 
+	private HashMap<String, ArrayList<Object>> wifiPerUserMap;
+
 	/** The wifi readed. */
 	private boolean wifiReaded;
 
@@ -66,7 +68,7 @@ public class DataProcessor {
 	private HashMap<String, Location> wifiLocations;
 
 	/** The base station locations. */
-	private HashMap<String, Location> bsLocations;
+	private HashMap<String, Location> baseStationLocations;
 
 	/** The users set. */
 	private HashSet<String> usersSet;
@@ -142,16 +144,18 @@ public class DataProcessor {
 
 		/* Null pointer prevention. */
 		readBaseStations();
-		return bsLocations;
+		return baseStationLocations;
 	}
 
-	public void setbsLocations(final HashMap<String, Location> bsLocations) {
+	public void setBaseStationLocations(
+			final HashMap<String, Location> bsLocations) {
 
-		this.bsLocations = bsLocations;
+		this.baseStationLocations = bsLocations;
 	}
 
 	public HashSet<String> getUsersSet() {
 
+		/* Null pointer prevention. */
 		readUsers();
 		return usersSet;
 	}
@@ -159,6 +163,18 @@ public class DataProcessor {
 	public void setUsersSet(final HashSet<String> usersSet) {
 
 		this.usersSet = usersSet;
+	}
+
+	public HashMap<String, ArrayList<Object>> getWifiPerUserMap() {
+
+		/* Null pointer prevention. */
+		readWifis();
+		return wifiPerUserMap;
+	}
+
+	public void setWifiPerUserMap(
+			final HashMap<String, ArrayList<Object>> wifiPerUserMap) {
+		this.wifiPerUserMap = wifiPerUserMap;
 	}
 
 	/**
@@ -201,7 +217,7 @@ public class DataProcessor {
 		wifiReaded = false;
 		usersReaded = false;
 		wifiLocations = new HashMap<String, Location>();
-		bsLocations = new HashMap<String, Location>();
+		baseStationLocations = new HashMap<String, Location>();
 		usersSet = new HashSet<String>();
 	}
 
@@ -255,6 +271,7 @@ public class DataProcessor {
 				break;
 			case WIFI:
 				stream = wifiStream;
+				wifiPerUserMap = new HashMap<String, ArrayList<Object>>();
 				break;
 			default:
 				throw new Exception("Wrong FileType given.");
@@ -341,7 +358,7 @@ public class DataProcessor {
 							Integer.valueOf(splittedLine[5]), splittedLine[6],
 							splittedLine[7], date);
 					/* check if key exists */
-					if (!map.containsKey(splittedLine[1])) {
+					if (!map.containsKey(splittedLine[3])) {
 						/* add empty list with first element */
 						ArrayList<Object> list = new ArrayList<Object>();
 						list.add(wifi);
@@ -350,6 +367,17 @@ public class DataProcessor {
 						/* add element to existing list */
 						map.get(splittedLine[3]).add(wifi);
 					}
+
+					if (!wifiPerUserMap.containsKey(splittedLine[1])) {
+						/* add empty list with first element */
+						ArrayList<Object> list = new ArrayList<Object>();
+						list.add(wifi);
+						wifiPerUserMap.put(splittedLine[1], list);
+					} else {
+						/* add element to existing list */
+						wifiPerUserMap.get(splittedLine[1]).add(wifi);
+					}
+
 					break;
 				case GPS:
 					/* split line */

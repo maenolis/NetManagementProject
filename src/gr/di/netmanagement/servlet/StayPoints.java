@@ -42,9 +42,9 @@ public class StayPoints extends HttpServlet {
 		SimpleDateFormat sf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
 		try {
 			System.out.println(DataAnalysis.analizeLocations(
-					sf.parse("01-4-2015 00:00:00"),
-					sf.parse("01-9-2015 00:00:00"), "user31", dataProcessor,
-					60, 100, 1440));
+					sf.parse("01-4-2014 00:00:01"),
+					sf.parse("01-9-2015 00:00:01"), "user31", dataProcessor, 5,
+					100, 30));
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}

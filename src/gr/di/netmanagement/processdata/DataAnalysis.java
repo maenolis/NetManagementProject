@@ -52,7 +52,7 @@ public class DataAnalysis {
 		ArrayList<PointOfInterest> retList = new ArrayList<PointOfInterest>();
 
 		int i = 0;
-		int j;
+		int j = 0;
 		long t;
 		double distance;
 		final int numOfLocations = list.size();
@@ -60,7 +60,9 @@ public class DataAnalysis {
 		LocationBean bean2;
 		ArrayList<LocationBean> tmpList = new ArrayList<LocationBean>();
 
-		while (i < numOfLocations) {
+		while (i < numOfLocations - 1) {
+			System.out.println("i = " + i + " j = " + j + "num = "
+					+ numOfLocations);
 			j = i + 1;
 			while (j < numOfLocations) {
 				bean1 = (LocationBean) list.get(j);
@@ -92,6 +94,9 @@ public class DataAnalysis {
 				}
 				j = j + 1;
 			}
+			if (j == numOfLocations) {
+				break;
+			}
 		}
 
 		return retList;
@@ -121,7 +126,8 @@ public class DataAnalysis {
 		final ArrayList<Object> retList = new ArrayList<Object>();
 
 		/* Get wifi and baseStation lists for given user. */
-		final ArrayList<Object> wifiList = dataProcessor.getWifiMap().get(user);
+		final ArrayList<Object> wifiList = dataProcessor.getWifiPerUserMap()
+				.get(user);
 		System.out.println(wifiList);
 		final ArrayList<Object> baseStationList = dataProcessor
 				.getBaseStationMap().get(user);
@@ -156,7 +162,7 @@ public class DataAnalysis {
 	private static long timeDistance(final Date date1, final Date date2) {
 
 		final long diffInMilliseconds = date1.getTime() - date2.getTime();
-		return Math.abs(diffInMilliseconds);
+		return Math.abs(diffInMilliseconds) / (60 * 1000);
 	}
 
 	/**
