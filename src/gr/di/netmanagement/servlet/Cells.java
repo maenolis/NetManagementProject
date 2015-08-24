@@ -59,7 +59,7 @@ public class Cells extends HttpServlet {
 				if (latitude == -1.0f && longtitude == -1.0f) {
 					continue;
 				} else{
-					dp.getbsLocations().put(key,
+					dp.getBaseStationLocations().put(key,
 							((BaseStation) list.get(0)).getLocation());
 					k=ap;
 				}
@@ -72,8 +72,8 @@ public class Cells extends HttpServlet {
 		String mcc = ((BaseStation) k).getMcc();
 		String mnc = ((BaseStation) k).getMnc();
 		String lac = ((BaseStation) k).getLac();
-		Double lat = dp.getbsLocations().get(user).getLatitude();
-		Double lon = dp.getbsLocations().get(user).getLongtitude();
+		Double lat = dp.getBaseStationLocations().get(user).getLatitude();
+		Double lon = dp.getBaseStationLocations().get(user).getLongtitude();
 		request.getSession().setAttribute("operator", operator);
 		request.getSession().setAttribute("cid", cid);
 		request.getSession().setAttribute("mcc", mcc);
