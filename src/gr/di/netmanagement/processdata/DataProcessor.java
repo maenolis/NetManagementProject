@@ -138,7 +138,7 @@ public class DataProcessor {
 		this.wifiLocations = wifiLocations;
 	}
 
-	public HashMap<String, Location> getbsLocations() {
+	public HashMap<String, Location> getBaseStationLocations() {
 
 		/* Null pointer prevention. */
 		readBaseStations();
