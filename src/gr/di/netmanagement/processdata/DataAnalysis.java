@@ -80,7 +80,10 @@ public class DataAnalysis {
 					t = timeDistance(bean1.getTimestamp(), bean2.getTimestamp());
 					if (t > tMin) {
 						for (int k = i; k < j; k++) {
-							tmpList.add((LocationBean) list.get(k));
+							if (!((LocationBean) list.get(k)).getLocation()
+									.isEmpty()) {
+								tmpList.add((LocationBean) list.get(k));
+							}
 						}
 						PointOfInterest poi = new PointOfInterest(
 								calculateCentroid(tmpList),

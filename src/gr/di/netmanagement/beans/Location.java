@@ -11,6 +11,8 @@ public class Location {
 	/** The longtitude. */
 	private double longtitude;
 
+	private boolean empty;
+
 	public double getLatitude() {
 
 		return latitude;
@@ -32,6 +34,14 @@ public class Location {
 		this.longtitude = longtitude;
 	}
 
+	public boolean isEmpty() {
+		return empty;
+	}
+
+	public void setEmpty(final boolean empty) {
+		this.empty = empty;
+	}
+
 	/**
 	 * Instantiates a new location.
 	 *
@@ -46,9 +56,11 @@ public class Location {
 		if (!(latitude.charAt(0) == 'N') && !(longtitude.charAt(0) == 'N')) {
 			this.latitude = Double.valueOf(latitude);
 			this.longtitude = Double.valueOf(longtitude);
+			this.empty = false;
 		} else {
 			this.latitude = -1.0f;
 			this.longtitude = -1.0f;
+			this.empty = true;
 		}
 	}
 

@@ -43,8 +43,8 @@ public class StayPoints extends HttpServlet {
 		try {
 			System.out.println(DataAnalysis.analizeLocations(
 					sf.parse("01-4-2014 00:00:01"),
-					sf.parse("01-9-2015 00:00:01"), "user31", dataProcessor, 5,
-					100, 30));
+					sf.parse("01-9-2015 00:00:01"), "user31", dataProcessor,
+					0.1f, 100, 10).size());
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
