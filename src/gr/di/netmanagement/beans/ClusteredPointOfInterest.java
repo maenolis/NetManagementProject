@@ -1,6 +1,6 @@
 package gr.di.netmanagement.beans;
 
-public class CLusteredPointOfInterest {
+public class ClusteredPointOfInterest {
 
 	private Location location;
 
@@ -32,7 +32,7 @@ public class CLusteredPointOfInterest {
 		this.southEastBound = southEastBound;
 	}
 
-	public CLusteredPointOfInterest(final Location location,
+	public ClusteredPointOfInterest(final Location location,
 			final Location northWestBound, final Location southEastBound) {
 		super();
 		this.location = location;

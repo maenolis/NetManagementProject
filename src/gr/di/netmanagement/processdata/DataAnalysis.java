@@ -1,7 +1,7 @@
 package gr.di.netmanagement.processdata;
 
 import gr.di.netmanagement.beans.Bean;
-import gr.di.netmanagement.beans.CLusteredPointOfInterest;
+import gr.di.netmanagement.beans.ClusteredPointOfInterest;
 import gr.di.netmanagement.beans.Location;
 import gr.di.netmanagement.beans.LocationBean;
 import gr.di.netmanagement.beans.PointOfInterest;
@@ -210,12 +210,12 @@ public class DataAnalysis {
 				.compute(location1.getPoint(), location2.getPoint());
 	}
 
-	public static ArrayList<CLusteredPointOfInterest> clusteredPointsOfInterest(
+	public static ArrayList<ClusteredPointOfInterest> clusteredPointsOfInterest(
 			final Date from, final Date to, final DataProcessor dataProcessor,
 			final float tMin, final float dMax, final int tMax,
 			final double eps, final int minPts) {
 
-		final ArrayList<CLusteredPointOfInterest> retList = new ArrayList<CLusteredPointOfInterest>();
+		final ArrayList<ClusteredPointOfInterest> retList = new ArrayList<ClusteredPointOfInterest>();
 		final ArrayList<Location> locationList = new ArrayList<Location>();
 
 		final Set<String> users = dataProcessor.getUsersSet();
@@ -238,13 +238,54 @@ public class DataAnalysis {
 
 	}
 
-	private static ArrayList<CLusteredPointOfInterest> analizeClusters(
-			final ArrayList<CLusteredPointOfInterest> retList,
+	private static ArrayList<ClusteredPointOfInterest> analizeClusters(
+			final ArrayList<ClusteredPointOfInterest> retList,
 			final List<Cluster<Location>> clusteredList) {
 
-		// TODO: analizeClusters
-		// median points + bounds
+		for (Cluster<Location> cluster : clusteredList) {
+			ClusteredPointOfInterest cPoi = analizeCluster(cluster);
+			retList.add(cPoi);
+		}
 
 		return retList;
+	}
+
+	private static ClusteredPointOfInterest analizeCluster(
+			final Cluster<Location> cluster) {
+		List<Location> locations = cluster.getPoints();
+		if (locations.size() == 0) {
+			System.out.println("Empty cluster.");
+			return null;
+		}
+		double midLat = 0.0;
+		double midLon = 0.0;
+		double west = locations.get(0).getLatitude();
+		double east = locations.get(0).getLatitude();
+		double north = locations.get(0).getLongtitude();
+		double south = locations.get(0).getLongtitude();
+
+		for (Location location : locations) {
+			midLat += location.getLatitude();
+			midLon += location.getLongtitude();
+			if (west > location.getLongtitude()) {
+				west = location.getLongtitude();
+			}
+			if (east < location.getLongtitude()) {
+				east = location.getLongtitude();
+			}
+			if (north < location.getLatitude()) {
+				north = location.getLatitude();
+			}
+			if (south > location.getLatitude()) {
+				south = location.getLatitude();
+			}
+		}
+
+		midLat = midLat / locations.size();
+		midLon = midLon / locations.size();
+		return new ClusteredPointOfInterest(new Location(
+				String.valueOf(midLat), String.valueOf(midLon)), new Location(
+				String.valueOf(north), String.valueOf(west)), new Location(
+				String.valueOf(south), String.valueOf(east)));
 	}
 }
