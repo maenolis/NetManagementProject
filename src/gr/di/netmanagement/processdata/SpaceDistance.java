@@ -2,10 +2,21 @@ package gr.di.netmanagement.processdata;
 
 import org.apache.commons.math3.ml.distance.DistanceMeasure;
 
+/**
+ * The Class SpaceDistance.
+ */
 public class SpaceDistance implements DistanceMeasure {
 
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.apache.commons.math3.ml.distance.DistanceMeasure#compute(double[],
+	 * double[])
+	 */
 	@Override
 	public double compute(final double[] paramArrayOfDouble1,
 			final double[] paramArrayOfDouble2) {

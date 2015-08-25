@@ -43,11 +43,9 @@ public class DataAnalysis {
 	 *            the d max
 	 * @param tMax
 	 *            the t max
-	 * @param maxMeters
-	 *            the max meters
 	 * @return the array list
 	 */
-	public static ArrayList<PointOfInterest> analizeLocations(final Date from,
+	public static ArrayList<PointOfInterest> analyzeLocations(final Date from,
 			final Date to, final String user,
 			final DataProcessor dataProcessor, final float tMin,
 			final float dMax, final int tMax) {
@@ -210,6 +208,27 @@ public class DataAnalysis {
 				.compute(location1.getPoint(), location2.getPoint());
 	}
 
+	/**
+	 * Clustered points of interest.
+	 *
+	 * @param from
+	 *            the from
+	 * @param to
+	 *            the to
+	 * @param dataProcessor
+	 *            the data processor
+	 * @param tMin
+	 *            the t min
+	 * @param dMax
+	 *            the d max
+	 * @param tMax
+	 *            the t max
+	 * @param eps
+	 *            the eps
+	 * @param minPts
+	 *            the min pts
+	 * @return the array list
+	 */
 	public static ArrayList<ClusteredPointOfInterest> clusteredPointsOfInterest(
 			final Date from, final Date to, final DataProcessor dataProcessor,
 			final float tMin, final float dMax, final int tMax,
@@ -221,7 +240,7 @@ public class DataAnalysis {
 		final Set<String> users = dataProcessor.getUsersSet();
 
 		for (String user : users) {
-			final ArrayList<PointOfInterest> tmpList = analizeLocations(from,
+			final ArrayList<PointOfInterest> tmpList = analyzeLocations(from,
 					to, user, dataProcessor, tMin, dMax, tMax);
 			for (PointOfInterest poi : tmpList) {
 				locationList.add(poi.getLocation());
@@ -234,31 +253,55 @@ public class DataAnalysis {
 		final List<Cluster<Location>> clusteredList = clusterer
 				.cluster(locationList);
 
-		return analizeClusters(retList, clusteredList);
+		return analyzeClusters(retList, clusteredList);
 
 	}
 
-	private static ArrayList<ClusteredPointOfInterest> analizeClusters(
+	/**
+	 * Analize clusters.
+	 *
+	 * @param retList
+	 *            the ret list
+	 * @param clusteredList
+	 *            the clustered list
+	 * @return the array list
+	 */
+	private static ArrayList<ClusteredPointOfInterest> analyzeClusters(
 			final ArrayList<ClusteredPointOfInterest> retList,
 			final List<Cluster<Location>> clusteredList) {
 
 		for (Cluster<Location> cluster : clusteredList) {
-			ClusteredPointOfInterest cPoi = analizeCluster(cluster);
+
+			/* Analyze each cluster individually. */
+			ClusteredPointOfInterest cPoi = analyzeCluster(cluster);
 			retList.add(cPoi);
 		}
 
 		return retList;
 	}
 
-	private static ClusteredPointOfInterest analizeCluster(
+	/**
+	 * Analize cluster.
+	 *
+	 * @param cluster
+	 *            the cluster
+	 * @return the clustered point of interest
+	 */
+	private static ClusteredPointOfInterest analyzeCluster(
 			final Cluster<Location> cluster) {
+
+		/* Cluster's points. */
 		List<Location> locations = cluster.getPoints();
 		if (locations.size() == 0) {
 			System.out.println("Empty cluster.");
 			return null;
 		}
+
+		/* Median points. */
 		double midLat = 0.0;
 		double midLon = 0.0;
+
+		/* Cluster's bounds. */
 		double west = locations.get(0).getLatitude();
 		double east = locations.get(0).getLatitude();
 		double north = locations.get(0).getLongtitude();
@@ -281,6 +324,7 @@ public class DataAnalysis {
 			}
 		}
 
+		/* Compute and create the ClusteredPointOfInterest. */
 		midLat = midLat / locations.size();
 		midLon = midLon / locations.size();
 		return new ClusteredPointOfInterest(new Location(

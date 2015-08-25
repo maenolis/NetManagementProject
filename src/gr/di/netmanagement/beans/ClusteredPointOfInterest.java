@@ -1,11 +1,17 @@
 package gr.di.netmanagement.beans;
 
+/**
+ * The Class ClusteredPointOfInterest.
+ */
 public class ClusteredPointOfInterest {
 
+	/** The location. */
 	private Location location;
 
+	/** The north west bound. */
 	private Location northWestBound;
 
+	/** The south east bound. */
 	private Location southEastBound;
 
 	public Location getLocation() {
@@ -32,6 +38,16 @@ public class ClusteredPointOfInterest {
 		this.southEastBound = southEastBound;
 	}
 
+	/**
+	 * Instantiates a new clustered point of interest.
+	 *
+	 * @param location
+	 *            the location
+	 * @param northWestBound
+	 *            the north west bound
+	 * @param southEastBound
+	 *            the south east bound
+	 */
 	public ClusteredPointOfInterest(final Location location,
 			final Location northWestBound, final Location southEastBound) {
 		super();
@@ -40,6 +56,11 @@ public class ClusteredPointOfInterest {
 		this.southEastBound = southEastBound;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
 		return "CLusteredPointOfInterest [location=" + location

@@ -41,7 +41,7 @@ public class StayPoints extends HttpServlet {
 		DataProcessor dataProcessor = DataProcessor.getInstance(session);
 		SimpleDateFormat sf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
 		try {
-			System.out.println(DataAnalysis.analizeLocations(
+			System.out.println(DataAnalysis.analyzeLocations(
 					sf.parse("01-4-2014 00:00:01"),
 					sf.parse("01-9-2015 00:00:01"), "user31", dataProcessor,
 					0.1f, 100, 10).size());
