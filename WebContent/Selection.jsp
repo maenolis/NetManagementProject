@@ -92,8 +92,18 @@
 	<select name="user" id="user" onchange="" size="1">
 		<c:forEach items="${users}" var="userIterator"> <option value="${userIterator}">${userIterator}</option> </c:forEach>
 	</select>
-	<p>
-	<p>
+	
+	<h4>Select page:</h4>
+	<select name="page" id="page" onchange="" size="1">
+		<option value="APStickers">APStickers</option>
+		<option value="BatteryTimeLevel">BatteryTimeLevel</option>
+		<option value="Cells">Cells</option>
+		<option value="CompanyUsers">Company Users</option>
+		<option value="GMapRoute">GMapRoute</option>
+		<option value="LowLevels">LowLevels</option>
+		<option value="StayPoints">StayPoints</option>
+	</select>
+	
 		<input type="submit" name="submit" value="Submit" />
 		
 	</form>
