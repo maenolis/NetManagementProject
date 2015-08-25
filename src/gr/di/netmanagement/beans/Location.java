@@ -1,14 +1,25 @@
 package gr.di.netmanagement.beans;
 
+import org.apache.commons.math3.ml.clustering.Clusterable;
+
 /**
  * The Class Location.
  */
-public class Location {
+public class Location implements Clusterable {
 
-	/** The latitude. */
+	/**
+	 * The latitude.
+	 * 
+	 * bigger means to the north. less means to the south.
+	 * 
+	 * */
 	private double latitude;
 
-	/** The longtitude. */
+	/**
+	 * The longtitude.
+	 * 
+	 * bigger means to the east. less means to the west.
+	 * */
 	private double longtitude;
 
 	private boolean empty;
@@ -76,6 +87,8 @@ public class Location {
 				+ "]";
 	}
 
+	/* Clusterable interface function. */
+	@Override
 	public double[] getPoint() {
 		double[] retArray = new double[2];
 		retArray[0] = this.getLatitude();

@@ -1,12 +1,18 @@
 package gr.di.netmanagement.processdata;
 
 import gr.di.netmanagement.beans.Bean;
+import gr.di.netmanagement.beans.CLusteredPointOfInterest;
 import gr.di.netmanagement.beans.Location;
 import gr.di.netmanagement.beans.LocationBean;
 import gr.di.netmanagement.beans.PointOfInterest;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
+
+import org.apache.commons.math3.ml.clustering.Cluster;
+import org.apache.commons.math3.ml.clustering.DBSCANClusterer;
 
 /**
  * The Class DataAnalysis.
@@ -199,26 +205,46 @@ public class DataAnalysis {
 	private static double distanceInMeters(final Location location1,
 			final Location location2) {
 
-		final double lat1 = location1.getLatitude();
-		final double lon1 = location1.getLongtitude();
-		final double lat2 = location2.getLatitude();
-		final double lon2 = location2.getLongtitude();
+		final SpaceDistance spaceDistance = new SpaceDistance();
+		return spaceDistance
+				.compute(location1.getPoint(), location2.getPoint());
+	}
 
-		/* Radius of the earth. */
-		final int R = 6371;
+	public static ArrayList<CLusteredPointOfInterest> clusteredPointsOfInterest(
+			final Date from, final Date to, final DataProcessor dataProcessor,
+			final float tMin, final float dMax, final int tMax,
+			final double eps, final int minPts) {
 
-		final Double latDistance = Math.toRadians(lat2 - lat1);
-		final Double lonDistance = Math.toRadians(lon2 - lon1);
-		final Double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
-				+ Math.cos(Math.toRadians(lat1))
-				* Math.cos(Math.toRadians(lat2)) * Math.sin(lonDistance / 2)
-				* Math.sin(lonDistance / 2);
-		final Double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-		/* Convert to meters. */
-		double distance = R * c * 1000;
+		final ArrayList<CLusteredPointOfInterest> retList = new ArrayList<CLusteredPointOfInterest>();
+		final ArrayList<Location> locationList = new ArrayList<Location>();
 
-		distance = Math.pow(distance, 2);
+		final Set<String> users = dataProcessor.getUsersSet();
 
-		return Math.sqrt(distance);
+		for (String user : users) {
+			final ArrayList<PointOfInterest> tmpList = analizeLocations(from,
+					to, user, dataProcessor, tMin, dMax, tMax);
+			for (PointOfInterest poi : tmpList) {
+				locationList.add(poi.getLocation());
+			}
+		}
+
+		final DBSCANClusterer<Location> clusterer = new DBSCANClusterer<Location>(
+				eps, minPts, new SpaceDistance());
+
+		final List<Cluster<Location>> clusteredList = clusterer
+				.cluster(locationList);
+
+		return analizeClusters(retList, clusteredList);
+
+	}
+
+	private static ArrayList<CLusteredPointOfInterest> analizeClusters(
+			final ArrayList<CLusteredPointOfInterest> retList,
+			final List<Cluster<Location>> clusteredList) {
+
+		// TODO: analizeClusters
+		// median points + bounds
+
+		return retList;
 	}
 }

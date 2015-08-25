@@ -193,10 +193,4 @@ public class BaseStation implements LocationBean {
 				+ timestamp + "]";
 	}
 
-	/* Clusterable interface function. */
-	@Override
-	public double[] getPoint() {
-		return this.location.getPoint();
-	}
-
 }
