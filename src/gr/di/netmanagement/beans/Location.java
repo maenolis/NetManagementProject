@@ -75,4 +75,11 @@ public class Location {
 		return "Location [latitude=" + latitude + ", longtitude=" + longtitude
 				+ "]";
 	}
+
+	public double[] getPoint() {
+		double[] retArray = new double[2];
+		retArray[0] = this.getLatitude();
+		retArray[1] = this.getLongtitude();
+		return retArray;
+	}
 }

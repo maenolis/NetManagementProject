@@ -98,4 +98,10 @@ public class Gps implements LocationBean {
 				+ ", timestamp=" + timestamp + "]";
 	}
 
+	/* Clusterable interface function. */
+	@Override
+	public double[] getPoint() {
+		return this.location.getPoint();
+	}
+
 }
