@@ -7,8 +7,18 @@ import java.util.HashMap;
 import java.util.Set;
 import java.util.TreeMap;
 
+/**
+ * The Class BaseStationProcessor.
+ */
 public class BaseStationProcessor {
 
+	/**
+	 * Companies map.
+	 *
+	 * @param baseStationMap
+	 *            the base station map
+	 * @return the tree map
+	 */
 	public static TreeMap<String, Integer> companiesMap(
 			final HashMap<String, ArrayList<Object>> baseStationMap) {
 
@@ -26,6 +36,13 @@ public class BaseStationProcessor {
 		return retMap;
 	}
 
+	/**
+	 * Object array to string.
+	 *
+	 * @param objArray
+	 *            the obj array
+	 * @return the string[]
+	 */
 	public static String[] objectArrayToString(final Object[] objArray) {
 
 		String[] retArray = new String[objArray.length];
@@ -35,6 +52,13 @@ public class BaseStationProcessor {
 		return retArray;
 	}
 
+	/**
+	 * Object array to int.
+	 *
+	 * @param objArray
+	 *            the obj array
+	 * @return the integer[]
+	 */
 	public static Integer[] objectArrayToInt(final Object[] objArray) {
 
 		Integer[] retArray = new Integer[objArray.length];

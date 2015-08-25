@@ -50,11 +50,13 @@ public class DataAnalysis {
 			final DataProcessor dataProcessor, final float tMin,
 			final float dMax, final int tMax) {
 
+		/* Discard entries from date range. */
 		ArrayList<Object> list = discardFromDateRange(from, to, user,
 				dataProcessor);
 
 		ArrayList<PointOfInterest> retList = new ArrayList<PointOfInterest>();
 
+		/* The following section implements the algorithm given. */
 		int i = 0;
 		int j = 0;
 		long t;
@@ -65,34 +67,46 @@ public class DataAnalysis {
 		ArrayList<LocationBean> tmpList = new ArrayList<LocationBean>();
 
 		while (i < numOfLocations - 1) {
-			System.out.println("i = " + i + " j = " + j + "num = "
-					+ numOfLocations);
 			j = i + 1;
 			while (j < numOfLocations) {
+
+				/* Current beans. */
 				bean1 = (LocationBean) list.get(j);
 				bean2 = (LocationBean) list.get(j - 1);
 				t = timeDistance(bean1.getTimestamp(), bean2.getTimestamp());
+
 				if (t > tMax) {
+					/* If time distance exceeds threshold skip. */
 					i = j;
 					break;
 				}
+
 				distance = distanceInMeters(bean1.getLocation(),
 						bean2.getLocation());
 				if (distance > dMax) {
+					/*
+					 * If distance exceeds threshold compute current point of
+					 * interest.
+					 */
 					bean1 = (LocationBean) list.get(i);
 					bean2 = (LocationBean) list.get(j - 1);
 					t = timeDistance(bean1.getTimestamp(), bean2.getTimestamp());
 					if (t > tMin) {
+						/* If time in stay point exceeds the minimum threshold. */
 						for (int k = i; k < j; k++) {
 							if (!((LocationBean) list.get(k)).getLocation()
 									.isEmpty()) {
 								tmpList.add((LocationBean) list.get(k));
 							}
 						}
+
+						/* Calculated point of interest. */
 						PointOfInterest poi = new PointOfInterest(
 								calculateCentroid(tmpList),
 								((LocationBean) list.get(i)).getTimestamp(),
 								((LocationBean) list.get(j - 1)).getTimestamp());
+
+						/* Temporary list emptying. */
 						tmpList.clear();
 						retList.add(poi);
 					}
@@ -102,6 +116,7 @@ public class DataAnalysis {
 				j = j + 1;
 			}
 			if (j == numOfLocations) {
+				/* End of calculations. */
 				break;
 			}
 		}
@@ -187,6 +202,8 @@ public class DataAnalysis {
 			lons += locationBean.getLocation().getLongtitude();
 			lats += locationBean.getLocation().getLatitude();
 		}
+
+		/* Return new location with median points. */
 		return new Location(String.valueOf(lats / list.size()),
 				String.valueOf(lons / list.size()));
 	}
@@ -234,11 +251,15 @@ public class DataAnalysis {
 			final float tMin, final float dMax, final int tMax,
 			final double eps, final int minPts) {
 
+		/* Second level clustering locations. */
 		final ArrayList<ClusteredPointOfInterest> retList = new ArrayList<ClusteredPointOfInterest>();
+
+		/* First level clustering locations. */
 		final ArrayList<Location> locationList = new ArrayList<Location>();
 
 		final Set<String> users = dataProcessor.getUsersSet();
 
+		/* Collect data for all users. */
 		for (String user : users) {
 			final ArrayList<PointOfInterest> tmpList = analyzeLocations(from,
 					to, user, dataProcessor, tMin, dMax, tMax);
@@ -247,12 +268,14 @@ public class DataAnalysis {
 			}
 		}
 
+		/* Clusterer with space distance. */
 		final DBSCANClusterer<Location> clusterer = new DBSCANClusterer<Location>(
 				eps, minPts, new SpaceDistance());
 
 		final List<Cluster<Location>> clusteredList = clusterer
 				.cluster(locationList);
 
+		/* Return analyzed cluster list. */
 		return analyzeClusters(retList, clusteredList);
 
 	}

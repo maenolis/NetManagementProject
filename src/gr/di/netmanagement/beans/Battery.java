@@ -1,6 +1,5 @@
 package gr.di.netmanagement.beans;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -158,14 +157,5 @@ public class Battery implements Bean {
 		return "Battery [id=" + id + ", user=" + user + ", level=" + level
 				+ ", plugged=" + plugged + ", temperature=" + temperature
 				+ ", voltage=" + voltage + ", timestamp=" + timestamp + "]";
-	}
-
-	public static void main(final String[] args) throws ParseException {
-
-		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-		Battery bat = new Battery(0, null, 0, 0, 0, 0,
-				sf.parse("1818-11-11 12:12:12"));
-		System.out.println(bat.getTimestampShortString());
 	}
 }

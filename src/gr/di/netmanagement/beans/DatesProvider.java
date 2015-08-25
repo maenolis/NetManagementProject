@@ -3,7 +3,7 @@ package gr.di.netmanagement.beans;
 import java.util.ArrayList;
 
 /**
- * The Class DatesProvider.
+ * The Class DatesProvider for servlets' forms.
  */
 public class DatesProvider {
 

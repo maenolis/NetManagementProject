@@ -96,6 +96,7 @@ public class BaseStation implements LocationBean {
 		this.user = user;
 	}
 
+	/* Enhanced getter for operator due to data inconsistency. */
 	public String getOperator() {
 
 		String tmp = operator.toLowerCase();

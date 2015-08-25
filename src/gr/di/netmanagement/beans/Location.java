@@ -3,7 +3,7 @@ package gr.di.netmanagement.beans;
 import org.apache.commons.math3.ml.clustering.Clusterable;
 
 /**
- * The Class Location.
+ * The Class Location. Cluserable interface implemented for DBSCAN clusterer.
  */
 public class Location implements Clusterable {
 
