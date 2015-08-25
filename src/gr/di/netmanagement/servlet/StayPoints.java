@@ -37,6 +37,7 @@ public class StayPoints extends HttpServlet {
 			final HttpServletResponse response) throws ServletException,
 			IOException {
 
+		// TODO: Selection first.
 		final HttpSession session = request.getSession();
 		DataProcessor dataProcessor = DataProcessor.getInstance(session);
 		SimpleDateFormat sf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");

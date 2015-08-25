@@ -57,11 +57,15 @@ public class LowLevels extends HttpServlet {
 		HttpSession session = request.getSession();
 		DataProcessor dataProcessor = DataProcessor.getInstance(session);
 
+		/* Get percentages map. */
 		TreeMap<String, Float> percentagesMap = BatteryDataProcessor
 				.getLowLevels(dataProcessor.getBatteryMap(), dataProcessor
 						.getUsersSet().size());
+
+		/* Adding transformed percentages map(JSONArray) in session. */
 		JSONArray jsArray = JsArgsProcessor.lowLevelsJsArg(percentagesMap);
 		session.setAttribute("lowLevelsPercentages", jsArray);
+
 		response.sendRedirect("LowLevels.jsp");
 	}
 

@@ -54,6 +54,8 @@ public class CompanyUsers extends HttpServlet {
 
 		HttpSession session = request.getSession();
 		DataProcessor dataProcessor = DataProcessor.getInstance(session);
+
+		/* Adding companies map in session. */
 		TreeMap<String, Integer> cMap = BaseStationProcessor
 				.companiesMap(dataProcessor.getBaseStationMap());
 		session.setAttribute("companyUsers",

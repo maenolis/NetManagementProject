@@ -36,6 +36,7 @@ public class Selection extends HttpServlet {
 			final HttpServletResponse response) throws ServletException,
 			IOException {
 
+		// TODO: BootStrap in jsp!!!!
 		HttpSession session = request.getSession();
 
 		if (session.getAttribute("days") == null) {
@@ -54,7 +55,6 @@ public class Selection extends HttpServlet {
 			session.setAttribute("users", DataProcessor.getInstance(session)
 					.getUsersSet());
 		}
-		
 
 		response.sendRedirect("Selection.jsp");
 	}
