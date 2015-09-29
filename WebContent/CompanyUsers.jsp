@@ -22,6 +22,7 @@
 				<li><a href="${pageContext.request.contextPath}/GMapRoute">User Route</a></li>
 				<li><a href="${pageContext.request.contextPath}/BatteryTimeLevel">Level/Battery Diagram</a></li>
 				<li><a href="${pageContext.request.contextPath}/Cells">User Connection Cells</a></li>
+				<li><a href="${pageContext.request.contextPath}/LowLevels">Low Levels</a></li>
 			</ul>
 </div>
 

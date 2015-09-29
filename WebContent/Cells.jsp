@@ -19,7 +19,9 @@
 <script>
 	function initialize() {
 
-		var array = <%out.print(session.getAttribute("baseStations"));%>;
+		var array =
+<%out.print(session.getAttribute("baseStations"));%>
+	;
 		console.log("test!!");
 		console.log(array[0]["lat"]);
 		console.log(array[0].lat);
@@ -30,33 +32,31 @@
 		};
 		var map = new google.maps.Map(document.getElementById("map-canvas"),
 				mapOptions);
-		
-
-		
 
 		for (var i = 0; i < array.length; i++) {
 			var lon = array[i].lon;
 			var lat = array[i].lat;
 			var contentString = '<p> Operator :' + array[i].operator + '</p>'
-					+ '<p> Mcc : ' + array[i].mcc + ' </p>' + '<p> Mnc : ' + array[i].mnc + ' </p>'
-					+ '<p> Lac : ' + array[i].lac + ' </p>' + '<p> Cid : ' + array[i].cid + ' </p>';
+					+ '<p> Mcc : ' + array[i].mcc + ' </p>' + '<p> Mnc : '
+					+ array[i].mnc + ' </p>' + '<p> Lac : ' + array[i].lac
+					+ ' </p>' + '<p> Cid : ' + array[i].cid + ' </p>';
 			var myLatlng = new google.maps.LatLng(array[i].lat, array[i].lon);
 
 			var infowindow = new google.maps.InfoWindow({
 				content : contentString
 			});
-			
+
 			var marker = new google.maps.Marker({
 				position : myLatlng,
 				map : map,
 				html : contentString
 			});
-			
-			google.maps.event.addListener(marker, 'click', function () {
-				
+
+			google.maps.event.addListener(marker, 'click', function() {
+
 				infowindow.setContent(this.html);
 				infowindow.open(map, this);
-				});
+			});
 		}
 
 	}
@@ -67,21 +67,16 @@
 
 <body>
 	<form action="${pageContext.request.contextPath}/Cells" method="post">
-		<div class="container">
+	<div class="container">
 			<ul class="nav nav-tabs nav-justified">
-				<li><a href="${pageContext.request.contextPath}/Selection">Start
-						Page </a></li>
-				<li><a href="${pageContext.request.contextPath}/APStickers">Access
-						Points Stickers </a></li>
-				<li><a href="${pageContext.request.contextPath}/GMapRoute">User
-						Route</a></li>
-				<li><a
-					href="${pageContext.request.contextPath}/BatteryTimeLevel">Level/Battery
-						Diagram</a></li>
-				<li><a href="${pageContext.request.contextPath}/Cells">User
-						Connection Cells</a></li>
+			<li><a href="${pageContext.request.contextPath}/Selection">Start Page </a></li>
+				<li><a href="${pageContext.request.contextPath}/APStickers">Access Points Stickers </a></li>
+				<li><a href="${pageContext.request.contextPath}/GMapRoute">User Route</a></li>
+				<li><a href="${pageContext.request.contextPath}/BatteryTimeLevel">Level/Battery Diagram</a></li>
+				<li><a href="${pageContext.request.contextPath}/Cells">User Connection Cells</a></li>
+				<li><a href="${pageContext.request.contextPath}/LowLevels">Low Levels</a></li>
 			</ul>
-		</div>
+	</div>
 		<div id="map-canvas"></div>
 		</div>
 	</form>
