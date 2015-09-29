@@ -53,6 +53,7 @@ public class CompanyUsers extends HttpServlet {
 			IOException {
 
 		HttpSession session = request.getSession();
+		session.setAttribute("page", "CompanyUsers");
 		DataProcessor dataProcessor = DataProcessor.getInstance(session);
 
 		/* Adding companies map in session. */
@@ -61,7 +62,7 @@ public class CompanyUsers extends HttpServlet {
 		session.setAttribute("companyUsers",
 				JsArgsProcessor.companyUsersJsArg(cMap));
 
-		response.sendRedirect("CompanyUsers.jsp");
+		response.sendRedirect((String) session.getAttribute("page") + ".jsp");
 
 	}
 

@@ -55,6 +55,7 @@ public class LowLevels extends HttpServlet {
 			IOException {
 
 		HttpSession session = request.getSession();
+		session.setAttribute("page", "LowLevels");
 		DataProcessor dataProcessor = DataProcessor.getInstance(session);
 
 		/* Get percentages map. */
@@ -66,7 +67,7 @@ public class LowLevels extends HttpServlet {
 		JSONArray jsArray = JsArgsProcessor.lowLevelsJsArg(percentagesMap);
 		session.setAttribute("lowLevelsPercentages", jsArray);
 
-		response.sendRedirect("LowLevels.jsp");
+		response.sendRedirect((String) session.getAttribute("page") + ".jsp");
 	}
 
 	/**

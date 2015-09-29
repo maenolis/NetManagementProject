@@ -1,13 +1,19 @@
 package gr.di.netmanagement.processdata;
 
+import gr.di.netmanagement.beans.BaseStation;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Set;
 import java.util.TreeMap;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * The Class JsArgsProcessor.
@@ -84,9 +90,10 @@ public class JsArgsProcessor {
 		return retArray;
 	}
 
-	public static JSONArray batteryTimeLevelJsArg(final TreeMap<String, Integer> uMap) {
+	public static JSONArray batteryTimeLevelJsArg(
+			final TreeMap<String, Integer> uMap) {
 		JSONArray retArray = new JSONArray();
-		
+
 		Set<String> keys = uMap.keySet();
 		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		GregorianCalendar gc = new GregorianCalendar();
@@ -107,7 +114,43 @@ public class JsArgsProcessor {
 				e.printStackTrace();
 			}
 		}
-		
+
+		return retArray;
+	}
+
+	public static JSONArray cellsJsArg(final ArrayList<Object> baseStations,
+			final Date from, final Date to) {
+
+		JSONArray retArray = new JSONArray();
+
+		for (Object baseStationObj : baseStations) {
+			BaseStation baseStation = (BaseStation) baseStationObj;
+			if (baseStation.getTimestamp().before(from)
+					|| baseStation.getTimestamp().after(to)
+					|| baseStation.getLocation().getLatitude() < 0.0f
+					|| baseStation.getLocation().getLongtitude() < 0.0f) {
+				continue;
+			}
+			JSONObject jsObject = new JSONObject();
+			try {
+
+				jsObject.put("id", baseStation.getId());
+				jsObject.put("cid", baseStation.getCid());
+				jsObject.put("lac", baseStation.getLac());
+				jsObject.put("lat", baseStation.getLocation().getLatitude());
+				jsObject.put("lon", baseStation.getLocation().getLongtitude());
+				jsObject.put("mcc", baseStation.getMcc());
+				jsObject.put("mnc", baseStation.getMnc());
+				jsObject.put("operator", baseStation.getOperator());
+				jsObject.put("timestamp", baseStation.getTimestamp());
+				jsObject.put("user", baseStation.getUser());
+			} catch (JSONException e) {
+
+				e.printStackTrace();
+			}
+			retArray.put(jsObject);
+		}
+
 		return retArray;
 	}
 }

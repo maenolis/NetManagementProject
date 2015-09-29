@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.TreeMap;
 
@@ -37,56 +36,25 @@ public class BatteryTimeLevel extends HttpServlet {
 			IOException {
 
 		HttpSession session = request.getSession();
-
+		session.setAttribute("page", "BatteryTimeLevel");
 		DataProcessor dataProcessor = DataProcessor.getInstance(session);
-
-		SimpleDateFormat sf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
-		Calendar calFrom = Calendar.getInstance();
-		Calendar calTo = Calendar.getInstance();
-		String dateF, dateT;
+		SimpleDateFormat sf = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
 		Date dateFrom, dateTo;
-		calFrom.set(
-				Integer.valueOf((String) request.getSession().getAttribute(
-						"yearFrom")),
-				Integer.valueOf((String) request.getSession().getAttribute(
-						"monthFrom")) - 1,
-				Integer.valueOf((String) request.getSession().getAttribute(
-						"dayFrom")),
-				Integer.valueOf((String) request.getSession().getAttribute(
-						"hourFrom")),
-				Integer.valueOf((String) request.getSession().getAttribute(
-						"minuteFrom")));
-		dateF = sf.format(calFrom.getTime()); // string format of user selection
-												// "from"
-		calTo.set(
-				Integer.valueOf((String) request.getSession().getAttribute(
-						"yearTo")),
-				Integer.valueOf((String) request.getSession().getAttribute(
-						"monthTo")) - 1,
-				Integer.valueOf((String) request.getSession().getAttribute(
-						"dayTo")),
-				Integer.valueOf((String) request.getSession().getAttribute(
-						"hourTo")),
-				Integer.valueOf((String) request.getSession().getAttribute(
-						"minuteTo")));
-		dateT = sf.format(calTo.getTime()); // string format of user selection
-											// "to"
-
 		try {
-			dateFrom = sf.parse(dateF);
-			dateTo = sf.parse(dateT);
-
+			dateFrom = sf.parse((String) session.getAttribute("dateFrom"));
+			dateTo = sf.parse((String) session.getAttribute("dateTo"));
 			ArrayList<Object> list = dataProcessor.getBatteryMap().get(
 					session.getAttribute("user"));
 			TreeMap<String, Integer> uMap = BatteryDataProcessor
 					.getUserLevelsWithinDates(dateFrom, dateTo, list);
 			session.setAttribute("batteryTimeLevels",
 					JsArgsProcessor.batteryTimeLevelJsArg(uMap));
-			response.sendRedirect("BatteryTimeLevel.jsp");
+			response.sendRedirect((String) session.getAttribute("page")
+					+ ".jsp");
 		} catch (ParseException e) {
 
 			e.printStackTrace();
-		} // User-selected "From Date"
+		}
 
 	}
 

@@ -1,9 +1,9 @@
 package gr.di.netmanagement.servlet;
 
-import gr.di.netmanagement.beans.DatesProvider;
 import gr.di.netmanagement.processdata.DataProcessor;
 
 import java.io.IOException;
+import java.util.TreeSet;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -36,27 +36,14 @@ public class Selection extends HttpServlet {
 			final HttpServletResponse response) throws ServletException,
 			IOException {
 
-		// TODO: BootStrap in jsp!!!!
 		HttpSession session = request.getSession();
-
-		if (session.getAttribute("days") == null) {
-			session.setAttribute("days", DatesProvider.getDays());
-		}
-		if (session.getAttribute("months") == null) {
-			session.setAttribute("months", DatesProvider.getMonths());
-		}
-		if (session.getAttribute("hours") == null) {
-			session.setAttribute("hours", DatesProvider.getHours());
-		}
-		if (session.getAttribute("minutes") == null) {
-			session.setAttribute("minutes", DatesProvider.getMinutes());
-		}
+		session.setAttribute("page", "Selection");
 		if (session.getAttribute("users") == null) {
-			session.setAttribute("users", DataProcessor.getInstance(session)
-					.getUsersSet());
+			session.setAttribute("users", new TreeSet<String>(DataProcessor
+					.getInstance(session).getUsersSet()));
 		}
 
-		response.sendRedirect("Selection.jsp");
+		response.sendRedirect((String) session.getAttribute("page") + ".jsp");
 	}
 
 	/**

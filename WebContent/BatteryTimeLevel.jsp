@@ -15,15 +15,14 @@
 <body>
 
 	<div class="container">
-		<ul class="nav nav-tabs nav-justified">
-			<li><a href="/NetManagementProject/APStickers.jsp">Access
-					Points Stickers </a></li>
-			<li><a href="/NetManagementProject/GMapRoute.jsp">User Route</a></li>
-			<li class="active"><a href="#">Level/Battery Diagram</a></li>
-			<li><a href="/NetManagementProject/Cells.jsp">User
-					Connection Cells</a></li>
-		</ul>
-	</div>
+			<ul class="nav nav-tabs nav-justified">
+			<li><a href="${pageContext.request.contextPath}/Selection">Start Page </a></li>
+				<li><a href="${pageContext.request.contextPath}/APStickers">Access Points Stickers </a></li>
+				<li><a href="${pageContext.request.contextPath}/GMapRoute">User Route</a></li>
+				<li><a href="${pageContext.request.contextPath}/BatteryTimeLevel">Level/Battery Diagram</a></li>
+				<li><a href="${pageContext.request.contextPath}/Cells">User Connection Cells</a></li>
+			</ul>
+</div>
 
 	
 	<div id="chart_div" style="margin-left:100px;margin-top:100px;"></div>

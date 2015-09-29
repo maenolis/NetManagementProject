@@ -14,14 +14,13 @@
 	<body>
 		<div class="container">
 			<ul class="nav nav-tabs nav-justified">
-				<li><a href="${pageContext.request.contextPath}/APStickers">Access
-						Points Stickers </a></li>
+			<li><a href="${pageContext.request.contextPath}/Selection">Start Page </a></li>
+				<li><a href="${pageContext.request.contextPath}/APStickers">Access Points Stickers </a></li>
 				<li><a href="${pageContext.request.contextPath}/GMapRoute">User Route</a></li>
 				<li><a href="${pageContext.request.contextPath}/BatteryTimeLevel">Level/Battery Diagram</a></li>
-				<li><a href="${pageContext.request.contextPath}/Cells">User
-						Connection Cells</a></li>
+				<li><a href="${pageContext.request.contextPath}/Cells">User Connection Cells</a></li>
 			</ul>
-		</div>
+</div>
 		<h3>Please choose from the list. Forwarder will redirect you!</h3>
 	</body>
 </html>

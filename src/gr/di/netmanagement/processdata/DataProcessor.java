@@ -205,6 +205,8 @@ public class DataProcessor {
 				gpsStream.close();
 				wifiStream.close();
 			} catch (IOException e1) {
+				System.err
+						.println("Streams were not read correctly. Check if access is lost with Tomcat server.");
 				e1.printStackTrace();
 			}
 			e.printStackTrace();

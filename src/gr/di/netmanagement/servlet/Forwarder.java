@@ -45,18 +45,13 @@ public class Forwarder extends HttpServlet {
 			IOException {
 
 		HttpSession session = request.getSession();
-		session.setAttribute("minuteFrom", request.getParameter("minuteFrom"));
-		session.setAttribute("hourFrom", request.getParameter("hourFrom"));
-		session.setAttribute("dayFrom", request.getParameter("dayFrom"));
-		session.setAttribute("monthFrom", request.getParameter("monthFrom"));
-		session.setAttribute("yearFrom", request.getParameter("yearFrom"));
-		session.setAttribute("minuteTo", request.getParameter("minuteTo"));
-		session.setAttribute("hourTo", request.getParameter("hourTo"));
-		session.setAttribute("dayTo", request.getParameter("dayTo"));
-		session.setAttribute("monthTo", request.getParameter("monthTo"));
-		session.setAttribute("yearTo", request.getParameter("yearTo"));
-		session.setAttribute("user", request.getParameter("user"));
-		response.sendRedirect("Forwarder.jsp");
+		// TODO!!!
+		// session.setAttribute("dateFrom", request.getParameter("dateFrom"));
+		// session.setAttribute("dateTo", request.getAttribute("dateTo"));
+		session.setAttribute("dateFrom", "2015/01/01 00:00:00");
+		session.setAttribute("dateTo", "2015/08/01 00:00:00");
+		session.setAttribute("user", "user31");
+		session.setAttribute("page", request.getParameter("page"));
+		response.sendRedirect(request.getParameter("page"));
 	}
-
 }
