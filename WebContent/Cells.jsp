@@ -20,11 +20,8 @@
 	function initialize() {
 
 		var array =
-<%out.print(session.getAttribute("baseStations"));%>
+<%out.print(session.getAttribute("cells"));%>
 	;
-		console.log("test!!");
-		console.log(array[0]["lat"]);
-		console.log(array[0].lat);
 		var mapOptions = {
 			center : new google.maps.LatLng(array[0].lat, array[0].lon),
 			zoom : 8,

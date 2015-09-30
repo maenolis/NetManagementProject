@@ -7,6 +7,18 @@ import java.util.Date;
  */
 public class Wifi implements LocationBean {
 
+	public Wifi(final Wifi wifi) {
+
+		this.id = wifi.getId();
+		this.user = wifi.getUser();
+		this.ssid = wifi.getSsid();
+		this.bssid = wifi.getBssid();
+		this.level = wifi.getLevel();
+		this.frequency = wifi.getFrequency();
+		this.location = wifi.getLocation();
+		this.timestamp = wifi.getTimestamp();
+	}
+
 	/** The id. */
 	private int id;
 

@@ -3,6 +3,7 @@ package gr.di.netmanagement.processdata;
 import gr.di.netmanagement.beans.BaseStation;
 import gr.di.netmanagement.beans.ClusteredPointOfInterest;
 import gr.di.netmanagement.beans.PointOfInterest;
+import gr.di.netmanagement.beans.Wifi;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeMap;
 
@@ -243,6 +245,31 @@ public class JsArgsProcessor {
 				clusterJs.put("midLat", cluster.getLocation().getLatitude());
 				clusterJs.put("midLon", cluster.getLocation().getLongtitude());
 				retArray.put(clusterJs);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return retArray;
+	}
+
+	public static JSONArray apStickersJs(final List<Wifi> apStickers) {
+
+		JSONArray retArray = new JSONArray();
+
+		if (apStickers == null || apStickers.size() == 0) {
+			return retArray;
+		}
+
+		for (Wifi apSticker : apStickers) {
+			JSONObject stickerJs = new JSONObject();
+			try {
+				stickerJs.put("bssid", apSticker.getBssid());
+				stickerJs.put("lat", apSticker.getLocation().getLatitude());
+				stickerJs.put("lon", apSticker.getLocation().getLongtitude());
+				stickerJs.put("midLevel", apSticker.getLevel());
+				stickerJs.put("ssid", apSticker.getSsid());
+				retArray.put(stickerJs);
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}

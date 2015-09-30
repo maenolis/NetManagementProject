@@ -1,15 +1,14 @@
 package gr.di.netmanagement.servlet;
 
-import gr.di.netmanagement.beans.Location;
 import gr.di.netmanagement.beans.Wifi;
 import gr.di.netmanagement.processdata.DataProcessor;
+import gr.di.netmanagement.processdata.JsArgsProcessor;
+import gr.di.netmanagement.processdata.WifiDataProcessor;
 
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -18,6 +17,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.json.JSONArray;
 
 /**
  * Servlet implementation class APStickers.
@@ -51,6 +52,8 @@ public class APStickers extends HttpServlet {
 
 		Date dateFrom, dateTo;
 		HttpSession session = request.getSession();
+		DataProcessor dataProcessor = DataProcessor.getInstance(session);
+		String user = (String) session.getAttribute("user");
 		session.setAttribute("page", "APStickers");
 
 		try {
@@ -59,33 +62,12 @@ public class APStickers extends HttpServlet {
 
 			dateTo = sf.parse((String) session.getAttribute("dateTo"));
 
-			HashMap<String, Location> wifiLocationsMap;
-			HashMap<String, ArrayList<Object>> wifiMap;
-			DataProcessor dp = DataProcessor.getInstance(request.getSession());
-			dp.computeAccessPointsLocation();
-			wifiLocationsMap = dp.getWifiLocations();
-			wifiMap = dp.getWifiMap();
-			String user = (String) request.getSession().getAttribute("user");
-			List<Double> Longtitudes = new ArrayList<Double>();
-			List<Double> Latitudes = new ArrayList<Double>();
+			List<Wifi> apStickers = WifiDataProcessor.getUserApStickers(
+					dataProcessor, user, dateFrom, dateTo);
 
-			// TODO: Implement in dataProcessor.
-			for (String key : wifiLocationsMap.keySet()) {
-				Date ts = ((Wifi) wifiMap.get(key).get(0)).getTimestamp();
-				String dsUser = ((Wifi) wifiMap.get(key).get(0)).getUser();
-				if (dsUser.equals(user)
-						&& ((ts.after(dateFrom) && ts.before(dateTo))
-								|| ts.equals(dateFrom) || ts.equals(dateTo))) {
+			JSONArray apStickersJs = JsArgsProcessor.apStickersJs(apStickers);
+			session.setAttribute("apStickers", apStickersJs);
 
-					Latitudes.add(wifiLocationsMap.get(key).getLatitude());
-					Longtitudes.add(wifiLocationsMap.get(key).getLongtitude());
-				}
-			}
-			int length = Latitudes.size();
-			request.getSession().setAttribute("length", length);
-
-			request.getSession().setAttribute("lat", Latitudes);
-			request.getSession().setAttribute("lon", Longtitudes);
 			response.sendRedirect((String) session.getAttribute("page")
 					+ ".jsp");
 		} catch (ParseException e) {

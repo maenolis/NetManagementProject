@@ -19,37 +19,47 @@
     <title>Access Points Stickers</title>
     
     <script>
-		var num_markers = "${length}"
+    
+    var array = <%out.print(session.getAttribute("apStickers"));%>;
+		
         function initialize(){
-			var lats = [];
-			<c:forEach var="lat" items="${lat}"> 
-            	lats.push("${lat}");
-        	</c:forEach>
-        	var longs = [];
-        	<c:forEach var="lon" items="${lon}"> 
-        		longs.push("${lon}");
-    		</c:forEach>
-    		
-            var mapOptions = {
-                center: new google.maps.LatLng(lats[0], longs[0]),
+			var mapOptions = {
+                center: new google.maps.LatLng(array[0].lat, array[0].lon),
                 zoom: 11,
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             };
             var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
-            var marker, i;
             
-            for (i = 0; i < num_markers; i++) {
-            	var myLatlng = new google.maps.LatLng(lats[i],longs[i]);
-                marker = new google.maps.Marker({
-                  position: myLatlng,
-                  map: map,
-                });
-              
+            for (var i = 0; i < array.length; i++) {
+    			var lon = array[i].lon;
+    			var lat = array[i].lat;
+    			var bssid = array[i].bssid;
+    			var midLevel = array[i].midLevel;
+    			var ssid = array[i].ssid;
+    			var contentString = '<p> bssid :' + bssid + '</p>'
+    					+ '<p> ssid :' + ssid + '</p>'
+    					+ '<p> midLevel : ' + midLevel + ' </p>';
+    			var myLatlng = new google.maps.LatLng(lat, lon);
 
-              }   
+    			var infowindow = new google.maps.InfoWindow({
+    				content : contentString
+    			});
+
+    			var marker = new google.maps.Marker({
+    				position : myLatlng,
+    				map : map,
+    				html : contentString
+    			});
+
+    			google.maps.event.addListener(marker, 'click', function() {
+
+    				infowindow.setContent(this.html);
+    				infowindow.open(map, this);
+    			});
+    		}   
         }
 
-        if(num_markers!=0) google.maps.event.addDomListener(window, 'load', initialize);
+        if(array.length != 0) google.maps.event.addDomListener(window, 'load', initialize);
         else window.alert("No Access Points for this user.");
         
         
