@@ -64,16 +64,16 @@
 
 <div class="container">
 			<ul class="nav nav-tabs nav-justified">
-			<li><a href="${pageContext.request.contextPath}/Selection">Start Page </a></li>
-				<li><a href="${pageContext.request.contextPath}/APStickers">Access Points Stickers </a></li>
-				<li><a href="${pageContext.request.contextPath}/GMapRoute">User Route</a></li>
-				<li><a href="${pageContext.request.contextPath}/BatteryTimeLevel">Level/Battery Diagram</a></li>
-				<li><a href="${pageContext.request.contextPath}/Cells">User Connection Cells</a></li>
+			<li><a href="${pageContext.request.contextPath}/Selection">Home</a></li>
+				<li><a href="${pageContext.request.contextPath}/APStickers">Wifi Points</a></li>
+				<li><a href="${pageContext.request.contextPath}/GMapRoute">Wifi Route</a></li>
+				<li><a href="${pageContext.request.contextPath}/BatteryTimeLevel">Battery Diagram</a></li>
+				<li><a href="${pageContext.request.contextPath}/Cells">Cell Points</a></li>
 				<li><a href="${pageContext.request.contextPath}/LowLevels">Low Levels</a></li>
 			</ul>
 </div>
     
-    <div id = "map-canvas">
+    <div id = "map-canvas" style="margin-left:100px;margin-top:10px;">
     </div>
 
 </body>

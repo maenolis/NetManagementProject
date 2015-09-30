@@ -11,7 +11,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -59,6 +58,7 @@ public class DataProcessor {
 	/** The wifi map. */
 	private HashMap<String, ArrayList<Object>> wifiMap;
 
+	/** The wifi per user map. */
 	private HashMap<String, ArrayList<Object>> wifiPerUserMap;
 
 	/** The wifi readed. */
@@ -179,11 +179,6 @@ public class DataProcessor {
 
 	/**
 	 * Instantiates a new data reader.
-	 *
-	 * @throws URISyntaxException
-	 *             the URI syntax exception
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
 	 */
 	public DataProcessor() {
 
@@ -223,6 +218,13 @@ public class DataProcessor {
 		usersSet = new HashSet<String>();
 	}
 
+	/**
+	 * Gets the single instance of DataProcessor.
+	 *
+	 * @param session
+	 *            the session
+	 * @return single instance of DataProcessor
+	 */
 	public static DataProcessor getInstance(final HttpSession session) {
 
 		/*

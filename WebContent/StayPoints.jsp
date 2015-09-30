@@ -19,12 +19,8 @@
 <script>
 	function initialize() {
 
-		var array =
-<%out.print(session.getAttribute("baseStations"));%>
-	;
-		console.log("test!!");
-		console.log(array[0]["lat"]);
-		console.log(array[0].lat);
+		var array = <%out.print(session.getAttribute("stayPoints"));%>;
+		
 		var mapOptions = {
 			center : new google.maps.LatLng(array[0].lat, array[0].lon),
 			zoom : 8,
@@ -36,11 +32,13 @@
 		for (var i = 0; i < array.length; i++) {
 			var lon = array[i].lon;
 			var lat = array[i].lat;
-			var contentString = '<p> Operator :' + array[i].operator + '</p>'
-					+ '<p> Mcc : ' + array[i].mcc + ' </p>' + '<p> Mnc : '
-					+ array[i].mnc + ' </p>' + '<p> Lac : ' + array[i].lac
-					+ ' </p>' + '<p> Cid : ' + array[i].cid + ' </p>';
-			var myLatlng = new google.maps.LatLng(array[i].lat, array[i].lon);
+			var start = array[i].start;
+			var end = array[i].end;
+			var contentString = '<p> lat :' + lat + '</p>'
+					+ '<p> lon : ' + lon + ' </p>' + '<p> start : '
+					+ start + ' </p>' + '<p> end : ' + end
+					+ ' </p>';
+			var myLatlng = new google.maps.LatLng(lat, lon);
 
 			var infowindow = new google.maps.InfoWindow({
 				content : contentString

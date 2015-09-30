@@ -20,14 +20,25 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class APStickers
+ * Servlet implementation class APStickers.
  */
 @WebServlet("/APStickers")
 public class APStickers extends HttpServlet {
 
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
 	/**
+	 * Do get.
+	 *
+	 * @param request
+	 *            the request
+	 * @param response
+	 *            the response
+	 * @throws ServletException
+	 *             the servlet exception
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 * @see HttpServlet#HttpServlet()
 	 */
 
@@ -48,26 +59,26 @@ public class APStickers extends HttpServlet {
 
 			dateTo = sf.parse((String) session.getAttribute("dateTo"));
 
-			HashMap<String, Location> map;
-			HashMap<String, ArrayList<Object>> map2;
+			HashMap<String, Location> wifiLocationsMap;
+			HashMap<String, ArrayList<Object>> wifiMap;
 			DataProcessor dp = DataProcessor.getInstance(request.getSession());
 			dp.computeAccessPointsLocation();
-			map = dp.getWifiLocations();
-			map2 = dp.getWifiMap();
+			wifiLocationsMap = dp.getWifiLocations();
+			wifiMap = dp.getWifiMap();
 			String user = (String) request.getSession().getAttribute("user");
 			List<Double> Longtitudes = new ArrayList<Double>();
 			List<Double> Latitudes = new ArrayList<Double>();
 
 			// TODO: Implement in dataProcessor.
-			for (String key : map.keySet()) {
-				Date ts = ((Wifi) map2.get(key).get(0)).getTimestamp();
-				String dsUser = ((Wifi) map2.get(key).get(0)).getUser();
+			for (String key : wifiLocationsMap.keySet()) {
+				Date ts = ((Wifi) wifiMap.get(key).get(0)).getTimestamp();
+				String dsUser = ((Wifi) wifiMap.get(key).get(0)).getUser();
 				if (dsUser.equals(user)
 						&& ((ts.after(dateFrom) && ts.before(dateTo))
 								|| ts.equals(dateFrom) || ts.equals(dateTo))) {
 
-					Latitudes.add(map.get(key).getLatitude());
-					Longtitudes.add(map.get(key).getLongtitude());
+					Latitudes.add(wifiLocationsMap.get(key).getLatitude());
+					Longtitudes.add(wifiLocationsMap.get(key).getLongtitude());
 				}
 			}
 			int length = Latitudes.size();
@@ -84,6 +95,16 @@ public class APStickers extends HttpServlet {
 	}
 
 	/**
+	 * Do post.
+	 *
+	 * @param request
+	 *            the request
+	 * @param response
+	 *            the response
+	 * @throws ServletException
+	 *             the servlet exception
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */

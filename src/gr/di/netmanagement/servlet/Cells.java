@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,14 +18,17 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class Cells
+ * Servlet implementation class Cells.
  */
 @WebServlet("/Cells")
 public class Cells extends HttpServlet {
 
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
 	/**
+	 * Instantiates a new cells.
+	 *
 	 * @see HttpServlet#HttpServlet()
 	 */
 	public Cells() {
@@ -35,6 +37,16 @@ public class Cells extends HttpServlet {
 	}
 
 	/**
+	 * Do get.
+	 *
+	 * @param request
+	 *            the request
+	 * @param response
+	 *            the response
+	 * @throws ServletException
+	 *             the servlet exception
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
@@ -96,12 +108,21 @@ public class Cells extends HttpServlet {
 		// request.getSession().setAttribute("longtitude", lon);
 		session.setAttribute("baseStations",
 				JsArgsProcessor.cellsJsArg(bsmap.get(user), dateFrom, dateTo));
-		System.out.println(JsArgsProcessor.cellsJsArg(bsmap.get(user),
-				dateFrom, dateTo));
+
 		response.sendRedirect((String) session.getAttribute("page") + ".jsp");
 	}
 
 	/**
+	 * Do post.
+	 *
+	 * @param request
+	 *            the request
+	 * @param response
+	 *            the response
+	 * @throws ServletException
+	 *             the servlet exception
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
@@ -110,12 +131,6 @@ public class Cells extends HttpServlet {
 			final HttpServletResponse response) throws ServletException,
 			IOException {
 
-		String url = "/Cells.jsp";
-		String user = (String) request.getSession().getAttribute("users");
-		System.out.println(user);
-		request.getSession().setAttribute("user", user);
-		RequestDispatcher rd = getServletContext().getRequestDispatcher(url);
-		rd.forward(request, response);
 	}
 
 }

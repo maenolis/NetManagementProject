@@ -13,14 +13,17 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class Selection
+ * Servlet implementation class Selection.
  */
 @WebServlet("/Selection")
 public class Selection extends HttpServlet {
 
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
 	/**
+	 * Instantiates a new selection.
+	 *
 	 * @see HttpServlet#HttpServlet()
 	 */
 	public Selection() {
@@ -28,6 +31,16 @@ public class Selection extends HttpServlet {
 	}
 
 	/**
+	 * Do get.
+	 *
+	 * @param request
+	 *            the request
+	 * @param response
+	 *            the response
+	 * @throws ServletException
+	 *             the servlet exception
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
@@ -47,6 +60,16 @@ public class Selection extends HttpServlet {
 	}
 
 	/**
+	 * Do post.
+	 *
+	 * @param request
+	 *            the request
+	 * @param response
+	 *            the response
+	 * @throws ServletException
+	 *             the servlet exception
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */

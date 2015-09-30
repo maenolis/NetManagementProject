@@ -11,8 +11,14 @@ public class ClusteredPointOfInterest {
 	/** The north west bound. */
 	private Location northWestBound;
 
+	/** The south west bound. */
+	private final Location southWestBound;
+
 	/** The south east bound. */
 	private Location southEastBound;
+
+	/** The north east bound. */
+	private final Location northEastBound;
 
 	public Location getLocation() {
 		return location;
@@ -38,6 +44,14 @@ public class ClusteredPointOfInterest {
 		this.southEastBound = southEastBound;
 	}
 
+	public Location getSouthWestBound() {
+		return southWestBound;
+	}
+
+	public Location getNorthEastBound() {
+		return northEastBound;
+	}
+
 	/**
 	 * Instantiates a new clustered point of interest.
 	 *
@@ -54,6 +68,11 @@ public class ClusteredPointOfInterest {
 		this.location = location;
 		this.northWestBound = northWestBound;
 		this.southEastBound = southEastBound;
+
+		this.southWestBound = new Location(String.valueOf(southEastBound
+				.getLatitude()), String.valueOf(northWestBound.getLongtitude()));
+		this.northEastBound = new Location(String.valueOf(northWestBound
+				.getLatitude()), String.valueOf(southEastBound.getLongtitude()));
 	}
 
 	/*
@@ -63,9 +82,10 @@ public class ClusteredPointOfInterest {
 	 */
 	@Override
 	public String toString() {
-		return "CLusteredPointOfInterest [location=" + location
-				+ ", northWestBound=" + northWestBound + ", southEastBound="
-				+ southEastBound + "]";
+		return "ClusteredPointOfInterest [location=" + location
+				+ ", northWestBound=" + northWestBound + ", southWestBound="
+				+ southWestBound + ", southEastBound=" + southEastBound
+				+ ", northEastBound=" + northEastBound + "]";
 	}
 
 }

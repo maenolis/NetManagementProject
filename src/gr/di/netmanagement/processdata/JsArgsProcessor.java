@@ -1,6 +1,8 @@
 package gr.di.netmanagement.processdata;
 
 import gr.di.netmanagement.beans.BaseStation;
+import gr.di.netmanagement.beans.ClusteredPointOfInterest;
+import gr.di.netmanagement.beans.PointOfInterest;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -90,6 +92,13 @@ public class JsArgsProcessor {
 		return retArray;
 	}
 
+	/**
+	 * Battery time level js arg.
+	 *
+	 * @param uMap
+	 *            the u map
+	 * @return the JSON array
+	 */
 	public static JSONArray batteryTimeLevelJsArg(
 			final TreeMap<String, Integer> uMap) {
 		JSONArray retArray = new JSONArray();
@@ -118,6 +127,17 @@ public class JsArgsProcessor {
 		return retArray;
 	}
 
+	/**
+	 * Cells js arg.
+	 *
+	 * @param baseStations
+	 *            the base stations
+	 * @param from
+	 *            the from
+	 * @param to
+	 *            the to
+	 * @return the JSON array
+	 */
 	public static JSONArray cellsJsArg(final ArrayList<Object> baseStations,
 			final Date from, final Date to) {
 
@@ -149,6 +169,83 @@ public class JsArgsProcessor {
 				e.printStackTrace();
 			}
 			retArray.put(jsObject);
+		}
+
+		return retArray;
+	}
+
+	/**
+	 * Points of interest js arg.
+	 *
+	 * @param stayPoints
+	 *            the stay points
+	 * @return the JSON array
+	 */
+	public static JSONArray pointsOfInterestJsArg(
+			final ArrayList<PointOfInterest> stayPoints) {
+		JSONArray retArray = new JSONArray();
+
+		if (stayPoints == null || stayPoints.size() == 0) {
+			return retArray;
+		}
+
+		for (PointOfInterest poi : stayPoints) {
+			JSONObject poiJs = new JSONObject();
+			try {
+				poiJs.put("lat", poi.getLocation().getLatitude());
+				poiJs.put("lon", poi.getLocation().getLongtitude());
+				poiJs.put("end", poi.getEnd().toString());
+				poiJs.put("start", poi.getStart().toString());
+				retArray.put(poiJs);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return retArray;
+	}
+
+	/**
+	 * Clustered points of interest.
+	 *
+	 * @param clusters
+	 *            the clusters
+	 * @return the JSON array
+	 */
+	public static JSONArray clusteredPointsOfInterest(
+			final ArrayList<ClusteredPointOfInterest> clusters) {
+
+		JSONArray retArray = new JSONArray();
+
+		if (clusters == null || clusters.size() == 0) {
+			return retArray;
+		}
+
+		for (ClusteredPointOfInterest cluster : clusters) {
+			JSONObject clusterJs = new JSONObject();
+			try {
+				clusterJs.put("northEastLat", cluster.getNorthEastBound()
+						.getLatitude());
+				clusterJs.put("northEastLon", cluster.getNorthEastBound()
+						.getLongtitude());
+				clusterJs.put("southEastLat", cluster.getSouthEastBound()
+						.getLatitude());
+				clusterJs.put("southEastLon", cluster.getSouthEastBound()
+						.getLongtitude());
+				clusterJs.put("northWestLat", cluster.getNorthWestBound()
+						.getLatitude());
+				clusterJs.put("northWestLon", cluster.getNorthWestBound()
+						.getLongtitude());
+				clusterJs.put("southWestLat", cluster.getSouthWestBound()
+						.getLatitude());
+				clusterJs.put("southWestLon", cluster.getSouthWestBound()
+						.getLongtitude());
+				clusterJs.put("midLat", cluster.getLocation().getLatitude());
+				clusterJs.put("midLon", cluster.getLocation().getLongtitude());
+				retArray.put(clusterJs);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
 		}
 
 		return retArray;

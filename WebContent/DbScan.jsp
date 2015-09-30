@@ -19,38 +19,48 @@
     <title>Access Points Stickers</title>
     
     <script>
-		var num_markers = "${length}"
+    
+    	var array =	<%out.print(session.getAttribute("clusters"));%>;
+		
         function initialize(){
-			var lats = [];
-			<c:forEach var="lat" items="${lat}"> 
-            	lats.push("${lat}");
-        	</c:forEach>
-        	var longs = [];
-        	<c:forEach var="lon" items="${lon}"> 
-        		longs.push("${lon}");
-    		</c:forEach>
-    		
             var mapOptions = {
-                center: new google.maps.LatLng(lats[0], longs[0]),
-                zoom: 11,
+                center: new google.maps.LatLng(array[0].midLat, array[0].midLon),
+                zoom: 8,
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             };
             var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
-            var marker, i;
-            
-            for (i = 0; i < num_markers; i++) {
-            	var myLatlng = new google.maps.LatLng(lats[i],longs[i]);
-                marker = new google.maps.Marker({
-                  position: myLatlng,
-                  map: map,
+            var polyline = [];
+            for (var i = 0; i < array.length; i++) {
+            	polyline = [];
+            	var southWest = new google.maps.LatLng(array[i].southWestLat, array[i].southWestLon);
+            	polyline[0]=southWest;
+            	console.log("southWest: " + southWest);
+            	var northWest = new google.maps.LatLng(array[i].northWestLat, array[i].northWestLon);
+            	polyline[1]=northWest;
+            	console.log("northWest: " + northWest);
+            	var northEast = new google.maps.LatLng(array[i].northEastLat, array[i].northEastLon);
+            	polyline[2]=northEast;
+            	console.log("northEast: " + northEast);
+            	var southEast = new google.maps.LatLng(array[i].southEastLat, array[i].southEastLon);
+            	polyline[3]=southEast;
+            	console.log("southEast: " + southEast);
+            	
+            	polyline[4]=southWest;
+            	
+            	var route = new google.maps.Polyline({
+                    path: polyline,
+                    strokeColor: '#FF0000',
+                    strokeOpacity: 1.0,
+                    strokeWeight: 2
                 });
-              
 
-              }   
+                route.setMap(map);
+            }   
+            
         }
 
-        if(num_markers!=0) google.maps.event.addDomListener(window, 'load', initialize);
-        else window.alert("No Access Points for this user.");
+        if(array.length != 0) google.maps.event.addDomListener(window, 'load', initialize);
+        else window.alert("No clusters.");
         
         
         </script>

@@ -10,14 +10,17 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class Forwarder
+ * Servlet implementation class Forwarder.
  */
 @WebServlet("/Forwarder")
 public class Forwarder extends HttpServlet {
 
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
 	/**
+	 * Instantiates a new forwarder.
+	 *
 	 * @see HttpServlet#HttpServlet()
 	 */
 	public Forwarder() {
@@ -25,6 +28,16 @@ public class Forwarder extends HttpServlet {
 	}
 
 	/**
+	 * Do get.
+	 *
+	 * @param request
+	 *            the request
+	 * @param response
+	 *            the response
+	 * @throws ServletException
+	 *             the servlet exception
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
@@ -36,6 +49,16 @@ public class Forwarder extends HttpServlet {
 	}
 
 	/**
+	 * Do post.
+	 *
+	 * @param request
+	 *            the request
+	 * @param response
+	 *            the response
+	 * @throws ServletException
+	 *             the servlet exception
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
@@ -45,12 +68,15 @@ public class Forwarder extends HttpServlet {
 			IOException {
 
 		HttpSession session = request.getSession();
-		// TODO!!!
-		// session.setAttribute("dateFrom", request.getParameter("dateFrom"));
-		// session.setAttribute("dateTo", request.getAttribute("dateTo"));
-		session.setAttribute("dateFrom", "2015/01/01 00:00:00");
-		session.setAttribute("dateTo", "2015/08/01 00:00:00");
-		session.setAttribute("user", "user31");
+
+		session.setAttribute("dateFrom", request.getParameter("dateFrom"));
+		session.setAttribute("dateTo", request.getParameter("dateTo"));
+		session.setAttribute("tMin", request.getParameter("tMin"));
+		session.setAttribute("dMax", request.getParameter("dMax"));
+		session.setAttribute("tMax", request.getParameter("tMax"));
+		session.setAttribute("tMax", request.getParameter("dMeasure"));
+		session.setAttribute("tMax", request.getParameter("minPoints"));
+		session.setAttribute("user", request.getParameter("user"));
 		session.setAttribute("page", request.getParameter("page"));
 		response.sendRedirect(request.getParameter("page"));
 	}

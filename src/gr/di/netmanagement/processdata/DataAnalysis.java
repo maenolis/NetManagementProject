@@ -1,6 +1,5 @@
 package gr.di.netmanagement.processdata;
 
-import gr.di.netmanagement.beans.Bean;
 import gr.di.netmanagement.beans.ClusteredPointOfInterest;
 import gr.di.netmanagement.beans.Location;
 import gr.di.netmanagement.beans.LocationBean;
@@ -150,25 +149,34 @@ public class DataAnalysis {
 		/* Get wifi and baseStation lists for given user. */
 		final ArrayList<Object> wifiList = dataProcessor.getWifiPerUserMap()
 				.get(user);
-		System.out.println(wifiList);
+
 		final ArrayList<Object> baseStationList = dataProcessor
 				.getBaseStationMap().get(user);
-		/* Gather wifi locations. */
-		for (final Object wifiObj : wifiList) {
-			final Bean wifi = (Bean) wifiObj;
-			if (wifi.getTimestamp().after(from)
-					&& wifi.getTimestamp().before(to)) {
-				retList.add(wifi);
+
+		if (wifiList != null) {
+			/* Gather wifi locations. */
+			for (final Object wifiObj : wifiList) {
+				final LocationBean wifi = (LocationBean) wifiObj;
+				if (wifi.getTimestamp().after(from)
+						&& wifi.getTimestamp().before(to)
+						&& wifi.getLocation().getLatitude() > 0.0f) {
+					retList.add(wifi);
+				}
 			}
 		}
-		/* Gather base station locations. */
-		for (final Object baseStationObj : baseStationList) {
-			final Bean baseStation = (Bean) baseStationObj;
-			if (baseStation.getTimestamp().after(from)
-					&& baseStation.getTimestamp().before(to)) {
-				retList.add(baseStation);
+
+		if (baseStationList != null) {
+			/* Gather base station locations. */
+			for (final Object baseStationObj : baseStationList) {
+				final LocationBean baseStation = (LocationBean) baseStationObj;
+				if (baseStation.getTimestamp().after(from)
+						&& baseStation.getTimestamp().before(to)
+						&& baseStation.getLocation().getLatitude() > 0.0f) {
+					retList.add(baseStation);
+				}
 			}
 		}
+
 		return retList;
 	}
 
@@ -240,19 +248,16 @@ public class DataAnalysis {
 	 *            the d max
 	 * @param tMax
 	 *            the t max
-	 * @param eps
-	 *            the eps
-	 * @param minPts
-	 *            the min pts
+	 * @param dMeasure
+	 *            the d measure
+	 * @param minPoints
+	 *            the min points
 	 * @return the array list
 	 */
 	public static ArrayList<ClusteredPointOfInterest> clusteredPointsOfInterest(
 			final Date from, final Date to, final DataProcessor dataProcessor,
 			final float tMin, final float dMax, final int tMax,
-			final double eps, final int minPts) {
-
-		/* Second level clustering locations. */
-		final ArrayList<ClusteredPointOfInterest> retList = new ArrayList<ClusteredPointOfInterest>();
+			final int dMeasure, final int minPoints) {
 
 		/* First level clustering locations. */
 		final ArrayList<Location> locationList = new ArrayList<Location>();
@@ -270,28 +275,28 @@ public class DataAnalysis {
 
 		/* Clusterer with space distance. */
 		final DBSCANClusterer<Location> clusterer = new DBSCANClusterer<Location>(
-				eps, minPts, new SpaceDistance());
+				dMeasure, minPoints, new SpaceDistance());
 
 		final List<Cluster<Location>> clusteredList = clusterer
 				.cluster(locationList);
 
 		/* Return analyzed cluster list. */
-		return analyzeClusters(retList, clusteredList);
+		return analyzeClusters(clusteredList);
 
 	}
 
 	/**
 	 * Analize clusters.
 	 *
-	 * @param retList
-	 *            the ret list
 	 * @param clusteredList
 	 *            the clustered list
 	 * @return the array list
 	 */
 	private static ArrayList<ClusteredPointOfInterest> analyzeClusters(
-			final ArrayList<ClusteredPointOfInterest> retList,
 			final List<Cluster<Location>> clusteredList) {
+
+		/* Second level clustering locations. */
+		final ArrayList<ClusteredPointOfInterest> retList = new ArrayList<ClusteredPointOfInterest>();
 
 		for (Cluster<Location> cluster : clusteredList) {
 
@@ -325,10 +330,10 @@ public class DataAnalysis {
 		double midLon = 0.0;
 
 		/* Cluster's bounds. */
-		double west = locations.get(0).getLatitude();
-		double east = locations.get(0).getLatitude();
-		double north = locations.get(0).getLongtitude();
-		double south = locations.get(0).getLongtitude();
+		double west = locations.get(0).getLongtitude();
+		double east = locations.get(0).getLongtitude();
+		double north = locations.get(0).getLatitude();
+		double south = locations.get(0).getLatitude();
 
 		for (Location location : locations) {
 			midLat += location.getLatitude();
@@ -350,9 +355,11 @@ public class DataAnalysis {
 		/* Compute and create the ClusteredPointOfInterest. */
 		midLat = midLat / locations.size();
 		midLon = midLon / locations.size();
-		return new ClusteredPointOfInterest(new Location(
-				String.valueOf(midLat), String.valueOf(midLon)), new Location(
-				String.valueOf(north), String.valueOf(west)), new Location(
-				String.valueOf(south), String.valueOf(east)));
+		ClusteredPointOfInterest tmp = new ClusteredPointOfInterest(
+				new Location(String.valueOf(midLat), String.valueOf(midLon)),
+				new Location(String.valueOf(north), String.valueOf(west)),
+				new Location(String.valueOf(south), String.valueOf(east)));
+
+		return tmp;
 	}
 }
